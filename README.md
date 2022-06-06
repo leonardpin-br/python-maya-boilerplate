@@ -1,2 +1,2 @@
 # python-maya-boilerplate
- Boilerplate to start Autodesk Maya scripts.
+Boilerplate to start Autodesk Maya python scripts.
