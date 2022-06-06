@@ -1,0 +1,14 @@
+{
+	"python.analysis.extraPaths": ["C:\\Program Files\\Autodesk\\Maya2020\\devkit\\other\\pymel\\extras\\completion\\py"],
+    "qtForPython.designer.path": "C:\\Users\\leonardo\\AppData\\Roaming\\Python\\Python38\\site-packages\\qt5_applications\\Qt\\bin\\designer.exe",
+    "qtForPython.uic.liveExecution": false,
+	"qtForPython.uic.path": "C:\\Program Files\\Autodesk\\Maya2020\\bin\\pyside2-uic",
+	"qtForPython.uic.args": [
+		"-o \"${workspaceFolder}${pathSeparator}boilerplate${pathSeparator}userinterface${pathSeparator}${fileBasenameNoExtension}UIC.py\""
+	],
+    "qtForPython.rcc.liveExecution": true,
+    "qtForPython.rcc.path": "C:\\Program Files\\Autodesk\\Maya2020\\bin\\pyside2-rcc.exe",
+    "qtForPython.rcc.args": [
+        "-o \"${workspaceFolder}${pathSeparator}boilerplate${pathSeparator}userinterface${pathSeparator}ui_resources.py\""
+    ]
+}

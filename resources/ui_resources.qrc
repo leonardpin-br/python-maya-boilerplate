@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="resources">
+    <file>img/arrow-down.png</file>
+    <file>img/arrow-left.png</file>
+    <file>img/arrow-right.png</file>
+    <file>img/arrow-up.png</file>
+    <file>img/check.png</file>
+    <file>img/tree-closed.png</file>
+    <file>img/tree-open.png</file>
+    <file>img/logo-leonardo-pinheiro--window-icon.png</file>
+    <file>img/logo-leonardo-pinheiro-branca.png</file>
+  </qresource>
+</RCC>

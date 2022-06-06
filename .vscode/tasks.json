@@ -1,0 +1,130 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Clear",
+			"detail": "Clears the project.",
+			"type": "shell",
+			"command": "bash",
+			"args": [
+				"./scripts/clearProject.sh"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Generate requirements.txt",
+			"detail": "Generates the requirements.txt file",
+			"type": "shell",
+			"command": "pip",
+			"args": [
+				"freeze",
+                ">",
+                "requirements.txt"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Install requirements",
+			"detail": "Install requirements from requirements.txt file",
+			"type": "shell",
+			"command": "pip",
+			"args": [
+				"install",
+                "-r",
+                "requirements.txt"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Update QSS theme",
+			"detail": "Updates the (Combinear) .qss theme with new absolute paths.",
+			"type": "shell",
+			"command": "bash",
+			"args": [
+				"./scripts/update_qss_theme.sh"
+			],
+			"problemMatcher": []
+		},
+		{
+            "label": "Watch Doc",
+            "detail": "Builds the Sphinx documentation",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "\"watch:doc\""
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Serve Doc",
+            "detail": "Serves and autoloads the Sphinx documentation.",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "\"server:doc\""
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Watch Test",
+            "detail": "Watches and run coverage (unittest).",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "\"watch:test\""
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Serve Test",
+            "detail": "Serves and autoloads the Coverage reposts.",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "\"server:test\""
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Development",
+            "detail": "Watches TypeScript and JSDoc and serves the JSDoc documentation.",
+            "dependsOn": [
+                "Watch Doc",
+                "Serve Doc",
+                "Watch Test",
+                "Serve Test"
+            ],
+            "dependsOrder": "parallel",
+            "problemMatcher": []
+        },
+        {
+            "label": "Dev",
+            "detail": "Installs Composer dependencies, runs the watches and serves the documentation.",
+            "dependsOn": [
+                "Install requirements",
+                "Update QSS theme",
+                "Development"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        }
+	]
+}

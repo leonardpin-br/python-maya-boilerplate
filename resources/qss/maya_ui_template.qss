@@ -1,0 +1,14 @@
+/*
+Custom file that alters the result from Qt Designer and the Combinear.qss theme.
+
+Note:
+    Relative paths are not relative to the .qss file (when running on Maya).
+
+Note:
+    It is not necessary to include custom images in the interface from this file
+    after compiling the .qrc file into .py file.
+ */
+
+QLabel#label_2 {
+	/* background-image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/logo-leonardo-pinheiro-branca.png"); */
+}
