@@ -45,6 +45,7 @@ import sys
 from subpackage import example_classes
 from userinterface import maya_ui_template
 
+
 def print_sys_path():
     u"""Print every path in sys.path.
 
