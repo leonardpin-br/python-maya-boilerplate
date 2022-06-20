@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 u"""Entry point of the script/app.
 
-This file is only an example to serve as a reference or be deleted.
+This is the file to run.
 
-Last modified in 2022-04-28
+Last modified in 2022-06-20
 
 Python version 2.7.11 (Maya 2020)
 
@@ -77,10 +77,9 @@ def main():
     # Clear the terminal window.
     os.system('cls' if os.name == 'nt' else 'clear')
 
-    obj = example_classes.ExampleSubclass()
-    print(obj.return_message())
-    print(obj.greeter())
 
+    # UI CREATION
+    # ==========================================================================
     global myWin  # It is very necessary!
 
     try:
@@ -91,11 +90,15 @@ def main():
     myWin = maya_ui_template.ScriptName()
     myWin.show()
 
-    var1 = 2
-    var2 = 3
-    result = var1 + var2
 
-    print(result)
+    # CREATING CLASS INSTANCES
+    # ==========================================================================
+    obj = example_classes.ExampleSubclass()
+    print(obj.return_message())
+    print(obj.greeter())
+
+
+
 
 
 main()
