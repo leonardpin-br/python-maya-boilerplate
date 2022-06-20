@@ -377,7 +377,7 @@ QComboBox::drop-down
 
 QComboBox::down-arrow
 {
-    image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/arrow-down.png");
+    image: url("F:/d_flux/libraries/scripts/Maya/python-maya-boilerplate/resources/img/arrow-down.png");
     width: 8px;
     height: 8px;
 }
@@ -429,7 +429,7 @@ QDateTimeEdit::up-button:pressed
 QSpinBox::up-arrow,
 QDateTimeEdit::up-arrow
 {
-    image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/arrow-up.png");
+    image: url("F:/d_flux/libraries/scripts/Maya/python-maya-boilerplate/resources/img/arrow-up.png");
     width: 7px;
     height: 7px;
 
@@ -468,7 +468,7 @@ QDateTimeEdit::down-button:pressed
 QSpinBox::down-arrow,
 QDateTimeEdit::down-arrow
 {
-    image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/arrow-down.png");
+    image: url("F:/d_flux/libraries/scripts/Maya/python-maya-boilerplate/resources/img/arrow-down.png");
     width: 7px;
     height: 7px;
 
@@ -601,7 +601,7 @@ QTreeView::item:!selected:hover
 QTreeView::branch:has-children:!has-siblings:closed,
 QTreeView::branch:closed:has-children:has-siblings
 {
-    image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/tree-closed.png");
+    image: url("F:/d_flux/libraries/scripts/Maya/python-maya-boilerplate/resources/img/tree-closed.png");
 
 }
 
@@ -609,7 +609,7 @@ QTreeView::branch:closed:has-children:has-siblings
 QTreeView::branch:open:has-children:!has-siblings,
 QTreeView::branch:open:has-children:has-siblings
 {
-    image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/tree-open.png");
+    image: url("F:/d_flux/libraries/scripts/Maya/python-maya-boilerplate/resources/img/tree-open.png");
 
 }
 
@@ -708,7 +708,7 @@ QCheckBox::indicator
 
 QCheckBox::indicator:checked
 {
-    image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/check.png");
+    image: url("F:/d_flux/libraries/scripts/Maya/python-maya-boilerplate/resources/img/check.png");
 	background-color: #b78620;
     border: 1px solid #3a546e;
 
@@ -877,7 +877,7 @@ QScrollBar::sub-line:horizontal
 
 QScrollBar::right-arrow:horizontal
 {
-    image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/arrow-right.png");
+    image: url("F:/d_flux/libraries/scripts/Maya/python-maya-boilerplate/resources/img/arrow-right.png");
     width: 6px;
     height: 6px;
 
@@ -886,7 +886,7 @@ QScrollBar::right-arrow:horizontal
 
 QScrollBar::left-arrow:horizontal
 {
-    image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/arrow-left.png");
+    image: url("F:/d_flux/libraries/scripts/Maya/python-maya-boilerplate/resources/img/arrow-left.png");
     width: 6px;
     height: 6px;
 
@@ -943,7 +943,7 @@ QScrollBar::sub-line:vertical
 
 QScrollBar::up-arrow:vertical
 {
-    image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/arrow-up.png");
+    image: url("F:/d_flux/libraries/scripts/Maya/python-maya-boilerplate/resources/img/arrow-up.png");
     width: 6px;
     height: 6px;
 
@@ -952,7 +952,7 @@ QScrollBar::up-arrow:vertical
 
 QScrollBar::down-arrow:vertical
 {
-    image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/arrow-down.png");
+    image: url("F:/d_flux/libraries/scripts/Maya/python-maya-boilerplate/resources/img/arrow-down.png");
     width: 6px;
     height: 6px;
 

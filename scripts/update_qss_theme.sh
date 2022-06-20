@@ -43,6 +43,29 @@ removesCygwinPrefix() {
     echo -e "$ROOT_DIR"
 }
 
+# Removes Unix prefix.
+# param1 (string): The root directory path.
+removesUnixPrefix() {
+
+    local ROOT_DIR=$1
+
+    # The Unix prefix /e, if exists, must be removed.
+    if [[ "$ROOT_DIR" =~ ^\/[a-z]\/[a-z]+ ]]; then
+
+        # Removes the first /.
+        ROOT_DIR=${ROOT_DIR/\//}
+
+        # Capitalizes the drive letter (first character).
+        ROOT_DIR="${ROOT_DIR^}"
+
+        # Swaps the (now) first / for :/
+        ROOT_DIR=${ROOT_DIR/\//\:\/}
+
+    fi
+
+    echo -e "$ROOT_DIR"
+}
+
 # Updates the absolute paths in the theme .qss file.
 # param1 (string): The theme file. Defaults to ./resources/qss/Combinear.qss.
 updateQssTheme() {
@@ -60,7 +83,17 @@ updateQssTheme() {
 
     local ROOT_DIR=$(get_root_directory)
 
-    ROOT_DIR=$(removesCygwinPrefix $ROOT_DIR)
+    # Discovers the environment this script is running on:
+    # https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
+    local environment="$(uname -s)"
+
+    # Checks if a string starts with a value:
+    # https://stackoverflow.com/questions/2172352/in-bash-how-can-i-check-if-a-string-begins-with-some-value
+    if [[ $environment == CYGWIN* ]]; then
+        ROOT_DIR=$(removesCygwinPrefix $ROOT_DIR)
+    elif [[ $environment == MINGW* ]]; then
+        ROOT_DIR=$(removesUnixPrefix $ROOT_DIR)
+    fi
 
     # Folders
     local RESOURCES_DIR="$ROOT_DIR/resources"
