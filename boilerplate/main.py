@@ -36,14 +36,52 @@ References:
 import os
 import sys
 
-# # Not necessary for execution, but necessary for documentation.
-# currentdir = os.path.dirname(os.path.realpath(__file__))    # boilerplate
+
+def get_subdir_full_paths(current_dir):
+
+    # Will store the full paths of the immediate subdirectories
+    # https://stackoverflow.com/questions/973473/getting-a-list-of-all-subdirectories-in-the-current-directory
+    subdir_full_paths = []
+    subdir_names = next(os.walk(current_dir))[1]
+    for directory in subdir_names:
+        subdir_full_paths.append(os.path.join(current_dir, directory))
+
+    return subdir_full_paths
+
+
+# Not necessary for execution, but necessary for documentation.
+current_dir = os.path.dirname(os.path.realpath(__file__))    # boilerplate
+subdir_full_paths = get_subdir_full_paths(current_dir)
+
+for subdir in subdir_full_paths:
+    print(subdir)
+
+print("\n=====================================================================")
+
+# for path in sys.path:
+#     for subdir in subdir_full_paths:
+#         if subdir == path:
+#             continue
+#         sys.path.append(subdir)
+
+# for path in sys.path:
+#     print(path)
+
 # userinterface_dir = os.path.join(currentdir, "userinterface")
-
 # sys.path.append(userinterface_dir)
+# databaseobject_dir = os.path.join(current_dir, "databaseobject")
+# print(databaseobject_dir)
+# sys.path.append(databaseobject_dir)
 
-from subpackage import example_classes
-from userinterface import maya_ui_template
+# # Se o caminho não faz parte do path:
+# for path in sys.path:
+#     if path == databaseobject_dir:
+#         break
+# else:
+#     sys.path.insert(0, databaseobject_dir)
+
+# from subpackage import example_classes
+# from userinterface import maya_ui_template
 # from databaseobject import connection_db
 
 
@@ -75,9 +113,8 @@ def main():
     u"""The main function to execute the entire project/application.
     """
 
-    # Clear the terminal window.
-    os.system('cls' if os.name == 'nt' else 'clear')
-
+    # # Clear the terminal window.
+    # os.system('cls' if os.name == 'nt' else 'clear')
 
     # # UI CREATION
     # # ==========================================================================
@@ -91,18 +128,14 @@ def main():
     # myWin = maya_ui_template.ScriptName()
     # myWin.show()
 
-
     # # CREATING CLASS INSTANCES
     # # ==========================================================================
     # obj = example_classes.ExampleSubclass()
     # print(obj.return_message())
     # print(obj.greeter())
 
-
     # CREATING MYSQL CONNECTION
     # ==========================================================================
-
-
 
 
 main()

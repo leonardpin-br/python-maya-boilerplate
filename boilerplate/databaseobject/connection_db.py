@@ -7,34 +7,46 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath('../../py27env/Lib/site-packages'))
+
+for path in sys.path:
+    print(path)
+
+
+
 # import mysql.connector
+# from mysql.connector import Error
 
-__copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
-__author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
-__link__ = u"https://www.leonardopinheiro.net"
-
-
-__all__ = [
-    'ConnectionDB'
-]
+# __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
+# __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
+# __link__ = u"https://www.leonardopinheiro.net"
 
 
-class ConnectionDB(object):
+# __all__ = [
+#     'ConnectionDB'
+# ]
 
 
-    affected_rows = 0
-    insert_id = 0
-
-    def __init__(self, hostname, username, password, database):
-        pass
+# class ConnectionDB(object):
 
 
-        # self.cnx = mysql.connector.connect(user=username, password=password, host=hostname, database=database)
+#     affected_rows = 0
+#     insert_id = 0
 
-        # print(self.cnx)
+#     def __init__(self, hostname, username, password, database):
+#         # pass
 
-    def query(self, sql):
-        pass
+#         cnx = mysql.connector.connect(user=username, password=password, host=hostname, database=database)
 
-    def escape_string(self, string_to_escape):
-        pass
+#         try:
+#             cursor = cnx.cursor()
+#             cursor.execute("""select 3 from your_table""")
+#             result = cursor.fetchall()
+#             print(result)
+#         finally:
+#             cnx.close()
+
+#     def query(self, sql):
+#         pass
+
+#     def escape_string(self, string_to_escape):
+#         pass
