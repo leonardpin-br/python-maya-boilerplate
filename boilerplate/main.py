@@ -42,8 +42,8 @@ import sys
 
 # sys.path.append(userinterface_dir)
 
-from subpackage import example_classes
-from userinterface import maya_ui_template
+# from subpackage import example_classes
+# from userinterface import maya_ui_template
 
 
 def print_sys_path():
@@ -78,24 +78,24 @@ def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-    # UI CREATION
-    # ==========================================================================
-    global myWin  # It is very necessary!
+    # # UI CREATION
+    # # ==========================================================================
+    # global myWin  # It is very necessary!
 
-    try:
-        myWin.close()
-    except:
-        pass
+    # try:
+    #     myWin.close()
+    # except:
+    #     pass
 
-    myWin = maya_ui_template.ScriptName()
-    myWin.show()
+    # myWin = maya_ui_template.ScriptName()
+    # myWin.show()
 
 
-    # CREATING CLASS INSTANCES
-    # ==========================================================================
-    obj = example_classes.ExampleSubclass()
-    print(obj.return_message())
-    print(obj.greeter())
+    # # CREATING CLASS INSTANCES
+    # # ==========================================================================
+    # obj = example_classes.ExampleSubclass()
+    # print(obj.return_message())
+    # print(obj.greeter())
 
 
 

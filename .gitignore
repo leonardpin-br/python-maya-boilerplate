@@ -1,2 +1,5 @@
 # Exclude all compiled python files:
 *.pyc
+
+# Exclude the contentes of docs/sphinx/build:
+docs/sphinx/build/*

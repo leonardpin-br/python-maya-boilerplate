@@ -9,11 +9,11 @@ __link__ = u"https://www.leonardopinheiro.net"
 
 
 __all__ = [
-    'Connection'
+    'ConnectionDB'
 ]
 
 
-class Connection(object):
+class ConnectionDB(object):
     """Mimics (loosely and in a very crud way) the mysqli (PHP) class.
 
     Args:

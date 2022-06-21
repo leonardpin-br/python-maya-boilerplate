@@ -8,9 +8,9 @@ Exports:
 
 """
 
-from .database_object import *
-from . ui_functions import *
+from . database_object import *
+from . connection_db import *
 
 
-__all__ = (database_object.__all__ +
-           ui_functions.__all__)
+__all__ =   (database_object.__all__ +
+            connection_db.__all__)
