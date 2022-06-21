@@ -42,8 +42,9 @@ import sys
 
 # sys.path.append(userinterface_dir)
 
-# from subpackage import example_classes
-# from userinterface import maya_ui_template
+from subpackage import example_classes
+from userinterface import maya_ui_template
+# from databaseobject import connection_db
 
 
 def print_sys_path():
@@ -97,6 +98,9 @@ def main():
     # print(obj.return_message())
     # print(obj.greeter())
 
+
+    # CREATING MYSQL CONNECTION
+    # ==========================================================================
 
 
 
