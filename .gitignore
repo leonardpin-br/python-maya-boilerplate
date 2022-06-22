@@ -1,5 +1,11 @@
 # Exclude all compiled python files:
 *.pyc
 
+# Exclude all __pycache__ folders
+**/__pycache__
+
 # Exclude the contentes of docs/sphinx/build:
 docs/sphinx/build/*
+
+# Exclude the db_credentials.py file:
+boilerplate/databaseobject/db_credentials.py
