@@ -5,9 +5,9 @@ __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
+import re
+
 import database_functions
-
-
 
 
 class ConnectionDB(object):
@@ -61,4 +61,9 @@ class ConnectionDB(object):
         return result
 
     def escape_string(self, string_to_escape):
+        """https://stackoverflow.com/questions/15798969/python-mysql-escape-special-characters
+
+        Args:
+            string_to_escape (_type_): _description_
+        """
         pass

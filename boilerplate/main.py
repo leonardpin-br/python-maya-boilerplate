@@ -133,5 +133,8 @@ def main():
     result = database.query("""SELECT * from bicycles""")
     print(result)
 
+    escaped_string = database.escape_string("Bob's Overdrive")
+    print(escaped_string)
+
 
 main()
