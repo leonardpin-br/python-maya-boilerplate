@@ -20,17 +20,21 @@ for path in sys.path:
 else:
     sys.path.append(path_to_mysql_connector)
 
-from mysql.connector import Error
 import mysql.connector
+from mysql.connector import Error
 
 
 class ConnectionDB(object):
     u"""Mimics (loosely and in a very crud way) the mysqli (PHP) class.
 
+    This class was built to access MySQL databases and depends on
+    ``mysql.connector`` (mysql-connector-python==8.0.22) to execute queries.
+
     Note:
-        It is very important to use a virtual environment.
-        It is also important to install the right version of mysql-connector-python
-        to use with Autodesk Maya 2020::
+        It is very, very, very important to **use a virtual environment.**
+
+        It is also important to install the right version of
+        mysql-connector-python to use with Autodesk Maya 2020 (and below)::
 
             pip install mysql-connector-python==8.0.22
 

@@ -107,7 +107,7 @@ def main():
 
     # CONNECTING TO A DATABASE
     # ==========================================================================
-    database = databaseobject.ConnectionDB('localhost', 'webuser', 'secretpassword', 'chain_gang')
+    database = databaseobject.connection_db.ConnectionDB('localhost', 'webuser', 'secretpassword', 'chain_gang')
     result = database.query("""SELECT * from bicycles""")
     print(database.affected_rows)
 

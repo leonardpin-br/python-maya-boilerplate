@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-u"""Package with custom user interface modules.
+u"""Package with custom modules to access databases.
+
+This package implements the Active Record design pattern.
 
 Exports:
     ``connection_db``
-
-    ``ui_functions``
 
 """
 
