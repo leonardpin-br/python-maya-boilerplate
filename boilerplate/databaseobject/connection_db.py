@@ -8,7 +8,7 @@ __link__ = u"https://www.leonardopinheiro.net"
 import os
 import sys
 
-# Not necessary for execution, but necessary for documentation.
+# It is necessary to add 'site-packages' to sys.path to find mysql. connector
 current_dir = os.path.dirname(os.path.realpath(__file__))    # databaseobject
 root_dir = os.path.dirname(os.path.dirname(current_dir))
 path_to_mysql_connector = os.path.join(

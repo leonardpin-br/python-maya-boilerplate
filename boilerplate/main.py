@@ -6,7 +6,7 @@ This is the file to run from Autodesk Maya. It is advisable to create a shelf
 button to run this app from there.
 
 Example:
-    How a shelf button should be written::
+    How a shelf button can be written::
 
         # -*- coding: utf-8 -*-
         u'''Maya shelf button for this app to run.
@@ -17,7 +17,7 @@ Example:
 
         import sys
 
-        module_path = 'E:\\cloud\\Backup\\Libraries\\scripts\\maya\\Boilerplate\\boilerplate'
+        module_path = 'E:\\\\cloud\\\\Backup\\\\Libraries\\\\scripts\\\\maya\\\\Boilerplate\\\\boilerplate'
 
         # Includes the module path in sys.path if it is not already there:
         for path in sys.path:
