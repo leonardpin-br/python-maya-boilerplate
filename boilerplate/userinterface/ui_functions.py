@@ -3,17 +3,12 @@ u"""Usefull functions for the user interface modules.
 
 """
 
-import os
-
-
+__all__ = ['build_ui_qss_filenames']
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
-
-__all__ = [
-    'build_ui_qss_filenames'
-]
+import os
 
 
 def build_ui_qss_filenames(python_ui_file):

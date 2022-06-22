@@ -106,6 +106,11 @@ References:
 
 """
 
+__all__ = ['ScriptName']
+__copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
+__author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
+__link__ = u"https://www.leonardopinheiro.net"
+
 import os
 import sys
 import io
@@ -119,16 +124,6 @@ from PySide2.QtUiTools import QUiLoader
 
 import ui_functions
 import ui_resources
-
-
-__copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
-__author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
-__link__ = u"https://www.leonardopinheiro.net"
-
-
-__all__ = [
-    'ScriptName'
-]
 
 
 UI_FILE, STYLESHEET_FILE, QSS_DIR = ui_functions.build_ui_qss_filenames(

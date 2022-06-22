@@ -37,11 +37,11 @@ class ConnectionDB(object):
     References:
         `How do I connect to a MySQL Database in Python?`_
 
-        `Python and MySQL Error: No module named mysql`_
+        `Python and MySQL Error\: No module named mysql`_
 
     .. _How do I connect to a MySQL Database in Python?:
        https://stackoverflow.com/a/20959654
-    .. _Python and MySQL Error: No module named mysql:
+    .. _Python and MySQL Error\: No module named mysql:
        https://sebhastian.com/no-module-named-mysql/
 
     """

@@ -24,8 +24,6 @@ References:
 
     `Test Code Coverage`_
 
-    `Python and MySQL Error: No module named mysql`_
-
 .. _sphinx-apidoc ignoring some modules/packages:
    https://chadrick-kwag.net/sphinx-apidoc-ignoring-some-modules-packages/
 .. _Coverage.py:
