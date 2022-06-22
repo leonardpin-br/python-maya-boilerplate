@@ -34,9 +34,14 @@ class ConnectionDB(object):
         It is very, very, very important to **use a virtual environment.**
 
         It is also important to install the right version of
-        mysql-connector-python to use with Autodesk Maya 2020 (and below)::
+        mysql-connector-python to use with Autodesk Maya 2020 and below (see
+        the reference)::
 
             pip install mysql-connector-python==8.0.22
+
+        If the mysql-connector-python installed is not of the right version, it
+        will not work for accessing the database and will also create
+        an error in Sphinx build process that is hard to track.
 
     References:
         `How do I connect to a MySQL Database in Python?`_
