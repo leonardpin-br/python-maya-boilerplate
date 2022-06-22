@@ -5,23 +5,9 @@ __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
-import os
-import sys
+import database_functions
 
-# It is necessary to add 'site-packages' to sys.path to find mysql. connector
-current_dir = os.path.dirname(os.path.realpath(__file__))    # databaseobject
-root_dir = os.path.dirname(os.path.dirname(current_dir))
-path_to_mysql_connector = os.path.join(
-    root_dir, 'py27env', 'Lib', 'site-packages')
 
-for path in sys.path:
-    if path == path_to_mysql_connector:
-        break
-else:
-    sys.path.append(path_to_mysql_connector)
-
-import mysql.connector
-from mysql.connector import Error
 
 
 class ConnectionDB(object):
@@ -58,10 +44,8 @@ class ConnectionDB(object):
     affected_rows = 0
     insert_id = 0
 
-    def __init__(self, hostname, username, password, database):
-        self.connection_db = mysql.connector.connect(user=username, password=password,
-                                                     host=hostname,
-                                                     database=database)
+    def __init__(self):
+        self.connection_db = database_functions.db_connect()
 
     def query(self, sql):
         try:

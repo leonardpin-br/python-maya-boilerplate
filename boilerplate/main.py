@@ -129,7 +129,7 @@ def main():
 
     # CONNECTING TO A DATABASE
     # ==========================================================================
-    database = connection_db.ConnectionDB('localhost', 'webuser', 'secretpassword', 'chain_gang')
+    database = connection_db.ConnectionDB()
     result = database.query("""SELECT * from bicycles""")
     print(result)
 
