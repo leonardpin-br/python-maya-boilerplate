@@ -1,19 +1,41 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-u"""Entry point of the script/app.
+u"""Entry point of this script/app.
 
-This is the file to run.
+This is the file to run from Autodesk Maya. It is advisable to create a shelf
+button to run this app from there.
 
-Last modified in 2022-06-21
+Example:
+    How a shelf button should be written::
+
+        # -*- coding: utf-8 -*-
+        u'''Maya shelf button for this app to run.
+
+        This is a (Maya) shelf button example to make this code run without conflict
+        with the Sphinx's sphinx-apidoc tool.
+        '''
+
+        import sys
+
+        module_path = 'E:\\cloud\\Backup\\Libraries\\scripts\\maya\\Boilerplate\\boilerplate'
+
+        # Includes the module path in sys.path if it is not already there:
+        for path in sys.path:
+            if path == module_path:
+                break
+        else:
+            sys.path.insert(0, module_path)
+
+        import main
+        reload(main)
+
+Last modified in 2022-06-22
 
 Python version 2.7.11 (Maya 2020)
 
-Example:
-    Running unittests::
+If unit tests are in place, this is how they can be run::
 
-        $ python -m unittest discover
-
-
+    $ python -m unittest discover
 
 References:
     `sphinx-apidoc ignoring some modules/packages`_
@@ -41,7 +63,7 @@ import os
 import sys
 
 
-import databaseobject
+import databaseobject.connection_db as connection_db
 
 
 def get_subdir_full_paths(current_dir):
@@ -107,9 +129,9 @@ def main():
 
     # CONNECTING TO A DATABASE
     # ==========================================================================
-    database = databaseobject.connection_db.ConnectionDB('localhost', 'webuser', 'secretpassword', 'chain_gang')
+    database = connection_db.ConnectionDB('localhost', 'webuser', 'secretpassword', 'chain_gang')
     result = database.query("""SELECT * from bicycles""")
-    print(database.affected_rows)
+    print(result)
 
 
 main()

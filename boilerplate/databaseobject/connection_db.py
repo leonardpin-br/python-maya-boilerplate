@@ -9,8 +9,8 @@ import os
 import sys
 
 # Not necessary for execution, but necessary for documentation.
-current_dir = os.path.dirname(os.path.realpath(__file__))    # boilerplate
-root_dir = os.path.dirname(current_dir)
+current_dir = os.path.dirname(os.path.realpath(__file__))    # databaseobject
+root_dir = os.path.dirname(os.path.dirname(current_dir))
 path_to_mysql_connector = os.path.join(
     root_dir, 'py27env', 'Lib', 'site-packages')
 
