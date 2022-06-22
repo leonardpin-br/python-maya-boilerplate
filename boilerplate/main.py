@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*-
 u"""Entry point of this script/app.
 
+Last modified in 2022-06-22
+
+Python version 2.7.11 (Autodesk Maya 2018 and 2020)
+
 This is the file to run from Autodesk Maya. It is advisable to create a shelf
 button to run this app from there.
 
@@ -29,13 +33,19 @@ Example:
         import main
         reload(main)
 
-Last modified in 2022-06-22
+Note:
 
-Python version 2.7.11 (Maya 2020)
+    If unit tests are in place, this is how they can be run::
 
-If unit tests are in place, this is how they can be run::
+        $ python -m unittest discover
 
-    $ python -m unittest discover
+Note:
+    Sphinx (and its packages) **MUST** be installed in the virtual environment
+    in order to avoid import errors.
+
+    Having multiple Python versions on the machine and Sphinx installed in one
+    of them, leads to confusion and hard to track bugs. Sphinx's installation
+    must be local (in the virtual environment).
 
 References:
     `sphinx-apidoc ignoring some modules/packages`_

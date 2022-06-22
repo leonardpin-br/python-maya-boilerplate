@@ -11,5 +11,9 @@
     "qtForPython.rcc.args": [
         "-o \"${workspaceFolder}${pathSeparator}boilerplate${pathSeparator}userinterface${pathSeparator}ui_resources.py\""
     ],
-    "python.formatting.autopep8Path": "./py27env/Scripts/autopep8.exe"
+    "python.formatting.autopep8Path": "./py27env/Scripts/autopep8.exe",
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true
+    }
 }

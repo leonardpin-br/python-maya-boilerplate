@@ -21,7 +21,7 @@ pip install virtualenv
 
 virtualenv py27env
 
-souce ./py27env/Scripts/activate
+source ./py27env/Scripts/activate
 
 
 

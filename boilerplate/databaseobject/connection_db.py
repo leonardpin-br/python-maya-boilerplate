@@ -61,9 +61,21 @@ class ConnectionDB(object):
         return result
 
     def escape_string(self, string_to_escape):
-        """https://stackoverflow.com/questions/15798969/python-mysql-escape-special-characters
+        """Roughly does the same as the ``mysqli::real_escape_string`` method, that is,
+        escapes a string before sending to the database.
 
         Args:
-            string_to_escape (_type_): _description_
+            string_to_escape (str): The string to be escaped.
+
+        Returns:
+            str: The escaped string.
+
+        References:
+
+            `Escaping strings with python mysql.connector`_
+
+        .. _Escaping strings with python mysql.connector:
+           https://stackoverflow.com/a/32124096/3768670
+
         """
-        pass
+        return self.connection_db.converter.escape(string_to_escape)

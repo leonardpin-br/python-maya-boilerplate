@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-u"""A collection of database related functions to use inside this package.
+u"""A collection of database related functions.
 
 References:
     `5.1 Connecting to MySQL Using Connector/Python`_
@@ -12,7 +12,7 @@ References:
 import os
 import sys
 
-# It is necessary to add 'site-packages' to sys.path to find mysql. connector
+# It is necessary to add 'site-packages' to sys.path to find mysql.connector
 current_dir = os.path.dirname(os.path.realpath(__file__))    # databaseobject
 root_dir = os.path.dirname(os.path.dirname(current_dir))
 path_to_mysql_connector = os.path.join(
@@ -31,7 +31,7 @@ import db_credentials
 
 
 def confirm_db_connect(connection):
-    u"""Not implemented. Following the `MySQL documentation`_.
+    u"""Not implemented, following the `MySQL documentation`_.
 
     .. _MySQL documentation:
        https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html
@@ -42,7 +42,17 @@ def confirm_db_connect(connection):
 def db_connect():
     u"""Establishes the connection with the MySQL database.
 
-    If the connection is not successful, shows an error message.
+    If the connection is not successful, raises an error and shows the message.
+
+    Returns:
+        MySQLConnection: A MySQLConnection object.
+
+    Raises:
+        ER_ACCESS_DENIED_ERROR: Raised by the MySQLConnection object if the
+            access to the database was denied.
+        ER_BAD_DB_ERROR: Raised by the MySQLConnection object if the database
+            does not exist.
+        Error: Any other error raised by the MySQLConnection object.
 
     Note:
         Sphinx shows a different (**wrong**) error message than is implemented here::
@@ -54,9 +64,9 @@ def db_connect():
 
     References:
 
-        `MySQL documentation`_
+        `5.1 Connecting to MySQL Using Connector/Python`_
 
-    .. _MySQL documentation:
+    .. _5.1 Connecting to MySQL Using Connector/Python:
        https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html
 
     """
