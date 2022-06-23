@@ -16,14 +16,14 @@ class ConnectionDB(object):
     This class was built to access MySQL databases and depends on
     ``mysql.connector`` (mysql-connector-python==8.0.22) to execute queries.
 
-    Note:
-        It is very, very, very important to **use a virtual environment.**
+    Warning:
+        It is very important to **use a virtual environment.**
 
         It is also important to install the right version of
         mysql-connector-python to use with Autodesk Maya 2020 and below (see
         the reference)::
 
-            pip install mysql-connector-python==8.0.22
+            $ pip install mysql-connector-python==8.0.22
 
         If the mysql-connector-python installed is not of the right version, it
         will not work for accessing the database and will also create
@@ -34,10 +34,14 @@ class ConnectionDB(object):
 
         `Python and MySQL Error\: No module named mysql`_
 
+        `3.7.4. Admonitions`_
+
     .. _How do I connect to a MySQL Database in Python?:
        https://stackoverflow.com/a/20959654
     .. _Python and MySQL Error\: No module named mysql:
        https://sebhastian.com/no-module-named-mysql/
+    .. _3.7.4. Admonitions:
+       https://sphinx-rtd-theme.readthedocs.io/en/stable/demo/demo.html#admonitions
 
     """
 
@@ -61,8 +65,9 @@ class ConnectionDB(object):
         return result
 
     def escape_string(self, string_to_escape):
-        """Roughly does the same as the ``mysqli::real_escape_string`` method, that is,
-        escapes a string before sending to the database.
+        """Roughly does the same as the ``mysqli::real_escape_string`` method,
+        that is, escapes a string. It is meant to be used before sending it to
+        the database.
 
         Args:
             string_to_escape (str): The string to be escaped.

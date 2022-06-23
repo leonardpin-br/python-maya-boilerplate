@@ -54,13 +54,14 @@ def db_connect():
             does not exist.
         Error: Any other error raised by the MySQLConnection object.
 
-    Note:
-        Sphinx shows a different (**wrong**) error message than is implemented here::
+    Error:
+        Sphinx shows a different (**wrong**) error message than is implemented
+        here::
 
             UnboundLocalError: local variable 'connection_db' referenced before assignment
 
-        Autodesk Maya 2020 shows the correct error message and the same wrong
-        one as Sphinx.
+        Autodesk Maya 2018 and 2020 show the correct error message and the same
+        wrong one as Sphinx.
 
     References:
 

@@ -10,6 +10,13 @@ These are the reasons to keep the credentials in a separate file:
 """
 
 DB_SERVER = 'localhost'
+"""str: The address of the database server."""
+
 DB_USER = 'username'
+"""str: The username to access the database server."""
+
 DB_PASS = 'userpassword'
+"""str: The password to access the database server."""
+
 DB_NAME = 'databasename'
+"""str: The database name."""

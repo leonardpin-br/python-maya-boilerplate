@@ -12,7 +12,7 @@
   "scripts": {
     "clear": "bash ./scripts/clearProject.sh",
 
-    "build:source:doc": "sphinx-apidoc --force -o ./docs/sphinx/source ./boilerplate",
+    "build:source:doc": "sphinx-apidoc --force -o ./docs/sphinx/source ./boilerplate ./boilerplate/databaseobject/db_credentials.py",
     "build:html:doc": "cd ./docs/sphinx && make clean && make html && cd .. && cd ..",
 	"build:doc": "npm run build:source:doc && npm run build:html:doc",
 	"watch:doc": "nodemon --ext py --watch ./boilerplate --exec \"npm run build:doc\"",

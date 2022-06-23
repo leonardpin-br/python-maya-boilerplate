@@ -34,18 +34,33 @@ Example:
         reload(main)
 
 Note:
-
     If unit tests are in place, this is how they can be run::
 
         $ python -m unittest discover
 
-Note:
+Important:
     Sphinx (and its packages) **MUST** be installed in the virtual environment
     in order to avoid import errors.
 
     Having multiple Python versions on the machine and Sphinx installed in one
-    of them, leads to confusion and hard to track bugs. Sphinx's installation
-    must be local (in the virtual environment).
+    of them, leads to confusion and hard to track bugs.
+
+Note:
+    How to generate the requirements.txt::
+
+        $ pip freeze > requirements.txt
+
+    How to install packages from requirements.txt::
+
+        $ pip install -r requirements.txt
+
+Note:
+    To exclude certain modules from being documented, it is necessary to pass
+    them as arguments to ``sphinx-apidoc``::
+
+        sphinx-apidoc --force -o ./docs/sphinx/source ./boilerplate ./boilerplate/databaseobject/db_credentials.py
+
+    The example above is in the **package.json** file as the ``build:source:doc`` script.
 
 References:
     `sphinx-apidoc ignoring some modules/packages`_
@@ -56,6 +71,10 @@ References:
 
     `Test Code Coverage`_
 
+    `Python Sphinx exclude patterns`_
+
+    `sphinx-apidoc`_
+
 .. _sphinx-apidoc ignoring some modules/packages:
    https://chadrick-kwag.net/sphinx-apidoc-ignoring-some-modules-packages/
 .. _Coverage.py:
@@ -64,6 +83,10 @@ References:
    https://coverage.readthedocs.io/en/6.3.2/config.html#configuration-reference
 .. _Test Code Coverage:
    https://cpske.github.io/ISP/testing/code-coverage
+.. _Python Sphinx exclude patterns:
+   https://stackoverflow.com/a/43868129
+.. _sphinx-apidoc:
+   https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html
 
 
 """
