@@ -164,7 +164,9 @@ def main():
     # ==========================================================================
     database = connection_db.ConnectionDB()
     result = database.query("""SELECT * from bicycles""")
-    print(result)
+    print("BRAND: {}".format(result[0]['brand']))
+
+
 
     escaped_string = database.escape_string("Bob's Overdrive")
     print(escaped_string)

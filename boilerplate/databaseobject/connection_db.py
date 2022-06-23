@@ -5,7 +5,6 @@ __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
-import re
 
 import database_functions
 
@@ -52,12 +51,28 @@ class ConnectionDB(object):
         self.connection_db = database_functions.db_connect()
 
     def query(self, sql):
+        """Performs a query on the database
+
+        Args:
+            sql (str): The query to be executed
+
+        Returns:
+            list[dict]: A list of dictionaries with all records or an empty
+            list.
+
+        References:
+            `10.6.4 cursor.MySQLCursorDict Class`_
+
+        .. _10.6.4 cursor.MySQLCursorDict Class:
+           https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursordict.html
+        """
         try:
-            cursor = self.connection_db.cursor()
+            cursor = self.connection_db.cursor(dictionary=True)
             cursor.execute(sql)
             self.affected_rows = cursor.rowcount
             self.insert_id = cursor.lastrowid
             result = cursor.fetchall()
+            cursor.close()
 
         finally:
             self.connection_db.close()
