@@ -168,8 +168,8 @@ def main():
 
 
 
-    escaped_string = database.escape_string("Bob's Overdrive")
-    print(escaped_string)
+    # escaped_string = database.escape_string("Bob's Overdrive")
+    # print(escaped_string)
 
 
 main()

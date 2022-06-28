@@ -50,8 +50,8 @@ def db_connect():
     Raises:
         ER_ACCESS_DENIED_ERROR: Raised by the MySQLConnection object if the
             access to the database was denied.
-        ER_BAD_DB_ERROR: Raised by the MySQLConnection object if the database
-            does not exist.
+        ER_DBACCESS_DENIED_ERROR: Raised by the MySQLConnection object if the
+            database does not exist.
         Error: Any other error raised by the MySQLConnection object.
 
     Error:
@@ -67,8 +67,12 @@ def db_connect():
 
         `5.1 Connecting to MySQL Using Connector/Python`_
 
+        `Shared MariaDB/MySQL error codes`_
+
     .. _5.1 Connecting to MySQL Using Connector/Python:
        https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html
+    .. _Shared MariaDB/MySQL error codes:
+       https://mariadb.com/kb/en/mariadb-error-codes/#shared-mariadbmysql-error-codes
 
     """
 
@@ -77,12 +81,16 @@ def db_connect():
                                                 host=db_credentials.DB_SERVER,
                                                 database=db_credentials.DB_NAME)
 
+        return connection_db
+
     except mysql.connector.Error as err:
+
+        # err.errno means the error code (number).
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print("\n\n===========================================================================================\n")
             print("Error:\nSomething is wrong with your user name or password.\n")
             print("===========================================================================================\n\n")
-        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+        elif err.errno == errorcode.ER_DBACCESS_DENIED_ERROR:
             print("\n\n===========================================================================================\n")
             print("\n\nError:\nDatabase does not exist.\n\n")
             print("===========================================================================================\n\n")
@@ -91,4 +99,4 @@ def db_connect():
             print(err)
             print("===========================================================================================\n\n")
 
-    return connection_db
+
