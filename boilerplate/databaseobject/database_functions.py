@@ -9,6 +9,7 @@ References:
 
 """
 
+
 import os
 import sys
 
@@ -27,6 +28,7 @@ else:
 import mysql.connector
 from mysql.connector import errorcode
 
+import shared
 import db_credentials
 
 
@@ -87,16 +89,11 @@ def db_connect():
 
         # err.errno means the error code (number).
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print("\n\n===========================================================================================\n")
-            print("Error:\nSomething is wrong with your user name or password.\n")
-            print("===========================================================================================\n\n")
+            shared.print_error_message(
+                "Something is wrong with your username or password.")
+
         elif err.errno == errorcode.ER_DBACCESS_DENIED_ERROR:
-            print("\n\n===========================================================================================\n")
-            print("\n\nError:\nDatabase does not exist.\n\n")
-            print("===========================================================================================\n\n")
+            shared.print_error_message("Database does not exist.")
+
         else:
-            print("\n\n===========================================================================================\n")
-            print(err)
-            print("===========================================================================================\n\n")
-
-
+            shared.print_error_message(err)

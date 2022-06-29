@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 u"""Entry point of this script/app.
 
-Last modified in 2022-06-22
+Last modified in 2022-06-29
 
 Python version 2.7.11 (Autodesk Maya 2018 and 2020)
 
@@ -95,32 +95,8 @@ References:
 import os
 import sys
 
-
-import databaseobject.connection_db as connection_db
-
-
-def get_subdir_full_paths(current_dir):
-
-    # Will store the full paths of the immediate subdirectories
-    # https://stackoverflow.com/questions/973473/getting-a-list-of-all-subdirectories-in-the-current-directory
-    subdir_full_paths = []
-    subdir_names = next(os.walk(current_dir))[1]
-    for directory in subdir_names:
-        subdir_full_paths.append(os.path.join(current_dir, directory))
-
-    return subdir_full_paths
-
-
-def print_sys_path():
-    u"""Print every path in sys.path.
-
-    Returns:
-        bool: The returned value is always True.
-    """
-    for path in sys.path:
-        print(path)
-
-    return True
+import shared
+import databaseobject
 
 
 def untested_function():
@@ -162,14 +138,13 @@ def main():
 
     # CONNECTING TO A DATABASE
     # ==========================================================================
-    database = connection_db.ConnectionDB()
+    database = databaseobject.ConnectionDB()
     result = database.query("""SELECT * from bicycles""")
     print("BRAND: {}".format(result[0]['brand']))
 
-
-
     # escaped_string = database.escape_string("Bob's Overdrive")
     # print(escaped_string)
+
 
 
 main()

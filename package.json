@@ -1,14 +1,14 @@
 {
   "name": "python-maya-boilerplate",
   "version": "1.0.0",
-  "description": "A boilerplate for creating Python scripts for Autodesk Maya",
+  "description": "A boilerplate for creating Python applications for Autodesk Maya",
   "main": "index.js",
   "directories": {
     "doc": "docs"
   },
   "keywords": [],
   "author": "Leonardo Pinheiro",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "clear": "bash ./scripts/clearProject.sh",
 
