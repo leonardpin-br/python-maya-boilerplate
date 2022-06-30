@@ -5,8 +5,8 @@ u"""Usefull functions available to other packages in this project.
 
 __all__ = [
     'get_subdir_full_paths',
-    'print_sys_path',
-    'print_error_message'
+    'print_error_message',
+    'print_sys_path'
 ]
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
@@ -55,14 +55,6 @@ def get_subdir_full_paths(current_dir):
     return subdir_full_paths
 
 
-def print_sys_path():
-    u"""Prints every path in ``sys.path``.
-
-    """
-    for path in sys.path:
-        print(path)
-
-
 def print_error_message(error_message):
     u"""Prints a formatted (and easy to read in the console) error message.
 
@@ -93,3 +85,11 @@ def print_error_message(error_message):
     print('{caller_function}(): {error_message}'.format(caller_function=caller_function, error_message=error_message))
     print("")
     print("================================================================================================\n\n")
+
+
+def print_sys_path():
+    u"""Prints every path in ``sys.path``.
+
+    """
+    for path in sys.path:
+        print(path)
