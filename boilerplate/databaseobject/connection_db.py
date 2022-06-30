@@ -51,7 +51,7 @@ class ConnectionDB(object):
         self.connection_db = database_functions.db_connect()
 
     def query(self, sql):
-        """Performs a query on the database
+        u"""Performs a query on the database
 
         Args:
             sql (str): The query to be executed
@@ -80,7 +80,7 @@ class ConnectionDB(object):
         return result
 
     def escape_string(self, string_to_escape):
-        """Roughly does the same as the ``mysqli::real_escape_string`` method,
+        u"""Roughly does the same as the ``mysqli::real_escape_string`` method,
         that is, escapes a string. It is meant to be used before sending it to
         the database.
 
