@@ -13,22 +13,12 @@ References:
 import os
 import sys
 
-# It is necessary to add 'site-packages' to sys.path to find mysql.connector
-current_dir = os.path.dirname(os.path.realpath(__file__))    # databaseobject
-root_dir = os.path.dirname(os.path.dirname(current_dir))
-path_to_mysql_connector = os.path.join(
-    root_dir, 'py27env', 'Lib', 'site-packages')
-
-for path in sys.path:
-    if path == path_to_mysql_connector:
-        break
-else:
-    sys.path.append(path_to_mysql_connector)
+import shared
+shared.add_site_packages_to_sys_path(__file__)
 
 import mysql.connector
 from mysql.connector import errorcode
 
-import shared
 import db_credentials
 
 

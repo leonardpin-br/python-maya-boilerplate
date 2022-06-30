@@ -4,6 +4,7 @@ u"""Usefull functions available to other packages in this project.
 """
 
 __all__ = [
+    'add_site_packages_to_sys_path',
     'get_subdir_full_paths',
     'print_error_message',
     'print_sys_path'
@@ -15,6 +16,37 @@ __link__ = u"https://www.leonardopinheiro.net"
 import os
 import sys
 import inspect
+
+
+def add_site_packages_to_sys_path(path_to_module, venv_folder_name='py27env'):
+    """Adds the site-packages folder to sys.path.
+
+    Args:
+        path_to_module (str): The full path to the module calling this function.
+        venv_folder_name (str, optional): The virtual environment's folder name.
+            Defaults to 'py27env'.
+
+    Example:
+        How to call this function::
+
+            import shared
+            shared.add_site_packages_to_sys_path(__file__)
+
+            # The package inside <project_root>/py27env/Lib/site-packages folder.
+            import mysql.connector
+    """
+
+    # It is necessary to add 'site-packages' to sys.path to find mysql.connector
+    current_dir = os.path.dirname(os.path.realpath(path_to_module))
+    root_dir = os.path.dirname(os.path.dirname(current_dir))
+    path_to_package = os.path.join(
+        root_dir, venv_folder_name, 'Lib', 'site-packages')
+
+    for path in sys.path:
+        if path == path_to_package:
+            break
+    else:
+        sys.path.append(path_to_package)
 
 
 def get_subdir_full_paths(current_dir):
