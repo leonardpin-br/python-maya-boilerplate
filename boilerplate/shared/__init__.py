@@ -4,6 +4,8 @@ u"""Package with useful functions that are shared by other packages.
 Exports:
     ``functions``
 
+    ``validation_functions``
+
 Warning:
     The way of importing::
 
@@ -15,6 +17,8 @@ Warning:
 
     Still, it is not recommended. It is advisable to write::
 
+        # Yes, the package name.
+        # The module name inside the package is not necessary.
         <package>.function_name()
 
     Here, inside ``__init__.py``, it is a good practice, though.
@@ -27,7 +31,7 @@ Note:
     is the construction below inside ``__init__.py``::
 
         __all__ = (functions.__all__ +
-                    <package>.__all__)
+                    <module>.__all__)
 
     This is how it is done in this boilerplate's package::
 
@@ -37,7 +41,7 @@ Note:
         __all__ = (example_classes.__all__)
 
 Note:
-    Every file should have a list of what is being "exported"::
+    Every file (module) should have a list of what is being "exported"::
 
         __all__ = [
             'ExampleSuperclass',
@@ -47,6 +51,8 @@ Note:
 """
 
 from . functions import *
+from . validation_functions import *
 
 
-__all__ = (functions.__all__)
+__all__ = (functions.__all__ +
+           validation_functions.__all__)

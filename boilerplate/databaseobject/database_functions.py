@@ -92,12 +92,7 @@ def db_connect():
 
 
 def db_disconnect(connection):
-    u"""Not implemented, following the `MySQL documentation`_.
-
-    .. _MySQL documentation:
-       https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html
+    u"""Closes the database connection.
     """
-    # if is_set(connection):
-    #     connection.close()
-
-    pass
+    if shared.is_set(connection):
+        connection.close()

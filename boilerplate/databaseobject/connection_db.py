@@ -118,6 +118,9 @@ class ConnectionDB(object):
 
         # Closes the cursor and the connection.
         cursor.close()
+
+        # Chose not to use this function because it is slow.
+        # database_functions.db_disconnect(self.connection_db)
         self.connection_db.close()
 
         return result
