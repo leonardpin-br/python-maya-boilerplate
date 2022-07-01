@@ -12,27 +12,46 @@ __link__ = u"https://www.leonardopinheiro.net"
 
 
 def is_set(*args):
-    """Mimics loosely the behaviour of the PHP function isset().
+    """Mimics loosely the behavior of the PHP function isset().
+
+    Determine if a variable is declared and is different than None.
 
     Args:
         *args: Variable length argument list.
 
     Returns:
-        bool: True if the variable(s) is(are) set. False otherwise.
+        bool: Returns True if variable exists and is not None. False otherwise.
 
     References:
-
         `Determine if variable is defined in Python [duplicate]`_
+
+        `not None test in Python [duplicate]`_
+
+        `Null in Python: What is None in Python`_
 
     .. _Determine if variable is defined in Python [duplicate]:
        https://stackoverflow.com/a/1592578
+    .. _not None test in Python [duplicate]:
+       https://stackoverflow.com/a/3965129
+    .. _Null in Python\: What is None in Python:
+       https://appdividend.com/2022/07/01/python-null/
 
     """
 
     for variable in args:
         try:
             variable
+
+        # The variable was NOT defined.
         except NameError:
             return False
+
+        # The variable was defined!
         else:
-            return True
+
+            # Checks if the variable is None.
+            if variable is None:
+                return False
+
+            else:
+                return True
