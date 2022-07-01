@@ -9,7 +9,6 @@ References:
 
 """
 
-
 import os
 import sys
 
@@ -81,9 +80,24 @@ def db_connect():
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             shared.print_error_message(
                 "Something is wrong with your username or password.")
+            raise
 
         elif err.errno == errorcode.ER_DBACCESS_DENIED_ERROR:
             shared.print_error_message("Database does not exist.")
+            raise
 
         else:
             shared.print_error_message(err)
+            raise
+
+
+def db_disconnect(connection):
+    u"""Not implemented, following the `MySQL documentation`_.
+
+    .. _MySQL documentation:
+       https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html
+    """
+    # if is_set(connection):
+    #     connection.close()
+
+    pass

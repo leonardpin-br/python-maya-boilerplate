@@ -142,8 +142,8 @@ def main():
     result = database.query("""SELECT * from bicycles""")
     print("BRAND: {}".format(result[0]['brand']))
 
-    escaped_string = database.escape_string("Bob's Overdrive")
-    print(escaped_string)
+    # escaped_string = database.escape_string("Bob's Overdrive")
+    # print(escaped_string)
 
 
 

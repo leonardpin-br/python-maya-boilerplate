@@ -6,6 +6,11 @@ __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
 
+import shared
+
+import mysql.connector
+from mysql.connector import errorcode
+
 import database_functions
 
 
@@ -48,6 +53,7 @@ class ConnectionDB(object):
     insert_id = 0
 
     def __init__(self):
+        # There is error checking inside the db_connect() function.
         self.connection_db = database_functions.db_connect()
 
     def query(self, sql):
@@ -60,22 +66,59 @@ class ConnectionDB(object):
             list[dict]: A list of dictionaries with all records or an empty
             list.
 
+        Raises:
+            ER_NO_SUCH_TABLE: Raised by the MySQLConnection object if the
+                table does not exist.
+            ER_BAD_FIELD_ERROR: Raised by the MySQLConnection object if the
+                column does not exist.
+            Error: Any other error raised by the MySQLConnection object.
+
         References:
             `10.6.4 cursor.MySQLCursorDict Class`_
 
+            `10.12.2 errors.Error Exception`_
+
+            `MariaDB Error Codes`_
+
         .. _10.6.4 cursor.MySQLCursorDict Class:
            https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursordict.html
-        """
-        try:
-            cursor = self.connection_db.cursor(dictionary=True)
-            cursor.execute(sql)
-            self.affected_rows = cursor.rowcount
-            self.insert_id = cursor.lastrowid
-            result = cursor.fetchall()
-            cursor.close()
+        .. _10.12.2 errors.Error Exception:
+           https://dev.mysql.com/doc/connector-python/en/connector-python-api-errors-error.html
+        .. _MariaDB Error Codes:
+           https://mariadb.com/kb/en/mariadb-error-codes/
 
-        finally:
-            self.connection_db.close()
+        """
+
+        # If the execution got to this line, it passed the error checking in
+        # db_connect().
+        cursor = self.connection_db.cursor(dictionary=True)
+
+        try:
+            cursor.execute(sql)
+
+        except mysql.connector.Error as err:
+
+            # err.errno means the error code (number).
+            if err.errno == errorcode.ER_NO_SUCH_TABLE:
+                shared.print_error_message("Database table does not exist.")
+                raise
+
+            if err.errno == errorcode.ER_BAD_FIELD_ERROR:
+                shared.print_error_message("Column does not exist in table.")
+                raise
+
+            else:
+                shared.print_error_message(err)
+                raise
+
+        # If there was no error in the execution:
+        self.affected_rows = cursor.rowcount
+        self.insert_id = cursor.lastrowid
+        result = cursor.fetchall()
+
+        # Closes the cursor and the connection.
+        cursor.close()
+        self.connection_db.close()
 
         return result
 
