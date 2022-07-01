@@ -22,7 +22,7 @@ class ConnectionDB(object):
         mysql-connector-python to use with Autodesk Maya 2020 and below (see
         the reference)::
 
-            $ pip install mysql-connector-python==8.0.22
+            pip install mysql-connector-python==8.0.22
 
         If the mysql-connector-python installed is not of the right version, it
         will not work for accessing the database and will also create
@@ -51,10 +51,10 @@ class ConnectionDB(object):
         self.connection_db = database_functions.db_connect()
 
     def query(self, sql):
-        u"""Performs a query on the database
+        u"""Performs a query on the database.
 
         Args:
-            sql (str): The query to be executed
+            sql (str): The query to be executed.
 
         Returns:
             list[dict]: A list of dictionaries with all records or an empty

@@ -36,7 +36,7 @@ Example:
 Note:
     If unit tests are in place, this is how they can be run::
 
-        $ python -m unittest discover
+        python -m unittest discover
 
 Important:
     Sphinx (and its packages) **MUST** be installed in the virtual environment
@@ -48,11 +48,11 @@ Important:
 Note:
     How to generate the requirements.txt::
 
-        $ pip freeze > requirements.txt
+        pip freeze > requirements.txt
 
     How to install packages from requirements.txt::
 
-        $ pip install -r requirements.txt
+        pip install -r requirements.txt
 
 Note:
     To exclude certain modules from being documented, it is necessary to pass

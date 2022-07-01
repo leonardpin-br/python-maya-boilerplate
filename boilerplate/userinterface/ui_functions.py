@@ -12,7 +12,7 @@ import os
 
 
 def build_ui_qss_filenames(python_ui_file):
-    """Builds the filenames of the ``.ui``, ``.qss`` files to be used in the
+    u"""Builds the filenames of the ``.ui``, ``.qss`` files to be used in the
     class that is going to create the user interface.
 
     Args:

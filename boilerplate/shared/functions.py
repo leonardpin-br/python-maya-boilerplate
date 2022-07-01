@@ -19,7 +19,7 @@ import inspect
 
 
 def add_site_packages_to_sys_path(path_to_module, venv_folder_name='py27env'):
-    """Adds the site-packages folder to sys.path.
+    u"""Adds the site-packages folder to sys.path.
 
     Args:
         path_to_module (str): The full path to the module calling this function.
