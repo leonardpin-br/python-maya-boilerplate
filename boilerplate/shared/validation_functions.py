@@ -4,15 +4,19 @@ u"""Usefull validation functions available to other packages in this project.
 """
 
 __all__ = [
-    'is_set'
+    'is_set',
+    'list_equals'
 ]
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __link__ = u"https://www.leonardopinheiro.net"
 
+# Utility functions (used by the validation functions)
+# ==============================================================================
+
 
 def is_set(*args):
-    """Mimics loosely the behavior of the PHP function isset().
+    u"""Mimics loosely the behavior of the PHP function isset().
 
     Determine if a variable is declared and is different than None.
 
@@ -55,3 +59,30 @@ def is_set(*args):
 
             else:
                 return True
+
+
+def list_equals(first_list, second_list):
+    u"""Compare two lists (arrays).
+
+    Args:
+        first_list (list): The first list (array).
+        second_list (list): The second list (array).
+
+    Returns:
+        bool: True if they are equal. False otherwise.
+
+    References:
+        `How to compare two lists in python?`_
+
+    .. _How to compare two lists in python?:
+       https://stackoverflow.com/a/3726365
+
+    """
+
+    if first_list == second_list:
+        return True
+
+    return False
+
+# Validation functions
+# ==============================================================================
