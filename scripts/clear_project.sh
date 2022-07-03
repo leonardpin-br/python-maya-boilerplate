@@ -4,12 +4,44 @@
 # https://www.cyberciti.biz/faq/how-to-find-and-delete-directory-recursively-on-linux-or-unix-like-system/
 # https://stackoverflow.com/questions/2135770/bash-for-loop-with-wildcards-and-hidden-files
 
-clearProject() {
+include() {
+	# MY_DIR corresponde ao diretório do arquivo principal.
+	MY_DIR=$(dirname $(readlink -f $0))
+	. $MY_DIR/$1
+}
+
+# Included files
+include "clear_cache.sh"
+
+remove_almost_everything_inside_folder() {
+
+    local GITIGNORE=".gitignore"
+
+    # Enable working with hidden files.
+    shopt -s dotglob
+    for folder_item in "$1"/*; do
+
+        # Keeps the hidden file (.gitignore)
+        if [ -f $GITIGNORE ]; then
+            continue
+        fi
+
+        rm -f $folder_item
+
+    done
+    # Disable working with hidden files.
+    shopt -u dotglob
+
+}
+
+clear_project() {
 
     # Clear the terminal window.
     clear
 
     # Folders
+    # --------------------------------------------------------------------------
+
     local DOCS="./docs"
 
     local COVERAGE="$DOCS/coverage"
@@ -22,11 +54,11 @@ clearProject() {
     local _TEMPLATES="$SOURCE/_templates"
 
     local NODE_MODULES="./node_modules"
-    local __PYCACHE__="__pycache__"
-    local PYC="*.pyc"
 
     # Files
-    local GITIGNORE="$HTMLCOV/.gitignore"
+    # --------------------------------------------------------------------------
+
+    local GITIGNORE=".gitignore"
     local DOT_COVERAGE="$COVERAGE/.coverage"
 
     local MAKE_BAT="$SPHINX/make.bat"
@@ -35,6 +67,7 @@ clearProject() {
     local INDEX_RST="$SOURCE/index.rst"
 
     # Works the ./docs folder.
+    # --------------------------------------------------------------------------
     for item in "$DOCS"/*; do
 
         # Works the ./docs/coverage folder.
@@ -46,12 +79,8 @@ clearProject() {
 
                 # Clear folder ./docs/coverage/htmlcov
                 if [ $coverageItem = $HTMLCOV ]; then
-                    rm -rf "$HTMLCOV"/*
 
-                    # Clear the hidden file (.gitignore)
-                    if [ -f $GITIGNORE ]; then
-                        rm -f "$GITIGNORE"
-                    fi
+                    remove_almost_everything_inside_folder "$HTMLCOV"
 
                 # If it is .coverage (data file)
                 elif [ $coverageItem = $DOT_COVERAGE ]; then
@@ -82,12 +111,17 @@ clearProject() {
 
                         # Clear folder ./docs/sphinx/source/_static
                         if [ $sourceItem = $_STATIC ]; then
-                            rm -rf "$_STATIC"/*
+
+                            remove_almost_everything_inside_folder "$_STATIC"
 
                         # Clear folder ./docs/sphinx/source/_templates
                         elif [ $sourceItem = $_TEMPLATES ]; then
-                            rm -rf "$_TEMPLATES"/*
 
+                            remove_almost_everything_inside_folder "$_TEMPLATES"
+
+                        # Keeps the hidden file (.gitignore)
+                        elif [ $sourceItem = $GITIGNORE ]; then
+                            continue
                         # If it is ./docs/sphinx/source/conf.py
                         elif [ $sourceItem = $CONF_PY ]; then
                             continue
@@ -126,19 +160,18 @@ clearProject() {
     done
 
     # Remove folder ./node_modules
-    if [ -d $NODE_MODULES ]; then
-        rm -rf "$NODE_MODULES"
-    fi
+    # --------------------------------------------------------------------------
+    # if [ -d $NODE_MODULES ]; then
+    #     rm -rf "$NODE_MODULES"
+    # fi
 
-    # Delete all __pycache__ folders recursively from the root directory.
-    find ../ -type d -name "$__PYCACHE__" -exec rm -rf {} +
-
-    # Delete all .pyc files recursively from the root directory.
-    find ../ -type f -name "$PYC" -exec rm -rf {} +
+    # Calls the function that clears the cache.
+    # --------------------------------------------------------------------------
+    clear_cache
 
     echo -e "Project cleared."
     exit 0
 
 }
 
-clearProject
+clear_project

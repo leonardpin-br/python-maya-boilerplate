@@ -19,7 +19,7 @@ clear_cache() {
     find ./ -type f -name "${PYC}" -exec rm -rf {} +
 
     echo -e "Cache cleared."
-    exit 0
+    # exit 0
 
 }
 
