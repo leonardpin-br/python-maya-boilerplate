@@ -34,19 +34,11 @@ __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
+from boilerplate import shared
 from shared import constant
 
 
 class Bicycle(object):
-
-    brand = ''
-    model_make = ''
-    year_make = 0
-    category_make = ''
-    color_make = ''
-    description = ''
-    gender = ''
-    price = 0.0
 
     @constant
     def CATEGORIES():
@@ -90,17 +82,40 @@ class Bicycle(object):
         References:
             `How can you set class attributes from variable arguments (kwargs) in python`_
 
+            `Python - Public, Protected, Private Members`_
+
         .. _How can you set class attributes from variable arguments (kwargs) in python:
         https://stackoverflow.com/a/8187408
+        .. _Python - Public, Protected, Private Members:
+        https://www.tutorialsteacher.com/python/public-private-protected-modifiers
 
         """
+
+        # Public properties:
+        self.brand = ''
+        self.model_make = ''
+        self.year_make = 0
+        self.category_make = ''
+        self.color_make = ''
+        self.description = ''
+        self.gender = ''
+        self.price = 0.0
+
+        # Protected attributes:
+        self._weight_kg = 0.0
+        self._condition_id = 0
 
         allowed_keys = {'brand', 'model_make', 'year_make', 'category_make',
                         'color_make', 'description', 'gender', 'price'}
         self.__dict__.update((k, v)
                              for k, v in kwargs.items() if k in allowed_keys)
 
-    def weight_kg():
+    @property
+    def weight_kg(self):
+        return "{formatted_number} Kg".format(formatted_number=shared.number_format(self._weight_kg, 2))
+
+    @weight_kg.setter
+    def weight_kg(self, new_value):
         pass
         # return '{caller_function}(): {error_message}'.format(caller_function=caller_function, error_message=error_message)
 

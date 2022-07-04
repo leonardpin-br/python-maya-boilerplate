@@ -7,6 +7,7 @@ __all__ = [
     'add_site_packages_to_sys_path',
     'constant',
     'get_subdir_full_paths',
+    'number_format',
     'print_error_message',
     'print_sys_path'
 ]
@@ -17,6 +18,7 @@ __link__ = u"https://www.leonardopinheiro.net"
 import os
 import sys
 import inspect
+import locale
 
 
 def add_site_packages_to_sys_path(path_to_module, venv_folder_name='py27env'):
@@ -109,6 +111,28 @@ def get_subdir_full_paths(current_dir):
         subdir_full_paths.append(os.path.join(current_dir, directory))
 
     return subdir_full_paths
+
+
+def number_format(num, places=0):
+    u"""Mimics the PHP function number_format().
+
+    Args:
+        num (int | float): An int or a float number to be formatted with the
+            given number of decimal places.
+        places (int, optional): The number of decimal places. Defaults to 0.
+
+    Returns:
+        str: A formatted string.
+
+    References:
+        `How to convert php number_format() function to python`_
+
+    .. _How to convert php number_format() function to python:
+       https://stackoverflow.com/a/56748295
+
+    """
+
+    return locale.format_string("%.*f", (places, num), True)
 
 
 def print_error_message(error_message):
