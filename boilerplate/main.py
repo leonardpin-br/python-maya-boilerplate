@@ -151,10 +151,10 @@ def main():
     bike = appclasses.Bicycle(brand="Brand name", model_make="Model", year_make=2016, category_make="Category",
                    color_make="black", description='', gender='unisex', price=499)
 
-    print(bike.color_make)
+    print("")
     print("====================================")
     print(bike.CATEGORIES)
-    # bike.CATEGORIES = 'New value'
+    print(bike.CONDITION_OPTIONS[2]) # Decent
 
 
 main()

@@ -51,10 +51,10 @@ def add_site_packages_to_sys_path(path_to_module, venv_folder_name='py27env'):
 
 
 def constant(f):
-    """Mimics the behaviour of constants in other languages.
+    u"""Decorator that allows the behaviour of constants in other languages.
 
     Args:
-        f (_type_): _description_5555555555555555555555555555555555555555555555
+        f (Any): The variable to be treated as constant by this decorator.
 
     References:
         `How do I create a constant in Python?`_
@@ -65,6 +65,7 @@ def constant(f):
     """
 
     def fset(self, value):
+        print_error_message("Constants shoud not receive a new value.")
         raise TypeError
 
     def fget(self):

@@ -50,14 +50,36 @@ class Bicycle(object):
 
     @constant
     def CATEGORIES():
+        u"""You cannot declare a variable or value as constant in Python.
+
+        To indicate to programmers that a variable is a constant, one usually
+        writes it in upper case.
+
+        If the behaviour of a constant is needed, the decorator ``@constant``
+        (created in the ``shared.functions.constant`` function) should be used.
+
+        References:
+            `How do I create a constant in Python?`_
+
+        .. _How do I create a constant in Python?:
+        https://stackoverflow.com/a/2688086
+
+        """
         return ['Road', 'Mountain', 'Hybrid', 'Cruiser', 'City', 'BMX']
-    """You cannot declare a variable or value as constant in Python.
 
-    To indicate to programmers that a variable is a constant, one usually writes
-    it in upper case.
-    """
+    @constant
+    def GENDERS():
+        return ['Mens', 'Womens', 'Unisex']
 
-    GENDERS = ['Mens', 'Womens', 'Unisex']
+    @constant
+    def CONDITION_OPTIONS():
+        return {
+            1: 'Beat up',
+            2: 'Decent',
+            3: 'Good',
+            4: 'Great',
+            5: 'Like New'
+        }
 
     def __init__(self, **kwargs):
         u"""Creates an instance of Bicycle.
