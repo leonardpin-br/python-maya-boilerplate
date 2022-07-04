@@ -7,6 +7,7 @@ __link__ = u"https://www.leonardopinheiro.net"
 
 
 import shared
+shared.add_site_packages_to_sys_path(__file__)
 
 import mysql.connector
 from mysql.connector import errorcode

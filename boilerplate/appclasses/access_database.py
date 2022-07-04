@@ -27,50 +27,56 @@ References:
 
 """
 
+__all__ = [
+    'Bicycle'
+]
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
-
-__all__ = [
-    'ExampleSuperclass',
-    'ExampleSubclass'
-]
+from shared import constant
 
 
-class ExampleSuperclass(object):
-    u"""Example of a superclass.
+class Bicycle(object):
+
+    brand = ''
+    model_make = ''
+    year_make = 0
+    category_make = ''
+    color_make = ''
+    description = ''
+    gender = ''
+    price = 0.0
+
+    @constant
+    def CATEGORIES():
+        return ['Road', 'Mountain', 'Hybrid', 'Cruiser', 'City', 'BMX']
+    """You cannot declare a variable or value as constant in Python.
+
+    To indicate to programmers that a variable is a constant, one usually writes
+    it in upper case.
     """
 
-    def __init__(self, any_number=10):
-        u"""Creates an instance of ExampleSuperclass.
+    GENDERS = ['Mens', 'Womens', 'Unisex']
+
+    def __init__(self, **kwargs):
+        u"""Creates an instance of Bicycle.
 
         Args:
-            any_number (int, optional): An example of parameter. Defaults to 10.
+            **kwargs: Keyword arguments with the bicycle properties.
+
+        References:
+            `How can you set class attributes from variable arguments (kwargs) in python`_
+
+        .. _How can you set class attributes from variable arguments (kwargs) in python:
+        https://stackoverflow.com/a/8187408
+
         """
 
-        self.any_number = any_number
-        u"""int: Example of a **public** property."""
-
-    def return_message(self):
-        u"""Returns an example message.
-
-        Returns:
-            str: An example message.
-        """
-        return u"The constructor of the superclass received the number: {self.any_number}.".format(self=self)
+        allowed_keys = {'brand', 'model_make', 'year_make', 'category_make',
+                        'color_make', 'description', 'gender', 'price'}
+        self.__dict__.update((k, v)
+                             for k, v in kwargs.items() if k in allowed_keys)
 
 
-class ExampleSubclass(ExampleSuperclass):
-    u"""Creates an instance of the example subclass."""
 
-    def __init__(self, any_number=10):
-        super(ExampleSubclass, self).__init__(any_number)
-
-    def greeter(self):
-        u"""Returns a greeting to the user.
-
-        Returns:
-            str: The greeting message.
-        """
-        return u"Hello from subclass!"

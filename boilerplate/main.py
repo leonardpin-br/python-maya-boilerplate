@@ -97,6 +97,7 @@ import sys
 
 import shared
 import databaseobject
+import appclasses
 
 
 def untested_function():
@@ -138,15 +139,22 @@ def main():
 
     # CONNECTING TO A DATABASE
     # ==========================================================================
-    database = databaseobject.ConnectionDB()
-    result = database.query("""SELECT * from bicycles""")
-    print("BRAND: {}".format(result[0]['brand']))
+    # database = databaseobject.ConnectionDB()
+    # result = database.query("""SELECT * from bicycles""")
+    # print("BRAND: {}".format(result[0]['brand']))
 
     # escaped_string = database.escape_string("Bob's Overdrive")
     # print(escaped_string)
 
+    # CREATING A BICYCLE
+    # ==========================================================================
+    bike = appclasses.Bicycle(brand="Brand name", model_make="Model", year_make=2016, category_make="Category",
+                   color_make="black", description='', gender='unisex', price=499)
 
-
+    print(bike.color_make)
+    print("====================================")
+    print(bike.CATEGORIES)
+    # bike.CATEGORIES = 'New value'
 
 
 main()

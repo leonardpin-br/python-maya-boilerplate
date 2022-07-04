@@ -5,6 +5,7 @@ u"""Usefull functions available to other packages in this project.
 
 __all__ = [
     'add_site_packages_to_sys_path',
+    'constant',
     'get_subdir_full_paths',
     'print_error_message',
     'print_sys_path'
@@ -47,6 +48,28 @@ def add_site_packages_to_sys_path(path_to_module, venv_folder_name='py27env'):
             break
     else:
         sys.path.append(path_to_package)
+
+
+def constant(f):
+    """Mimics the behaviour of constants in other languages.
+
+    Args:
+        f (_type_): _description_5555555555555555555555555555555555555555555555
+
+    References:
+        `How do I create a constant in Python?`_
+
+    .. _How do I create a constant in Python?:
+       https://stackoverflow.com/a/2688086
+
+    """
+
+    def fset(self, value):
+        raise TypeError
+
+    def fget(self):
+        return f()
+    return property(fget, fset)
 
 
 def get_subdir_full_paths(current_dir):
@@ -108,13 +131,14 @@ def print_error_message(error_message):
 
     # Stores the caller function of this function.
     try:
-        caller_function = inspect.stack()[1][3] # Python 2.7
+        caller_function = inspect.stack()[1][3]  # Python 2.7
     except:
-        caller_function = inspect.stack()[1].function # Python 3.5+
+        caller_function = inspect.stack()[1].function  # Python 3.5+
 
     print("\n\n================================================================================================\n")
     print("Error:")
-    print('{caller_function}(): {error_message}'.format(caller_function=caller_function, error_message=error_message))
+    print('{caller_function}(): {error_message}'.format(
+        caller_function=caller_function, error_message=error_message))
     print("")
     print("================================================================================================\n\n")
 
