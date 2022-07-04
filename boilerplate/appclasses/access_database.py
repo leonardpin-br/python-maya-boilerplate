@@ -100,5 +100,7 @@ class Bicycle(object):
         self.__dict__.update((k, v)
                              for k, v in kwargs.items() if k in allowed_keys)
 
-
+    def weight_kg():
+        pass
+        # return '{caller_function}(): {error_message}'.format(caller_function=caller_function, error_message=error_message)
 

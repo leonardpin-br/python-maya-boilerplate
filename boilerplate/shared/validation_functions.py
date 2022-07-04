@@ -24,7 +24,7 @@ def is_set(*args):
         *args: Variable length argument list.
 
     Returns:
-        bool: Returns True if variable exists and is not None. False otherwise.
+        (bool | None): Returns True if variable exists and is not None. False otherwise.
 
     References:
         `Determine if variable is defined in Python [duplicate]`_
