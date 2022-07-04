@@ -84,47 +84,30 @@ class Bicycle(object):
 
             `Python - Public, Protected, Private Members`_
 
+            `How To Check If A Key in **kwargs Exists?`_
+
         .. _How can you set class attributes from variable arguments (kwargs) in python:
         https://stackoverflow.com/a/8187408
         .. _Python - Public, Protected, Private Members:
         https://www.tutorialsteacher.com/python/public-private-protected-modifiers
+        .. _How To Check If A Key in **kwargs Exists?:
+        https://stackoverflow.com/a/12399836
 
         """
 
         # Public properties:
-        # self.brand = ''
-        # self.model_make = ''
-        # self.year_make = 0
-        # self.category_make = ''
-        # self.color_make = ''
-        # self.description = ''
-        # self.gender = ''
-        # self.price = 0.0
+        self.brand = kwargs['brand'] if 'brand' in kwargs else ''
+        self.model_make = kwargs['model_make'] if 'model_make' in kwargs else ''
+        self.year_make = kwargs['year_make'] if 'year_make' in kwargs else 0
+        self.category_make = kwargs['category_make'] if 'category_make' in kwargs else ''
+        self.color_make = kwargs['color_make'] if 'color_make' in kwargs else ''
+        self.description = kwargs['description'] if 'description' in kwargs else ''
+        self.gender = kwargs['gender'] if 'gender' in kwargs else ''
+        self.price = kwargs['price'] if 'price' in kwargs else 0
 
-        # Protected attributes:
-        self._weight_kg = 0.0
-        self._condition_id = 0
-
-        # allowed_keys = {'brand', 'model_make', 'year_make', 'category_make',
-        #                 'color_make', 'description', 'gender', 'price'}
-        # self.__dict__.update((k, v)
-        #                      for k, v in kwargs.items() if k in allowed_keys)
-
-        # Public properties:
-        self.brand = kwargs['brand'] if shared.is_set(kwargs['brand']) else ''
-        self.model_make = kwargs['model_make'] if shared.is_set(kwargs['model_make']) else ''
-        self.year_make = kwargs['year_make'] if shared.is_set(kwargs['year_make']) else 0
-        self.category_make = kwargs['category_make'] if shared.is_set(kwargs['category_make']) else ''
-        self.color_make = kwargs['color_make'] if shared.is_set(kwargs['color_make']) else ''
-        self.description = kwargs['description'] if shared.is_set(kwargs['description']) else ''
-        self.gender = kwargs['gender'] if shared.is_set(kwargs['gender']) else ''
-        self.price = kwargs['price'] if shared.is_set(kwargs['price']) else 0
-        self.weight_kg = kwargs['weight_kg'] if shared.is_set(kwargs['weight_kg']) else 0.0
-
-        # TODO
-        # This should be optional.
-        self.condition_id = kwargs['condition_id'] if shared.is_set(kwargs['condition_id']) else "Value is not set!!"
-
+        # Protected properties:
+        self._weight_kg = kwargs['weight_kg'] if 'weight_kg' in kwargs else 0.0
+        self._condition_id = kwargs['condition_id'] if 'condition_id' in kwargs else 3
 
     @property
     def weight_kg(self):
@@ -143,3 +126,19 @@ class Bicycle(object):
     def condition_id(self, value):
         self._condition_id = value
         return self._condition_id
+
+    @property
+    def weight_lbs(self):
+        result = self._weight_kg * 2.2046226218
+        formatted_str = "{weight_lbs} lbs".format(weight_lbs=shared.number_format(result, 2))
+        return formatted_str
+
+    @weight_lbs.setter
+    def weight_lbs(self, value):
+        self._weight_kg = value / 2.2046226218
+
+    def condition(self):
+        if self.condition_id > 0:
+            return self.CONDITION_OPTIONS[self.condition_id]
+        else:
+            return "Unknown"

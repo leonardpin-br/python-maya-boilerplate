@@ -91,7 +91,6 @@ References:
 
 """
 
-
 import os
 import sys
 
@@ -148,9 +147,12 @@ def main():
 
     # CREATING A BICYCLE
     # ==========================================================================
-    bike = appclasses.Bicycle(brand="Brand name", model_make="Model X", year_make=2016, category_make="Category",
-                   color_make="black", description='', gender='unisex', price=499, weight_kg=19.725, condition_id="Value")
+    bike = appclasses.Bicycle(brand='Schwinn', model_make='Cutter', year_make=2016,
+                              category_make='City', color_make='white', description='', gender='Unisex', price=587, weight_kg=18.7, condition_id=4)
 
-    print(bike.condition_id)
+    print(bike.condition())
+    bike.condition_id = 0
+    print(bike.condition())
+
 
 main()
