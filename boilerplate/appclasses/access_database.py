@@ -34,7 +34,7 @@ __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
-from boilerplate import shared
+import shared
 from shared import constant
 
 
