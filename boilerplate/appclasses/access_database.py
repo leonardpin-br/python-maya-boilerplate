@@ -92,30 +92,54 @@ class Bicycle(object):
         """
 
         # Public properties:
-        self.brand = ''
-        self.model_make = ''
-        self.year_make = 0
-        self.category_make = ''
-        self.color_make = ''
-        self.description = ''
-        self.gender = ''
-        self.price = 0.0
+        # self.brand = ''
+        # self.model_make = ''
+        # self.year_make = 0
+        # self.category_make = ''
+        # self.color_make = ''
+        # self.description = ''
+        # self.gender = ''
+        # self.price = 0.0
 
         # Protected attributes:
         self._weight_kg = 0.0
         self._condition_id = 0
 
-        allowed_keys = {'brand', 'model_make', 'year_make', 'category_make',
-                        'color_make', 'description', 'gender', 'price'}
-        self.__dict__.update((k, v)
-                             for k, v in kwargs.items() if k in allowed_keys)
+        # allowed_keys = {'brand', 'model_make', 'year_make', 'category_make',
+        #                 'color_make', 'description', 'gender', 'price'}
+        # self.__dict__.update((k, v)
+        #                      for k, v in kwargs.items() if k in allowed_keys)
+
+        # Public properties:
+        self.brand = kwargs['brand'] if shared.is_set(kwargs['brand']) else ''
+        self.model_make = kwargs['model_make'] if shared.is_set(kwargs['model_make']) else ''
+        self.year_make = kwargs['year_make'] if shared.is_set(kwargs['year_make']) else 0
+        self.category_make = kwargs['category_make'] if shared.is_set(kwargs['category_make']) else ''
+        self.color_make = kwargs['color_make'] if shared.is_set(kwargs['color_make']) else ''
+        self.description = kwargs['description'] if shared.is_set(kwargs['description']) else ''
+        self.gender = kwargs['gender'] if shared.is_set(kwargs['gender']) else ''
+        self.price = kwargs['price'] if shared.is_set(kwargs['price']) else 0
+        self.weight_kg = kwargs['weight_kg'] if shared.is_set(kwargs['weight_kg']) else 0.0
+
+        # TODO
+        # This should be optional.
+        self.condition_id = kwargs['condition_id'] if shared.is_set(kwargs['condition_id']) else "Value is not set!!"
+
 
     @property
     def weight_kg(self):
         return "{formatted_number} Kg".format(formatted_number=shared.number_format(self._weight_kg, 2))
 
     @weight_kg.setter
-    def weight_kg(self, new_value):
-        pass
-        # return '{caller_function}(): {error_message}'.format(caller_function=caller_function, error_message=error_message)
+    def weight_kg(self, value):
+        self._weight_kg = value
+        return self._weight_kg
 
+    @property
+    def condition_id(self):
+        return self._condition_id
+
+    @condition_id.setter
+    def condition_id(self, value):
+        self._condition_id = value
+        return self._condition_id

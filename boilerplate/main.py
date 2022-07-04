@@ -148,9 +148,9 @@ def main():
 
     # CREATING A BICYCLE
     # ==========================================================================
-    bike = appclasses.Bicycle(brand="Brand name", model_make="Model", year_make=2016, category_make="Category",
-                   color_make="black", description='', gender='unisex', price=499)
+    bike = appclasses.Bicycle(brand="Brand name", model_make="Model X", year_make=2016, category_make="Category",
+                   color_make="black", description='', gender='unisex', price=499, weight_kg=19.725, condition_id="Value")
 
-
+    print(bike.condition_id)
 
 main()
