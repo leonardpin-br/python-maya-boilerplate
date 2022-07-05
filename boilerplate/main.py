@@ -96,7 +96,7 @@ import sys
 
 import shared
 import databaseobject
-import appclasses
+from appclasses.access_database import Bicycle
 
 
 def untested_function():
@@ -147,12 +147,13 @@ def main():
 
     # CREATING A BICYCLE
     # ==========================================================================
-    bike = appclasses.Bicycle(brand='Schwinn', model_make='Cutter', year_make=2016,
-                              category_make='City', color_make='white', description='', gender='Unisex', price=587, weight_kg=18.7, condition_id=4)
+    # bike = Bicycle(brand='Schwinn', model_make='Cutter', year_make=2016,
+    #                category_make='City', color_make='white', description='', gender='Unisex', price=587, weight_kg=18.7, condition_id=4)
 
-    print(bike.condition())
-    bike.condition_id = 0
-    print(bike.condition())
+    sql = "SELECT * FROM bicycles"
+    result = Bicycle.database.query(sql)
+
+    print("BRAND: {brand}".format(brand=result[0]["brand"]))
 
 
 main()

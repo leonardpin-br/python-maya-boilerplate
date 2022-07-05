@@ -36,9 +36,44 @@ __link__ = u"https://www.leonardopinheiro.net"
 
 import shared
 from shared import constant
+from databaseobject.connection_db import ConnectionDB
 
 
 class Bicycle(object):
+
+    # ----- START OF ACTIVE RECORD CODE -----
+    database = ConnectionDB()
+    """An instance of ConnectionDB.
+
+    References:
+        `Static class variables and methods in Python`_
+
+    .. _Static class variables and methods in Python:
+        https://stackoverflow.com/a/68672
+    """
+
+    @staticmethod
+    def set_database(database):
+        u"""Not implemented.
+
+        Creating an instance of ConnectionDB (outside any method) allows the use
+        of the required functions.
+
+        This static method would inform this class about the connection with the
+        database.
+
+        Args:
+            database (MySQLConnection): The connection with the database.
+
+        References:
+            `How to Use the Magical @staticmethod, @classmethod, and @property Decorators in Python`_
+
+        .. _How to Use the Magical @staticmethod, @classmethod, and @property Decorators in Python:
+           https://betterprogramming.pub/how-to-use-the-magical-staticmethod-classmethod-and-property-decorators-in-python-e42dd74e51e7
+        """
+        pass
+
+    # ----- START OF ACTIVE RECORD CODE -----
 
     @constant
     def CATEGORIES():
@@ -54,7 +89,7 @@ class Bicycle(object):
             `How do I create a constant in Python?`_
 
         .. _How do I create a constant in Python?:
-        https://stackoverflow.com/a/2688086
+           https://stackoverflow.com/a/2688086
 
         """
         return ['Road', 'Mountain', 'Hybrid', 'Cruiser', 'City', 'BMX']
@@ -87,11 +122,11 @@ class Bicycle(object):
             `How To Check If A Key in **kwargs Exists?`_
 
         .. _How can you set class attributes from variable arguments (kwargs) in python:
-        https://stackoverflow.com/a/8187408
+           https://stackoverflow.com/a/8187408
         .. _Python - Public, Protected, Private Members:
-        https://www.tutorialsteacher.com/python/public-private-protected-modifiers
+           https://www.tutorialsteacher.com/python/public-private-protected-modifiers
         .. _How To Check If A Key in **kwargs Exists?:
-        https://stackoverflow.com/a/12399836
+           https://stackoverflow.com/a/12399836
 
         """
 
