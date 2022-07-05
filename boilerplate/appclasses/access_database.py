@@ -73,6 +73,21 @@ class Bicycle(object):
         """
         pass
 
+    @classmethod
+    def find_by_sql(cls, sql):
+        # result = cls.database.query(sql)
+
+        # if
+
+        # return result
+        pass
+
+    @classmethod
+    def find_all(cls):
+        # https://www.tutorialspoint.com/class-method-vs-static-method-in-python#
+        sql = "SELECT * FROM bicycles"
+        return cls.find_by_sql(sql)
+
     # ----- START OF ACTIVE RECORD CODE -----
 
     @constant

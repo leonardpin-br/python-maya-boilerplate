@@ -150,10 +150,12 @@ def main():
     # bike = Bicycle(brand='Schwinn', model_make='Cutter', year_make=2016,
     #                category_make='City', color_make='white', description='', gender='Unisex', price=587, weight_kg=18.7, condition_id=4)
 
-    sql = "SELECT * FROM bicycles"
-    result = Bicycle.database.query(sql)
+    result = Bicycle.find_all()
 
-    print("BRAND: {brand}".format(brand=result[0]["brand"]))
+    for item in result:
+        row = item
+
+        print(row["brand"])
 
 
 main()
