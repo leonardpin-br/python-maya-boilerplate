@@ -92,7 +92,7 @@ class Bicycle(object):
 
         """
 
-        result = cls._database.query(sql)
+        result = cls._database.query(sql, read=True)
 
         # If the resulting list is empty:
         if not result:
@@ -196,19 +196,22 @@ class Bicycle(object):
     def create(self):
         sql = "INSERT INTO bicycles ("
         sql += "brand, model, year, category, color, gender, price, weight_kg, condition_id, description"
-        sql += ") VALUES ("
-        sql += "'{self.brand}', ".format(self=self)
-        sql += "'{self.model}', ".format(self=self)
-        sql += "'{self.year}', ".format(self=self)
-        sql += "'{self.category}', ".format(self=self)
-        sql += "'{self.color}', ".format(self=self)
-        sql += "'{self.gender}', ".format(self=self)
-        sql += "'{self.price}', ".format(self=self)
-        sql += "'{weight_kg}', ".format(weight_kg=decimal.Decimal(self._weight_kg))
-        sql += "'{self.condition_id}', ".format(self=self)
-        sql += "'{self.description}'".format(self=self)
-        sql += ")"
-        result = self._database.query(sql)
+        sql += ") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+
+        data = (
+            self.brand,
+            self.model,
+            self.year,
+            self.category,
+            self.color,
+            self.gender,
+            self.price,
+            decimal.Decimal(self._weight_kg),
+            self.condition_id,
+            self.description
+        )
+
+        result = self._database.query(sql, values=data, create=True)
         if result:
             self.id = self._database.insert_id
         return result

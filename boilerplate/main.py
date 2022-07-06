@@ -186,25 +186,12 @@ def main():
 
     # CREATING A RECORD
     # ==========================================================================
-    # kwargs = {
-    #     "brand": "Schwinn",
-    #     "model": "Cutter",
-    #     "year": 2016,
-    #     "category": "City",
-    #     "color": "white",
-    #     "gender": "Unisex",
-    #     "price": 450,
-    #     "weight_kg": 18.0,
-    #     "condition_id": 4,
-    #     "description": ""
-    # }
-
-    bicycle = Bicycle(brand="Schwinn", model="Cutter", year=2016, category="City", color="white",
-                      gender="Unisex", price=450, weight_kg=18, condition_id=4, description="")
-    result = bicycle.create()
-    if result:
-        print("The new ID is: {id}".format(id=bicycle.id))
-        print("The bicycle was created successfully.")
+    # bicycle = Bicycle(brand="Schwinn", model="Cutter", year=2016, category="City", color="white",
+    #                   gender="Unisex", price=450, weight_kg=18, condition_id=4, description="")
+    # result = bicycle.create()
+    # if result:
+    #     print("The new ID is: {id}".format(id=bicycle.id))
+    #     print("The bicycle was created successfully.")
 
 
 main()

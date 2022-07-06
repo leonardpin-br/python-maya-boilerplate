@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 __all__ = ['ConnectionDB']
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
@@ -8,11 +9,10 @@ __link__ = u"https://www.leonardopinheiro.net"
 
 import shared
 shared.add_site_packages_to_sys_path(__file__)
-
-import mysql.connector
-from mysql.connector import errorcode
-
 import database_functions
+
+from mysql.connector import errorcode
+import mysql.connector
 
 
 class ConnectionDB(object):
@@ -57,15 +57,25 @@ class ConnectionDB(object):
         # There is error checking inside the db_connect() function.
         self.connection_db = database_functions.db_connect()
 
-    def query(self, sql):
+    def query(self, sql, values=None, create=False, read=False, update=False, delete=False):
         u"""Performs a query on the database.
 
         Args:
             sql (str): The query to be executed.
+            values (tuple, optional): The values to complete the SQL statement.
+                Defaults to None.
+            create (bool, optional): Flag to mark the creation of a record.
+                Defaults to False.
+            read (bool, optional): Flag to mark the read operation. Defaults to
+                False.
+            update (bool, optional): Flag to mark the update of a record.
+                Defaults to False.
+            delete (bool, optional): Flag to mark the delete operation. Defaults
+                to False.
 
         Returns:
             (list[dict] | list[] | True): A list of dictionaries with all
-            records, an empty list or True if it is a creation of a record.
+            records or an empty list or True if it is a creation of a record.
 
         Raises:
             ER_NO_SUCH_TABLE: Raised by the MySQLConnection object if the
@@ -81,53 +91,79 @@ class ConnectionDB(object):
 
             `MariaDB Error Codes`_
 
+            `10.5.4 MySQLCursor.execute() Method`_
+
+            `10.2.3 MySQLConnection.commit() Method`_
+
         .. _10.6.4 cursor.MySQLCursorDict Class:
            https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursordict.html
         .. _10.12.2 errors.Error Exception:
            https://dev.mysql.com/doc/connector-python/en/connector-python-api-errors-error.html
         .. _MariaDB Error Codes:
            https://mariadb.com/kb/en/mariadb-error-codes/
+        .. _10.5.4 MySQLCursor.execute() Method:
+           https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-execute.html
+        .. _10.2.3 MySQLConnection.commit() Method:
+           https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlconnection-commit.html
 
         """
 
         # If the execution got to this line, it passed the error checking in
         # db_connect().
-        cursor = self.connection_db.cursor(dictionary=True) # MySQLCursorDict
+        cursor = self.connection_db.cursor(dictionary=True)  # MySQLCursorDict
 
-        try:
-            result_from_execution = cursor.execute(sql) # None
+        if create:
+            try:
+                cursor.execute(sql, values)
+                self.connection_db.commit()
+                result = True
 
-        except mysql.connector.Error as err:
-
-            # err.errno means the error code (number).
-            if err.errno == errorcode.ER_NO_SUCH_TABLE:
-                shared.print_error_message("Database table does not exist.")
-                raise
-
-            if err.errno == errorcode.ER_BAD_FIELD_ERROR:
-                shared.print_error_message("Column does not exist in table.")
-                raise
-
-            else:
+            except mysql.connector.Error as err:
                 shared.print_error_message(err)
-                raise
+                raise Exception("There was an error in the creation of the record.")
+
+        elif read:
+            try:
+                cursor.execute(sql)  # None
+                result = cursor.fetchall()
+
+            except mysql.connector.Error as err:
+
+                # err.errno means the error code (number).
+                if err.errno == errorcode.ER_NO_SUCH_TABLE:
+                    shared.print_error_message(
+                        "Database table does not exist.")
+                    raise Exception("Database table does not exist.")
+
+                if err.errno == errorcode.ER_BAD_FIELD_ERROR:
+                    shared.print_error_message(
+                        "Column does not exist in table.")
+                    raise Exception("Column does not exist in table.")
+
+                else:
+                    shared.print_error_message(err)
+                    raise Exception("There was an error reading the record(s).")
+
+        elif update:
+            pass
+
+        elif delete:
+            pass
+
+        else:
+            shared.print_error_message("Must inform the (CRUD) operation.")
+            raise Exception("Must inform the (CRUD) operation.")
 
         # If there was no error in the execution:
         self.affected_rows = cursor.rowcount
         self.insert_id = cursor.lastrowid
 
-        # If it is a creation of a record in the database, there is nothing to
-        # fetch.
-        try:
-            result = cursor.fetchall()
-        except:
-            result = True
-
-        # Closes the cursor and the connection.
+        # Closes the cursor.
         cursor.close()
 
-        # Chose not to use this function because it is slow.
-        # database_functions.db_disconnect(self.connection_db)
+        # Closes the connection.
+        #   Chose not to use this function because it is slow.
+        #   database_functions.db_disconnect(self.connection_db)
         self.connection_db.close()
 
         return result
