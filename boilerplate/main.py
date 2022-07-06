@@ -150,21 +150,26 @@ def main():
     # bike = Bicycle(brand='Schwinn', model_make='Cutter', year_make=2016,
     #                category_make='City', color_make='white', description='', gender='Unisex', price=587, weight_kg=18.7, condition_id=4)
 
-    bikes = Bicycle.find_all()
+    # bikes = Bicycle.find_all()
 
-    for bike in bikes:
+    # for bike in bikes:
+    #     print(bike.brand)
+    #     print(bike.model)
+    #     print(bike.year)
+    #     print(bike.category)
+    #     print(bike.gender)
+    #     print(bike.color)
+    #     print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.weight_kg, weight_lbs=bike.weight_lbs))
+    #     print(bike.condition_id)
+    #     print(bike.price)
+    #     print("====================================================\n\n")
+
+    bike = Bicycle.find_by_id(19)
+
+    if bike:
         print(bike.brand)
-        print(bike.model)
-        print(bike.year)
-        print(bike.category)
-        print(bike.gender)
-        print(bike.color)
-        print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.weight_kg, weight_lbs=bike.weight_lbs))
-        print(bike.condition_id)
-        print(bike.price)
-        print("====================================================\n\n")
-
-
+    else:
+        shared.print_error_message('The ID was not found.')
 
 
 main()

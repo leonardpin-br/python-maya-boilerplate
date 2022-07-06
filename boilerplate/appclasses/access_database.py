@@ -90,16 +90,13 @@ class Bicycle(object):
         Returns:
             list[obj]: List containing objects from the query result.
 
-        Raises:
-            Error: Any error raised by the MySQLConnection object when the
-                ConnectionDB.query() method is executed.
         """
 
         result = cls._database.query(sql)
 
+        # If the resulting list is empty:
         if not result:
             shared.print_error_message('Database query failed.')
-            raise
 
         # results into objects
         object_list = []
@@ -124,6 +121,18 @@ class Bicycle(object):
 
         sql = "SELECT * FROM bicycles"
         return cls.find_by_sql(sql)
+
+    @classmethod
+    def find_by_id(cls, id):
+        sql = "SELECT * FROM bicycles "
+        sql += "WHERE id='{id}'".format(id=cls._database.escape_string(id))
+        object_list = cls.find_by_sql(sql)
+
+        # Checks if the list is NOT empty (does not need the "not" keyword).
+        if object_list:
+            return object_list[0]
+        else:
+            return False
 
     @classmethod
     def _instantiate(cls, record):

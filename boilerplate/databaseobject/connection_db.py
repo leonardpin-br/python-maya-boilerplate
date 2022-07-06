@@ -64,8 +64,8 @@ class ConnectionDB(object):
             sql (str): The query to be executed.
 
         Returns:
-            list[dict]: A list of dictionaries with all records or an empty
-            list.
+            (list[dict] | list[]): A list of dictionaries with all records or an
+            empty list.
 
         Raises:
             ER_NO_SUCH_TABLE: Raised by the MySQLConnection object if the
