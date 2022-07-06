@@ -150,12 +150,19 @@ def main():
     # bike = Bicycle(brand='Schwinn', model_make='Cutter', year_make=2016,
     #                category_make='City', color_make='white', description='', gender='Unisex', price=587, weight_kg=18.7, condition_id=4)
 
-    result = Bicycle.find_all()
+    bikes = Bicycle.find_all()
 
-    for item in result:
-        row = item
-
-        print(row["brand"])
+    for bike in bikes:
+        print(bike.brand)
+        print(bike.model)
+        print(bike.year)
+        print(bike.category)
+        print(bike.gender)
+        print(bike.color)
+        print(bike.weight_kg)
+        print(bike.condition_id)
+        print(bike.price)
+        print("====================================================\n\n")
 
 
 main()

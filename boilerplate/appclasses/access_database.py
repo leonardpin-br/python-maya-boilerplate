@@ -42,18 +42,18 @@ from databaseobject.connection_db import ConnectionDB
 class Bicycle(object):
 
     # ----- START OF ACTIVE RECORD CODE -----
-    database = ConnectionDB()
-    """An instance of ConnectionDB.
+    _database = ConnectionDB()
+    u"""databaseobject.connection_db.ConnectionDB: Holds the connection information used by static methods.
 
     References:
         `Static class variables and methods in Python`_
 
     .. _Static class variables and methods in Python:
-        https://stackoverflow.com/a/68672
+       https://stackoverflow.com/a/68672
     """
 
-    @staticmethod
-    def set_database(database):
+    @classmethod
+    def set_database(cls, database):
         u"""Not implemented.
 
         Creating an instance of ConnectionDB (outside any method) allows the use
@@ -75,18 +75,82 @@ class Bicycle(object):
 
     @classmethod
     def find_by_sql(cls, sql):
-        # result = cls.database.query(sql)
+        u"""Sends the SQL query to the database and returns a list of objects.
 
-        # if
+        Args:
+            sql (str): The SQL string to be executed.
 
-        # return result
-        pass
+        Returns:
+            list[obj]: List containing objects from the query result.
+
+        Raises:
+            Error: Any error raised by the MySQLConnection object when the
+                ConnectionDB.query() method is executed.
+        """
+
+        result = cls._database.query(sql)
+
+        if not result:
+            shared.print_error_message('Database query failed.')
+            raise
+
+        # results into objects
+        object_list = []
+        for record in result:
+            object_list.append(cls._instantiate(record))
+
+        return object_list
 
     @classmethod
     def find_all(cls):
-        # https://www.tutorialspoint.com/class-method-vs-static-method-in-python#
+        u"""Finds all records in the given database table.
+
+        Returns:
+            list[obj]: List containing objects.
+
+        References:
+            `Class method vs static method in Python`_
+
+        .. _Class method vs static method in Python:
+           https://www.tutorialspoint.com/class-method-vs-static-method-in-python#
+        """
+
         sql = "SELECT * FROM bicycles"
         return cls.find_by_sql(sql)
+
+    @classmethod
+    def _instantiate(cls, record):
+        u"""Creates an instance of the class setting the properties with
+        the values of the object passed as argument.
+
+        Args:
+            record (dict): A dictionary representing a record (row) in the
+                result set.
+
+        Returns:
+            obj: An instance of the subclass.
+
+        References:
+            `Protected method in python [duplicate]`_
+
+            `How to know if an object has an attribute in Python`_
+
+            `Object does not support item assignment error`_
+
+        .. _Protected method in python [duplicate]:
+           https://stackoverflow.com/a/11483397
+        .. _How to know if an object has an attribute in Python:
+           https://stackoverflow.com/a/610893
+        .. _Object does not support item assignment error:
+           https://stackoverflow.com/a/8542369
+        """
+
+        obj = cls()
+        for key, value in record.items():
+            if hasattr(obj, key):
+                setattr(obj, key, value)
+
+        return obj
 
     # ----- START OF ACTIVE RECORD CODE -----
 
@@ -146,11 +210,12 @@ class Bicycle(object):
         """
 
         # Public properties:
+        self.id = kwargs['id'] if 'id' in kwargs else 0
         self.brand = kwargs['brand'] if 'brand' in kwargs else ''
-        self.model_make = kwargs['model_make'] if 'model_make' in kwargs else ''
-        self.year_make = kwargs['year_make'] if 'year_make' in kwargs else 0
-        self.category_make = kwargs['category_make'] if 'category_make' in kwargs else ''
-        self.color_make = kwargs['color_make'] if 'color_make' in kwargs else ''
+        self.model = kwargs['model'] if 'model' in kwargs else ''
+        self.year = kwargs['year'] if 'year' in kwargs else 0
+        self.category = kwargs['category'] if 'category' in kwargs else ''
+        self.color = kwargs['color'] if 'color' in kwargs else ''
         self.description = kwargs['description'] if 'description' in kwargs else ''
         self.gender = kwargs['gender'] if 'gender' in kwargs else ''
         self.price = kwargs['price'] if 'price' in kwargs else 0
