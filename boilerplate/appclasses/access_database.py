@@ -34,6 +34,8 @@ __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
+import decimal
+
 import shared
 from shared import constant
 from databaseobject.connection_db import ConnectionDB
@@ -43,7 +45,8 @@ class Bicycle(object):
 
     # ----- START OF ACTIVE RECORD CODE -----
     _database = ConnectionDB()
-    u"""databaseobject.connection_db.ConnectionDB: Holds the connection information used by static methods.
+    u"""databaseobject.connection_db.ConnectionDB: Holds the connection
+    information used by static methods.
 
     References:
         `Static class variables and methods in Python`_
@@ -54,12 +57,16 @@ class Bicycle(object):
 
     @classmethod
     def set_database(cls, database):
-        u"""Not implemented.
+        u"""**Not implemented.**
 
-        Creating an instance of ConnectionDB (outside any method) allows the use
-        of the required functions.
+        Setting the value of ``_database`` (receiving an instance of
+        ``ConnectionDB``) outside any methods make that property a static
+        property.
 
-        This static method would inform this class about the connection with the
+        This allows the use of the required class methods. There is no need for
+        using this method outside this class.
+
+        This class method would inform this class about the connection with the
         database.
 
         Args:
@@ -145,14 +152,22 @@ class Bicycle(object):
            https://stackoverflow.com/a/8542369
         """
 
+        # Creates an instance of the subclass.
         obj = cls()
+
+        # Loops through the dictionary.
         for key, value in record.items():
+
+            # Checks if the instance has the same attribute as the dictionary
+            # key.
             if hasattr(obj, key):
+
+                # Sets the object attribute with the value from the key.
                 setattr(obj, key, value)
 
         return obj
 
-    # ----- START OF ACTIVE RECORD CODE -----
+    # ----- END OF ACTIVE RECORD CODE -----
 
     @constant
     def CATEGORIES():
@@ -244,13 +259,15 @@ class Bicycle(object):
 
     @property
     def weight_lbs(self):
-        result = self._weight_kg * 2.2046226218
+        # https://stackoverflow.com/a/21418696
+        result = self._weight_kg * decimal.Decimal(2.2046226218)
         formatted_str = "{weight_lbs} lbs".format(weight_lbs=shared.number_format(result, 2))
         return formatted_str
 
     @weight_lbs.setter
     def weight_lbs(self, value):
-        self._weight_kg = value / 2.2046226218
+        # https://stackoverflow.com/a/21418696
+        self._weight_kg = value / decimal.Decimal(2.2046226218)
 
     def condition(self):
         if self.condition_id > 0:

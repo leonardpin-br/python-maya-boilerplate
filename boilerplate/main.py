@@ -159,10 +159,12 @@ def main():
         print(bike.category)
         print(bike.gender)
         print(bike.color)
-        print(bike.weight_kg)
+        print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.weight_kg, weight_lbs=bike.weight_lbs))
         print(bike.condition_id)
         print(bike.price)
         print("====================================================\n\n")
+
+
 
 
 main()
