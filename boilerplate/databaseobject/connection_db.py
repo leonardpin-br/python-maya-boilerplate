@@ -64,8 +64,8 @@ class ConnectionDB(object):
             sql (str): The query to be executed.
 
         Returns:
-            (list[dict] | list[]): A list of dictionaries with all records or an
-            empty list.
+            (list[dict] | list[] | True): A list of dictionaries with all
+            records, an empty list or True if it is a creation of a record.
 
         Raises:
             ER_NO_SUCH_TABLE: Raised by the MySQLConnection object if the
@@ -115,7 +115,13 @@ class ConnectionDB(object):
         # If there was no error in the execution:
         self.affected_rows = cursor.rowcount
         self.insert_id = cursor.lastrowid
-        result = cursor.fetchall()
+
+        # If it is a creation of a record in the database, there is nothing to
+        # fetch.
+        try:
+            result = cursor.fetchall()
+        except:
+            result = True
 
         # Closes the cursor and the connection.
         cursor.close()

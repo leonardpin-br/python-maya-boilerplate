@@ -97,6 +97,7 @@ class Bicycle(object):
         # If the resulting list is empty:
         if not result:
             shared.print_error_message('Database query failed.')
+            raise
 
         # results into objects
         object_list = []
@@ -124,7 +125,7 @@ class Bicycle(object):
 
     @classmethod
     def find_by_id(cls, id):
-        """Finds a record in the database, using the ID.
+        u"""Finds a record in the database, using the ID.
 
         Args:
             id (int): The ID number to be used in the query.
@@ -132,16 +133,6 @@ class Bicycle(object):
         Returns:
             (obj | False): An object corresponding to the database record. False
             if it does not find anything.
-
-        Example:
-            This is the way this method should be used::
-
-                bike = Bicycle.find_by_id(19)
-
-                if bike:
-                    print(bike.brand)
-                else:
-                    shared.print_error_message('The ID was not found.')
 
         References:
             `How to check if a list is empty in python?`_
@@ -201,6 +192,26 @@ class Bicycle(object):
                 setattr(obj, key, value)
 
         return obj
+
+    def create(self):
+        sql = "INSERT INTO bicycles ("
+        sql += "brand, model, year, category, color, gender, price, weight_kg, condition_id, description"
+        sql += ") VALUES ("
+        sql += "'{self.brand}', ".format(self=self)
+        sql += "'{self.model}', ".format(self=self)
+        sql += "'{self.year}', ".format(self=self)
+        sql += "'{self.category}', ".format(self=self)
+        sql += "'{self.color}', ".format(self=self)
+        sql += "'{self.gender}', ".format(self=self)
+        sql += "'{self.price}', ".format(self=self)
+        sql += "'{weight_kg}', ".format(weight_kg=decimal.Decimal(self._weight_kg))
+        sql += "'{self.condition_id}', ".format(self=self)
+        sql += "'{self.description}'".format(self=self)
+        sql += ")"
+        result = self._database.query(sql)
+        if result:
+            self.id = self._database.insert_id
+        return result
 
     # ----- END OF ACTIVE RECORD CODE -----
 
@@ -274,6 +285,9 @@ class Bicycle(object):
         self._weight_kg = kwargs['weight_kg'] if 'weight_kg' in kwargs else 0.0
         self._condition_id = kwargs['condition_id'] if 'condition_id' in kwargs else 3
 
+    def name(self):
+        return "{brand} {model} {year}".format(brand=self.brand, model=self.model, year=self.year)
+
     @property
     def weight_kg(self):
         return "{formatted_number} Kg".format(formatted_number=shared.number_format(self._weight_kg, 2))
@@ -296,7 +310,8 @@ class Bicycle(object):
     def weight_lbs(self):
         # https://stackoverflow.com/a/21418696
         result = self._weight_kg * decimal.Decimal(2.2046226218)
-        formatted_str = "{weight_lbs} lbs".format(weight_lbs=shared.number_format(result, 2))
+        formatted_str = "{weight_lbs} lbs".format(
+            weight_lbs=shared.number_format(result, 2))
         return formatted_str
 
     @weight_lbs.setter

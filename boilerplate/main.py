@@ -118,8 +118,8 @@ def main():
     # Clear the terminal window.
     os.system('cls' if os.name == 'nt' else 'clear')
 
-    # # UI CREATION
-    # # ==========================================================================
+    # UI CREATION
+    # ==========================================================================
     # global myWin  # It is very necessary!
 
     # try:
@@ -130,8 +130,8 @@ def main():
     # myWin = maya_ui_template.ScriptName()
     # myWin.show()
 
-    # # CREATING CLASS INSTANCES
-    # # ==========================================================================
+    # CREATING CLASS INSTANCES
+    # ==========================================================================
     # obj = example_classes.ExampleSubclass()
     # print(obj.return_message())
     # print(obj.greeter())
@@ -145,11 +145,13 @@ def main():
     # escaped_string = database.escape_string("Bob's Overdrive")
     # print(escaped_string)
 
-    # CREATING A BICYCLE
+    # CREATING A BICYCLE INSTANCE
     # ==========================================================================
     # bike = Bicycle(brand='Schwinn', model_make='Cutter', year_make=2016,
     #                category_make='City', color_make='white', description='', gender='Unisex', price=587, weight_kg=18.7, condition_id=4)
 
+    # FIND ALL
+    # ==========================================================================
     # bikes = Bicycle.find_all()
 
     # for bike in bikes:
@@ -164,12 +166,45 @@ def main():
     #     print(bike.price)
     #     print("====================================================\n\n")
 
-    bike = Bicycle.find_by_id(19)
+    # FIND BY ID
+    # ==========================================================================
+    # bike = Bicycle.find_by_id(2)
 
-    if bike:
-        print(bike.brand)
-    else:
-        shared.print_error_message('The ID was not found.')
+    # if bike:
+    #     print(bike.name())
+    #     print("-------------------------------------------")
+    #     print(bike.id)
+    #     print(bike.brand)
+    #     print(bike.model)
+    #     print(bike.year)
+    #     print(bike.category)
+    #     print(bike.gender)
+    #     print(bike.color)
+    #     print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.weight_kg, weight_lbs=bike.weight_lbs))
+    #     print(bike.condition())
+    #     print("${price}".format(price=bike.price))
+
+    # CREATING A RECORD
+    # ==========================================================================
+    # kwargs = {
+    #     "brand": "Schwinn",
+    #     "model": "Cutter",
+    #     "year": 2016,
+    #     "category": "City",
+    #     "color": "white",
+    #     "gender": "Unisex",
+    #     "price": 450,
+    #     "weight_kg": 18.0,
+    #     "condition_id": 4,
+    #     "description": ""
+    # }
+
+    bicycle = Bicycle(brand="Schwinn", model="Cutter", year=2016, category="City", color="white",
+                      gender="Unisex", price=450, weight_kg=18, condition_id=4, description="")
+    result = bicycle.create()
+    if result:
+        print("The new ID is: {id}".format(id=bicycle.id))
+        print("The bicycle was created successfully.")
 
 
 main()
