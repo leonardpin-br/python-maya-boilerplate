@@ -124,6 +124,32 @@ class Bicycle(object):
 
     @classmethod
     def find_by_id(cls, id):
+        """Finds a record in the database, using the ID.
+
+        Args:
+            id (int): The ID number to be used in the query.
+
+        Returns:
+            (obj | False): An object corresponding to the database record. False
+            if it does not find anything.
+
+        Example:
+            This is the way this method should be used::
+
+                bike = Bicycle.find_by_id(19)
+
+                if bike:
+                    print(bike.brand)
+                else:
+                    shared.print_error_message('The ID was not found.')
+
+        References:
+            `How to check if a list is empty in python?`_
+
+        .. _How to check if a list is empty in python\?:
+           https://flexiple.com/check-if-list-is-empty-python/#section2
+        """
+
         sql = "SELECT * FROM bicycles "
         sql += "WHERE id='{id}'".format(id=cls._database.escape_string(id))
         object_list = cls.find_by_sql(sql)
