@@ -92,10 +92,10 @@ class ConnectionDB(object):
 
         # If the execution got to this line, it passed the error checking in
         # db_connect().
-        cursor = self.connection_db.cursor(dictionary=True)
+        cursor = self.connection_db.cursor(dictionary=True) # MySQLCursorDict
 
         try:
-            cursor.execute(sql)
+            result_from_execution = cursor.execute(sql) # None
 
         except mysql.connector.Error as err:
 
