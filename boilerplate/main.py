@@ -168,30 +168,33 @@ def main():
 
     # FIND BY ID
     # ==========================================================================
-    # bike = Bicycle.find_by_id(2)
+    bike = Bicycle.find_by_id(2)
 
-    # if bike:
-    #     print(bike.name())
-    #     print("-------------------------------------------")
-    #     print(bike.id)
-    #     print(bike.brand)
-    #     print(bike.model)
-    #     print(bike.year)
-    #     print(bike.category)
-    #     print(bike.gender)
-    #     print(bike.color)
-    #     print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.weight_kg, weight_lbs=bike.weight_lbs))
-    #     print(bike.condition())
-    #     print("${price}".format(price=bike.price))
+    if bike:
+        print(bike.name())
+        print("-------------------------------------------")
+        print(bike.id)
+        print(bike.brand)
+        print(bike.model)
+        print(bike.year)
+        print(bike.category)
+        print(bike.gender)
+        print(bike.color)
+        print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.weight_kg, weight_lbs=bike.weight_lbs))
+        print(bike.condition())
+        print("${price}".format(price=bike.price))
 
     # CREATING A RECORD
     # ==========================================================================
     # bicycle = Bicycle(brand="Schwinn", model="Cutter", year=2016, category="City", color="white",
     #                   gender="Unisex", price=450, weight_kg=18, condition_id=4, description="")
+    # bicycle = Bicycle(brand="Mongoose", model="Switchback Sport", year=2015, category="Mountain", color="blue",
+    #                   gender="Mens", price=399, weight_kg=24, condition_id=2, description="")
     # result = bicycle.create()
     # if result:
     #     print("The new ID is: {id}".format(id=bicycle.id))
     #     print("The bicycle was created successfully.")
 
+    # print("Hello")
 
 main()

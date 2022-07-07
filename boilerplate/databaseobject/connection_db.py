@@ -95,6 +95,8 @@ class ConnectionDB(object):
 
             `10.2.3 MySQLConnection.commit() Method`_
 
+            `cursor() raise errors.OperationalError("MySQL Connection not available.") OperationalError: MySQL Connection not available`_
+
         .. _10.6.4 cursor.MySQLCursorDict Class:
            https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursordict.html
         .. _10.12.2 errors.Error Exception:
@@ -105,6 +107,8 @@ class ConnectionDB(object):
            https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-execute.html
         .. _10.2.3 MySQLConnection.commit() Method:
            https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlconnection-commit.html
+        .. _cursor() raise errors.OperationalError("MySQL Connection not available.") OperationalError\: MySQL Connection not available:
+           https://stackoverflow.com/a/44577753
 
         """
 
@@ -161,10 +165,14 @@ class ConnectionDB(object):
         # Closes the cursor.
         cursor.close()
 
+        # THE CONNECTION SHOULD NOT BE CLOSED.
+        # Autodesk Maya executes correctly the first time, but shows an error
+        # from the second time foward. See reference.
+        # ----------------------------------------------------------------------
         # Closes the connection.
         #   Chose not to use this function because it is slow.
         #   database_functions.db_disconnect(self.connection_db)
-        self.connection_db.close()
+        # self.connection_db.close()
 
         return result
 

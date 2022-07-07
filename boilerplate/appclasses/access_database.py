@@ -55,6 +55,9 @@ class Bicycle(object):
        https://stackoverflow.com/a/68672
     """
 
+    _db_columns = ['id', 'brand', 'model', 'year', 'category', 'color',
+                   'gender', 'price', 'weight_kg', 'condition_id', 'description']
+
     @classmethod
     def set_database(cls, database):
         u"""**Not implemented.**
@@ -194,27 +197,85 @@ class Bicycle(object):
         return obj
 
     def create(self):
+        u"""Creates a record in the database with the properties' values of the
+        current instance in memory.
+
+        Returns:
+            (list[dict] | list[] | True): The result of the **query()** method executed
+            inside this method.
+
+        References:
+            `How to Convert a List to String in Python`_
+
+            `Last Key in Python Dictionary`_
+
+            `Python add item to the tuple`_
+
+        .. _How to Convert a List to String in Python:
+           https://www.simplilearn.com/tutorials/python-tutorial/list-to-string-in-python#how_to_convert_a_list_to_string_in_python
+        .. _Last Key in Python Dictionary:
+           https://stackoverflow.com/a/16125237
+        .. _Python add item to the tuple:
+           https://stackoverflow.com/a/16730584
+        """
+
+        attributes = self.attributes()
+
+        temporary_list = []
         sql = "INSERT INTO bicycles ("
-        sql += "brand, model, year, category, color, gender, price, weight_kg, condition_id, description"
+
+        # Loops through the dictionary:
+        for key in attributes:
+            sql += key
+            temporary_list.append(attributes[key])
+
+            # If it is the last key in the dictionary:
+            if key == attributes.keys()[-1]:
+                break
+
+            sql += ", "
+
         sql += ") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
-        data = (
-            self.brand,
-            self.model,
-            self.year,
-            self.category,
-            self.color,
-            self.gender,
-            self.price,
-            decimal.Decimal(self._weight_kg),
-            self.condition_id,
-            self.description
-        )
+        data = tuple(temporary_list)
 
         result = self._database.query(sql, values=data, create=True)
         if result:
             self.id = self._database.insert_id
+
         return result
+
+    def attributes(self):
+        u"""Creates a dictionary that have, as properties, the database columns
+        (excluding ID) and the corresponding values from the instance object in
+        memory.
+
+        Returns:
+            dict: Dictionary containing the names of the columns and the
+            corresponding values from the instance object in memory.
+
+        References:
+            `Add Key to a Python Dictionary`_
+
+            `Python Break and Continue: Step-By-Step Guide`_
+
+            `How to dynamically access class properties in Python?`_
+
+        .. _Add Key to a Python Dictionary:
+           https://stackabuse.com/python-how-to-add-keys-to-dictionary/#addkeytoapythondictionary
+        .. _Python Break and Continue\: Step-By-Step Guide:
+           https://careerkarma.com/blog/python-break-and-continue/
+        .. _How to dynamically access class properties in Python?:
+           https://stackoverflow.com/a/2425281
+        """
+
+        attributes = {}
+        for column in self._db_columns:
+            if column == 'id':
+                continue
+            attributes[column] = getattr(self, column)
+
+        return attributes
 
     # ----- END OF ACTIVE RECORD CODE -----
 
@@ -293,7 +354,8 @@ class Bicycle(object):
 
     @property
     def weight_kg(self):
-        return "{formatted_number} Kg".format(formatted_number=shared.number_format(self._weight_kg, 2))
+        # return "{formatted_number} Kg".format(formatted_number=shared.number_format(self._weight_kg, 2))
+        return decimal.Decimal(self._weight_kg)
 
     @weight_kg.setter
     def weight_kg(self, value):
