@@ -219,7 +219,7 @@ class Bicycle(object):
            https://stackoverflow.com/a/16730584
         """
 
-        attributes = self.attributes()
+        attributes = self._sanitized_attributes()
 
         temporary_list = []
         sql = "INSERT INTO bicycles ("
@@ -276,6 +276,27 @@ class Bicycle(object):
             attributes[column] = getattr(self, column)
 
         return attributes
+
+    def _sanitized_attributes(self):
+        u"""Sanitizes (escapes the values) of the object before sending to the
+        database.
+
+        Returns:
+            dict: Dictionary with the values escaped.
+
+        References:
+            `Python - Loop Dictionaries`_
+
+        .. _Python - Loop Dictionaries:
+           https://www.w3schools.com/python/python_dictionaries_loop.asp
+        """
+
+        sanitized = {}
+        attributes = self.attributes()
+        for key, value in attributes.items():
+            sanitized[key] = self._database.escape_string(value)
+
+        return sanitized
 
     # ----- END OF ACTIVE RECORD CODE -----
 
