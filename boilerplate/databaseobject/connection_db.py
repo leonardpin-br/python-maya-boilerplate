@@ -177,7 +177,9 @@ class ConnectionDB(object):
         return result
 
     def escape_string(self, string_to_escape):
-        u"""Roughly does the same as the ``mysqli::real_escape_string`` method,
+        u"""**NOT NECESSARY** (see reference).
+
+        Roughly does the same as the ``mysqli::real_escape_string`` method,
         that is, escapes a string. It is meant to be used before sending it to
         the database.
 
@@ -192,7 +194,10 @@ class ConnectionDB(object):
             `Escaping strings with python mysql.connector`_
 
         .. _Escaping strings with python mysql.connector:
-           https://stackoverflow.com/a/32124096/3768670
+           https://stackoverflow.com/a/7540828
 
         """
-        return self.connection_db.converter.escape(string_to_escape)
+        # The line below would escape the string, but it is not necessary.
+        # See reference.
+        # return self.connection_db.converter.escape(string_to_escape)
+        return string_to_escape

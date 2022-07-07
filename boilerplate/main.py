@@ -75,6 +75,8 @@ References:
 
     `sphinx-apidoc`_
 
+    `Unpacking kwargs`_
+
 .. _sphinx-apidoc ignoring some modules/packages:
    https://chadrick-kwag.net/sphinx-apidoc-ignoring-some-modules-packages/
 .. _Coverage.py:
@@ -87,6 +89,8 @@ References:
    https://stackoverflow.com/a/43868129
 .. _sphinx-apidoc:
    https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html
+.. _Unpacking kwargs:
+   https://stackoverflow.com/a/28771348
 
 
 """
