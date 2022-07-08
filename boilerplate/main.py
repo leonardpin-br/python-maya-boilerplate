@@ -243,7 +243,7 @@ def main():
     # else:
     #     print("The ID was not found.")
 
-    print(shared.has_length_greater_than('abcd', 3))
+    print(shared.has_length_exactly('abcd', 4))
 
 
 main()

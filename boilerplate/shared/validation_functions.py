@@ -11,7 +11,9 @@ __all__ = [
     # ----------
     'is_blank',
     'has_presence',
-    'has_length_greater_than'
+    'has_length_greater_than',
+    'has_length_less_than',
+    'has_length_exactly'
 ]
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
@@ -180,3 +182,43 @@ def has_length_greater_than(value, min):
     """
     length = len(value)
     return length > min
+
+
+def has_length_less_than(value, max):
+    u"""Validate string length. Spaces count towards length. Use ``trim()`` if
+    spaces should not count.
+
+    Args:
+        value (str): The string to be verified.
+        max (int): The maximun number to compare the string with.
+
+    Returns:
+        bool: True if the string is smaller. False otherwise.
+
+    Example:
+        Calling this function::
+
+            shared.has_length_less_than('abcd', 5)
+    """
+    length = len(value)
+    return length < max
+
+
+def has_length_exactly(value, exact):
+    u"""Validate string length. Spaces count towards length. Use ``trim()`` if
+    spaces should not count.
+
+    Args:
+        value (str): The string to be verified.
+        exact (int): The exact number that should be the string's length.
+
+    Returns:
+        bool: True if the string has that length. False otherwise.
+
+    Example:
+        Calling this function::
+
+            shared.has_length_exactly('abcd', 4)
+    """
+    length = len(value)
+    return length == exact
