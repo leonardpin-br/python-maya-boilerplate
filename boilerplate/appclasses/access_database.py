@@ -35,6 +35,7 @@ __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
 import decimal
+from boilerplate.shared.validation_functions import is_none
 
 import shared
 from shared import constant
@@ -245,6 +246,26 @@ class Bicycle(object):
 
         return result
 
+    def update(self):
+
+        attributes = self.attributes()
+
+        sql = "UPDATE bicycles SET "
+        sql +=
+        sql += " WHERE id='%s' "
+        sql += "LIMIT 1"
+
+        data = (self.id)
+
+        result = self._database.query(sql, values=data, update=True)
+        return result
+
+    def merge_attributes(self, **kwargs):
+        for key, value in kwargs.items():
+            if hasattr(self, key) and not is_none(value):
+                setattr(self, key, value)
+
+
     def attributes(self):
         u"""Creates a dictionary that have, as properties, the database columns
         (excluding ID) and the corresponding values from the instance object in
@@ -365,37 +386,35 @@ class Bicycle(object):
         self.description = kwargs['description'] if 'description' in kwargs else ''
         self.gender = kwargs['gender'] if 'gender' in kwargs else ''
         self.price = kwargs['price'] if 'price' in kwargs else 0
-
-        # Protected properties:
-        self._weight_kg = kwargs['weight_kg'] if 'weight_kg' in kwargs else 0.0
-        self._condition_id = kwargs['condition_id'] if 'condition_id' in kwargs else 3
+        self.weight_kg = decimal.Decimal(kwargs['weight_kg']) if 'weight_kg' in kwargs else 0.0
+        self.condition_id = kwargs['condition_id'] if 'condition_id' in kwargs else 3
 
     def name(self):
         return "{brand} {model} {year}".format(brand=self.brand, model=self.model, year=self.year)
 
-    @property
-    def weight_kg(self):
-        # return "{formatted_number} Kg".format(formatted_number=shared.number_format(self._weight_kg, 2))
-        return decimal.Decimal(self._weight_kg)
+    # @property
+    # def weight_kg(self):
+    #     # return "{formatted_number} Kg".format(formatted_number=shared.number_format(self.weight_kg, 2))
+    #     return decimal.Decimal(self.weight_kg)
 
-    @weight_kg.setter
-    def weight_kg(self, value):
-        self._weight_kg = value
-        return self._weight_kg
+    # @weight_kg.setter
+    # def weight_kg(self, value):
+    #     self.weight_kg = value
+    #     return self.weight_kg
 
-    @property
-    def condition_id(self):
-        return self._condition_id
+    # @property
+    # def condition_id(self):
+    #     return self.condition_id
 
-    @condition_id.setter
-    def condition_id(self, value):
-        self._condition_id = value
-        return self._condition_id
+    # @condition_id.setter
+    # def condition_id(self, value):
+    #     self.condition_id = value
+    #     return self.condition_id
 
     @property
     def weight_lbs(self):
         # https://stackoverflow.com/a/21418696
-        result = self._weight_kg * decimal.Decimal(2.2046226218)
+        result = self.weight_kg * decimal.Decimal(2.2046226218)
         formatted_str = "{weight_lbs} lbs".format(
             weight_lbs=shared.number_format(result, 2))
         return formatted_str
@@ -403,7 +422,7 @@ class Bicycle(object):
     @weight_lbs.setter
     def weight_lbs(self, value):
         # https://stackoverflow.com/a/21418696
-        self._weight_kg = value / decimal.Decimal(2.2046226218)
+        self.weight_kg = value / decimal.Decimal(2.2046226218)
 
     def condition(self):
         if self.condition_id > 0:

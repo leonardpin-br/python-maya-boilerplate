@@ -149,7 +149,15 @@ class ConnectionDB(object):
                     raise Exception("There was an error reading the record(s).")
 
         elif update:
-            pass
+            # https://dev.mysql.com/doc/connector-python/en/connector-python-tutorial-cursorbuffered.html
+            try:
+                cursor.execute(sql, values)
+                self.connection_db.commit()
+                result = True
+
+            except mysql.connector.Error as err:
+                shared.print_error_message(err)
+                raise Exception("There was an error updating the record.")
 
         elif delete:
             pass

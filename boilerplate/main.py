@@ -194,25 +194,35 @@ def main():
     #                   gender="Unisex", price=450, weight_kg=18, condition_id=4, description="")
     # bicycle = Bicycle(brand="Mongoose", model="Switchback Sport", year=2015, category="Mountain", color="blue",
     #                   gender="Mens", price=399, weight_kg=24, condition_id=2, description="")
-    kwargs = {
-        "brand": "Diamondback",
-        "model": "Bob's Overdrive",
-        "year": 2016,
-        "category": "Mountain",
-        "color": "dark green",
-        "gender": "Unisex",
-        "price": 565,
-        "weight_kg": 23.7,
-        "condition_id": 3,
-        "description": ""
-    }
+    # kwargs = {
+    #     "brand": "Diamondback",
+    #     "model": "Bob's Overdrive",
+    #     "year": 2016,
+    #     "category": "Mountain",
+    #     "color": "dark green",
+    #     "gender": "Unisex",
+    #     "price": 565,
+    #     "weight_kg": 23.7,
+    #     "condition_id": 3,
+    #     "description": ""
+    # }
 
-    bicycle = Bicycle(**kwargs)
-    result = bicycle.create()
-    if result:
-        print("The new ID is: {id}".format(id=bicycle.id))
-        print("The bicycle was created successfully.")
+    # bicycle = Bicycle(**kwargs)
+    # result = bicycle.create()
+    # if result:
+    #     print("The new ID is: {id}".format(id=bicycle.id))
+    #     print("The bicycle was created successfully.")
 
-    # print("Hello")
+    # UPDATING A RECORD
+    # ==========================================================================
+    # bicycle = Bicycle.find_by_id(2) # Should return False if it does not find.
+
+    # if bicycle is False:
+    #     print("Is False.")
+    # else:
+    #     print("True.")
+
+
+
 
 main()

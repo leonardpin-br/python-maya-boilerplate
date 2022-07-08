@@ -4,6 +4,7 @@ u"""Usefull validation functions available to other packages in this project.
 """
 
 __all__ = [
+    'is_none',
     'is_set',
     'list_equals'
 ]
@@ -13,6 +14,23 @@ __link__ = u"https://www.leonardopinheiro.net"
 
 # Utility functions (used by the validation functions)
 # ==============================================================================
+
+
+def is_none(variable):
+    u"""Mimics loosely the behavior of the PHP function is_null().
+
+    Finds whether a variable is None.
+
+    Args:
+        variable (Any): The variable being evaluated.
+
+    Returns:
+        bool: Returns True if value is None, False otherwise.
+    """
+    if variable is None:
+        return True
+
+    return False
 
 
 def is_set(*args):
