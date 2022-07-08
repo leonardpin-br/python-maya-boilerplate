@@ -217,33 +217,33 @@ def main():
 
     # UPDATING A RECORD
     # ==========================================================================
-    bike = Bicycle.find_by_id(26)
+    # bike = Bicycle.find_by_id(26)
 
-    if bike:
+    # if bike:
 
-        kwargs = {
-            "id": bike.id,
-            "brand": bike.brand,
-            "model": "Bob's Overdrive", # Bob's Overdrive
-            "year": bike.year,
-            "category": bike.category,
-            "gender": bike.gender,
-            "color": bike.color,
-            "weight_kg": bike.weight_kg,
-            "condition": bike.condition,
-            "price": bike.price
-        }
+    #     kwargs = {
+    #         "id": bike.id,
+    #         "brand": bike.brand,
+    #         "model": "Bob's Overdrive", # Bob's Overdrive
+    #         "year": bike.year,
+    #         "category": bike.category,
+    #         "gender": bike.gender,
+    #         "color": bike.color,
+    #         "weight_kg": bike.weight_kg,
+    #         "condition": bike.condition,
+    #         "price": bike.price
+    #     }
 
-        bike.merge_attributes(**kwargs)
-        result = bike.save()
-        if result:
-            print("The bicycle was updated successfully.")
-        else:
-            print("There was an error in the update process.")
-    else:
-        print("The ID was not found.")
+    #     bike.merge_attributes(**kwargs)
+    #     result = bike.save()
+    #     if result:
+    #         print("The bicycle was updated successfully.")
+    #     else:
+    #         print("There was an error in the update process.")
+    # else:
+    #     print("The ID was not found.")
 
-
+    print(shared.has_length_greater_than('abcd', 3))
 
 
 main()

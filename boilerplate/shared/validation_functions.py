@@ -6,11 +6,17 @@ u"""Usefull validation functions available to other packages in this project.
 __all__ = [
     'is_none',
     'is_set',
-    'list_equals'
+    'list_equals',
+    'trim',
+    # ----------
+    'is_blank',
+    'has_presence',
+    'has_length_greater_than'
 ]
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __link__ = u"https://www.leonardopinheiro.net"
+
 
 # Utility functions (used by the validation functions)
 # ==============================================================================
@@ -102,5 +108,75 @@ def list_equals(first_list, second_list):
 
     return False
 
+
+def trim(value):
+    u"""Mimics loosely the behaiour of the PHP trim() function.
+
+    Args:
+        value (str): The string to be trimmed.
+
+    Returns:
+        str: The trimmed string
+    """
+    return value.strip()
+
 # Validation functions
 # ==============================================================================
+
+
+def is_blank(value):
+    u"""Checks if the given string is empty.
+
+    Validate data presence.
+    Uses ``trim()`` so empty spaces don't count.
+    Uses ``trim(value) == ""`` to avoid empty strings.
+
+    Args:
+        value (str): The string to be checked.
+
+    Returns:
+        bool: True if the string is empty. False otherwise.
+
+    Example:
+        How to call this function::
+
+            shared.is_blank("")
+    """
+    return not is_set(value) or trim(value) == ""
+
+
+def has_presence(value):
+    u"""Validate data presence. Reverse of isBlank().
+
+    Args:
+        value (str): The string to be checked.
+
+    Returns:
+        bool: True if it has presence. False otherwise.
+
+    Example:
+        Calling this function::
+
+            shared.hasPresence('abcd')
+    """
+    return not is_blank(value)
+
+
+def has_length_greater_than(value, min):
+    u"""Validate string length. Spaces count towards length. Use ``trim()`` if
+    spaces should not count.
+
+    Args:
+        value (str): The string to be verified.
+        min (int): The minimun number to compare the string with.
+
+    Returns:
+        bool: True if the string is greater. False otherwise.
+
+    Example:
+        Calling this function::
+
+            shared.has_length_greater_than('abcd', 3)
+    """
+    length = len(value)
+    return length > min
