@@ -172,23 +172,23 @@ def main():
 
     # FIND BY ID
     # ==========================================================================
-    bike = Bicycle.find_by_id(297)
+    # bike = Bicycle.find_by_id(2)
 
-    if bike:
-        print(bike.name())
-        print("-------------------------------------------")
-        print(bike.id)
-        print(bike.brand)
-        print(bike.model)
-        print(bike.year)
-        print(bike.category)
-        print(bike.gender)
-        print(bike.color)
-        print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.weight_kg, weight_lbs=bike.weight_lbs))
-        print(bike.condition())
-        print("${price}".format(price=bike.price))
-    else:
-        print("The ID was not found.")
+    # if bike:
+    #     print(bike.name())
+    #     print("-------------------------------------------")
+    #     print(bike.id)
+    #     print(bike.brand)
+    #     print(bike.model)
+    #     print(bike.year)
+    #     print(bike.category)
+    #     print(bike.gender)
+    #     print(bike.color)
+    #     print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.weight_kg, weight_lbs=bike.weight_lbs))
+    #     print(bike.condition())
+    #     print("${price}".format(price=bike.price))
+    # else:
+    #     print("The ID was not found.")
 
     # CREATING A RECORD
     # ==========================================================================
@@ -217,12 +217,33 @@ def main():
 
     # UPDATING A RECORD
     # ==========================================================================
-    # bicycle = Bicycle.find_by_id(2) # Should return False if it does not find.
+    bike = Bicycle.find_by_id(26)
 
-    # if bicycle is False:
-    #     print("Is False.")
-    # else:
-    #     print("True.")
+    if bike:
+        print("Bicycle found!")
+        print("")
+
+        kwargs = {
+            "id": bike.id,
+            "brand": bike.brand,
+            "model": "Bob's Overdrive", # bike.model
+            "year": bike.year,
+            "category": bike.category,
+            "gender": bike.gender,
+            "color": bike.color,
+            "weight_kg": bike.weight_kg,
+            "condition": bike.condition,
+            "price": bike.price
+        }
+
+        bike.merge_attributes(kwargs)
+        result = bike.update()
+        if result:
+            print("The bicycle was updated.")
+        else:
+            print("There was an error in the update process.")
+    else:
+        print("The ID was not found.")
 
 
 

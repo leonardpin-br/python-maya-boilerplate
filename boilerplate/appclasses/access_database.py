@@ -262,18 +262,40 @@ class Bicycle(object):
         return result
 
     def update(self):
-        pass
-        # attributes = self.attributes()
+        u"""Updates the database with the properties' values of the current
+        instance in memory.
 
-        # sql = "UPDATE bicycles SET "
-        # sql +=
-        # sql += " WHERE id='%s' "
-        # sql += "LIMIT 1"
+        Returns:
+            (bool): The result of the query() method executed inside this
+            method. True if the update is successful. False otherwise.
 
-        # data = (self.id)
+        References:
+            `How to Convert a List to String in Python`_
 
-        # result = self._database.query(sql, values=data)
-        # return result
+        .. _How to Convert a List to String in Python:
+           https://www.simplilearn.com/tutorials/python-tutorial/list-to-string-in-python#how_to_convert_a_list_to_string_in_python
+        """
+
+        attributes = self._sanitized_attributes()
+        key_list = []
+        value_list = []
+
+        # Loops through the dictionary:
+        for key, value in attributes.items():
+            key_list.append("{key}=%s".format(key=key))
+            value_list.append(value)
+
+        sql = "UPDATE bicycles SET "
+        sql += ", ".join(key_list)
+        sql += " WHERE id=%s "
+        sql += "LIMIT 1"
+
+        # Appends the ID at the end of the value_list.
+        value_list.append(self.id)
+        data = tuple(value_list)
+
+        result = self._database.query(sql, values=data)
+        return result
 
     def merge_attributes(self, **kwargs):
         for key, value in kwargs.items():
