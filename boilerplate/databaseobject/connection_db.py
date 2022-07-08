@@ -64,14 +64,6 @@ class ConnectionDB(object):
             sql (str): The query to be executed.
             values (tuple, optional): The values to complete the SQL statement.
                 Defaults to None.
-            create (bool, optional): Flag to mark the creation of a record.
-                Defaults to False.
-            read (bool, optional): Flag to mark the read operation. Defaults to
-                False.
-            update (bool, optional): Flag to mark the update of a record.
-                Defaults to False.
-            delete (bool, optional): Flag to mark the delete operation. Defaults
-                to False.
 
         Returns:
             (list[dict] | list[] | bool): Returns False on failure. For
@@ -114,6 +106,7 @@ class ConnectionDB(object):
 
         """
 
+        # The default return value of this function is False.
         result = False
 
         # If the execution got to this line, it passed the error checking in
@@ -131,26 +124,25 @@ class ConnectionDB(object):
             # READ or DELETE (CRUD)
             else:
                 # Read
-                cursor.execute(sql)  # None
+                cursor.execute(sql)
                 result = cursor.fetchall()
 
         except mysql.connector.Error as err:
-
 
             # err.errno means the error code (number).
             if err.errno == errorcode.ER_NO_SUCH_TABLE:
                 shared.print_error_message(
                     "Database table does not exist.")
-                # raise Exception("Database table does not exist.")
+                raise Exception("Database table does not exist.")
 
             if err.errno == errorcode.ER_BAD_FIELD_ERROR:
                 shared.print_error_message(
                     "Column does not exist in table.")
-                # raise Exception("Column does not exist in table.")
+                raise Exception("Column does not exist in table.")
 
             else:
                 shared.print_error_message(err)
-                # raise Exception("There was an error reading the record(s).")
+                raise Exception("There was an error executing the query.")
 
         finally:
             # If there was no error in the execution:

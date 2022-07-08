@@ -80,15 +80,15 @@ def db_connect():
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             shared.print_error_message(
                 "Something is wrong with your username or password.")
-            raise
+            raise Exception("Something is wrong with your username or password.")
 
         elif err.errno == errorcode.ER_DBACCESS_DENIED_ERROR:
             shared.print_error_message("Database does not exist.")
-            raise
+            raise Exception("Database does not exist.")
 
         else:
             shared.print_error_message(err)
-            raise
+            raise Exception("There was an error with the database connection.")
 
 
 def db_disconnect(connection):

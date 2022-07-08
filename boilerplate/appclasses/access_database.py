@@ -91,7 +91,14 @@ class Bicycle(object):
             sql (str): The SQL string to be executed.
 
         Returns:
-            list[obj]: List containing objects from the query result.
+            (list[obj] | False): List containing objects from the query result.
+            False if it does not find anything.
+
+        References:
+            `How to check if a list is empty in python?`_
+
+        .. _How to check if a list is empty in python?:
+           https://flexiple.com/check-if-list-is-empty-python/#section2
 
         """
 
@@ -99,7 +106,9 @@ class Bicycle(object):
 
         # If the resulting list is empty:
         if not result:
-            shared.print_error_message('Database query failed.')
+            shared.print_error_message(
+                'Database query failed. The resulting list is empty.')
+            return False
 
         # results into objects
         object_list = []
@@ -271,7 +280,6 @@ class Bicycle(object):
             if hasattr(self, key) and not shared.is_none(value):
                 setattr(self, key, value)
 
-
     def attributes(self):
         u"""Creates a dictionary that have, as properties, the database columns
         (excluding ID) and the corresponding values from the instance object in
@@ -392,7 +400,8 @@ class Bicycle(object):
         self.description = kwargs['description'] if 'description' in kwargs else ''
         self.gender = kwargs['gender'] if 'gender' in kwargs else ''
         self.price = kwargs['price'] if 'price' in kwargs else 0
-        self.weight_kg = decimal.Decimal(kwargs['weight_kg']) if 'weight_kg' in kwargs else 0.0
+        self.weight_kg = decimal.Decimal(
+            kwargs['weight_kg']) if 'weight_kg' in kwargs else 0.0
         self.condition_id = kwargs['condition_id'] if 'condition_id' in kwargs else 3
 
     def name(self):
