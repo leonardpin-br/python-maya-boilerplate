@@ -187,6 +187,8 @@ def main():
         print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.weight_kg, weight_lbs=bike.weight_lbs))
         print(bike.condition())
         print("${price}".format(price=bike.price))
+    else:
+        print("The ID was not found.")
 
     # CREATING A RECORD
     # ==========================================================================

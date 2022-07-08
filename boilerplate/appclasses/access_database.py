@@ -100,7 +100,6 @@ class Bicycle(object):
         # If the resulting list is empty:
         if not result:
             shared.print_error_message('Database query failed.')
-            raise
 
         # results into objects
         object_list = []
