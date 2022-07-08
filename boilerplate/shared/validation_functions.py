@@ -230,6 +230,8 @@ def has_length(value, options={'min': 0, 'max': 0, 'exact': 0}):
     exactly. Spaces count towards length. Use ``trim()`` if spaces should not
     count.
 
+    options=dict(min=0, max=0, exact=0)
+
     Args:
         value (str): The string to be verified.
         options (dict[min, max, exact]): Dictionary with properties to check the string length.
