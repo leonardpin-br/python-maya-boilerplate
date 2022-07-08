@@ -220,13 +220,11 @@ def main():
     bike = Bicycle.find_by_id(26)
 
     if bike:
-        print("Bicycle found!")
-        print("")
 
         kwargs = {
             "id": bike.id,
             "brand": bike.brand,
-            "model": "Bob's Overdrive", # bike.model
+            "model": "Bob's Overdrive", # Bob's Overdrive
             "year": bike.year,
             "category": bike.category,
             "gender": bike.gender,
@@ -236,7 +234,7 @@ def main():
             "price": bike.price
         }
 
-        bike.merge_attributes(kwargs)
+        bike.merge_attributes(**kwargs)
         result = bike.update()
         if result:
             print("The bicycle was updated.")

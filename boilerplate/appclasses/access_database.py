@@ -298,6 +298,41 @@ class Bicycle(object):
         return result
 
     def merge_attributes(self, **kwargs):
+        u"""Merges the attributes from the given dictionary into the object in
+        memory created from the findById() method.
+
+        Args:
+            **kwargs: The dictionary containing the new values to be merged and later updated.
+
+        Example:
+            How to call this method::
+
+                    bike = Bicycle.find_by_id(26)
+
+                    if bike:
+                        kwargs = {
+                            "id": bike.id,
+                            "brand": bike.brand,
+                            "model": "Bob's Overdrive", # bike.model
+                            "year": bike.year,
+                            "category": bike.category,
+                            "gender": bike.gender,
+                            "color": bike.color,
+                            "weight_kg": bike.weight_kg,
+                            "condition": bike.condition,
+                            "price": bike.price
+                        }
+
+                        bike.merge_attributes(**kwargs)
+                        result = bike.update()
+                        if result:
+                            print("The bicycle was updated.")
+                        else:
+                            print("There was an error in the update process.")
+                    else:
+                        print("The ID was not found.")
+        """
+
         for key, value in kwargs.items():
             if hasattr(self, key) and not shared.is_none(value):
                 setattr(self, key, value)
