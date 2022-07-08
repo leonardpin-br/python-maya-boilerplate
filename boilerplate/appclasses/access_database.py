@@ -35,7 +35,6 @@ __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
 import decimal
-from boilerplate.shared.validation_functions import is_none
 
 import shared
 from shared import constant
@@ -96,7 +95,7 @@ class Bicycle(object):
 
         """
 
-        result = cls._database.query(sql, read=True)
+        result = cls._database.query(sql)
 
         # If the resulting list is empty:
         if not result:
@@ -202,8 +201,8 @@ class Bicycle(object):
         current instance in memory.
 
         Returns:
-            (list[dict] | list[] | True): The result of the **query()** method executed
-            inside this method.
+            (list[dict] | list[] | bool): The result of the **query()** method
+            executed inside this method.
 
         References:
             `How to Convert a List to String in Python`_
@@ -212,16 +211,22 @@ class Bicycle(object):
 
             `Python add item to the tuple`_
 
+            `Prepared Statements`_
+
         .. _How to Convert a List to String in Python:
            https://www.simplilearn.com/tutorials/python-tutorial/list-to-string-in-python#how_to_convert_a_list_to_string_in_python
         .. _Last Key in Python Dictionary:
            https://stackoverflow.com/a/16125237
         .. _Python add item to the tuple:
            https://stackoverflow.com/a/16730584
+        .. _Prepared Statements:
+           https://www.php.net/manual/en/mysqli.quickstart.prepared-statements.php
         """
 
         attributes = self._sanitized_attributes()
 
+        # Prepared statement, stage 1: prepare
+        # ----------------------------------------------------------------------
         temporary_list = []
         sql = "INSERT INTO bicycles ("
 
@@ -240,29 +245,31 @@ class Bicycle(object):
 
         data = tuple(temporary_list)
 
-        result = self._database.query(sql, values=data, create=True)
+        # Prepared statement, stage 2: bind and execute happen inside query().
+        # ----------------------------------------------------------------------
+        result = self._database.query(sql, values=data)
         if result:
             self.id = self._database.insert_id
 
         return result
 
     def update(self):
+        pass
+        # attributes = self.attributes()
 
-        attributes = self.attributes()
+        # sql = "UPDATE bicycles SET "
+        # sql +=
+        # sql += " WHERE id='%s' "
+        # sql += "LIMIT 1"
 
-        sql = "UPDATE bicycles SET "
-        sql +=
-        sql += " WHERE id='%s' "
-        sql += "LIMIT 1"
+        # data = (self.id)
 
-        data = (self.id)
-
-        result = self._database.query(sql, values=data, update=True)
-        return result
+        # result = self._database.query(sql, values=data)
+        # return result
 
     def merge_attributes(self, **kwargs):
         for key, value in kwargs.items():
-            if hasattr(self, key) and not is_none(value):
+            if hasattr(self, key) and not shared.is_none(value):
                 setattr(self, key, value)
 
 

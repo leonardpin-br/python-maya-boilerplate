@@ -92,7 +92,9 @@ def db_connect():
 
 
 def db_disconnect(connection):
-    u"""Closes the database connection.
+    u"""Chose not to use this function because it is slow.
+
+    Closes the database connection.
     """
     if shared.is_set(connection):
         connection.close()

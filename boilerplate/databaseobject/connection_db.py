@@ -57,7 +57,7 @@ class ConnectionDB(object):
         # There is error checking inside the db_connect() function.
         self.connection_db = database_functions.db_connect()
 
-    def query(self, sql, values=None, create=False, read=False, update=False, delete=False):
+    def query(self, sql, values=None):
         u"""Performs a query on the database.
 
         Args:
@@ -74,8 +74,10 @@ class ConnectionDB(object):
                 to False.
 
         Returns:
-            (list[dict] | list[] | True): A list of dictionaries with all
-            records or an empty list or True if it is a creation of a record.
+            (list[dict] | list[] | bool): Returns False on failure. For
+            successful queries which produce a result set, such as SELECT, SHOW,
+            DESCRIBE or EXPLAIN, will return a list of dictionaries with all
+            records. For other successful queries, will return True.
 
         Raises:
             ER_NO_SUCH_TABLE: Raised by the MySQLConnection object if the
@@ -112,77 +114,60 @@ class ConnectionDB(object):
 
         """
 
+        result = False
+
         # If the execution got to this line, it passed the error checking in
         # db_connect().
         cursor = self.connection_db.cursor(dictionary=True)  # MySQLCursorDict
 
-        if create:
-            try:
+        # https://dev.mysql.com/doc/connector-python/en/connector-python-tutorial-cursorbuffered.html
+        try:
+            # CREATE or UPDATE (CRUD)
+            if values:
                 cursor.execute(sql, values)
                 self.connection_db.commit()
                 result = True
 
-            except mysql.connector.Error as err:
-                shared.print_error_message(err)
-                raise Exception("There was an error in the creation of the record.")
-
-        elif read:
-            try:
+            # READ or DELETE (CRUD)
+            else:
+                # Read
                 cursor.execute(sql)  # None
                 result = cursor.fetchall()
 
-            except mysql.connector.Error as err:
+        except mysql.connector.Error as err:
 
-                # err.errno means the error code (number).
-                if err.errno == errorcode.ER_NO_SUCH_TABLE:
-                    shared.print_error_message(
-                        "Database table does not exist.")
-                    raise Exception("Database table does not exist.")
 
-                if err.errno == errorcode.ER_BAD_FIELD_ERROR:
-                    shared.print_error_message(
-                        "Column does not exist in table.")
-                    raise Exception("Column does not exist in table.")
+            # err.errno means the error code (number).
+            if err.errno == errorcode.ER_NO_SUCH_TABLE:
+                shared.print_error_message(
+                    "Database table does not exist.")
+                # raise Exception("Database table does not exist.")
 
-                else:
-                    shared.print_error_message(err)
-                    raise Exception("There was an error reading the record(s).")
+            if err.errno == errorcode.ER_BAD_FIELD_ERROR:
+                shared.print_error_message(
+                    "Column does not exist in table.")
+                # raise Exception("Column does not exist in table.")
 
-        elif update:
-            # https://dev.mysql.com/doc/connector-python/en/connector-python-tutorial-cursorbuffered.html
-            try:
-                cursor.execute(sql, values)
-                self.connection_db.commit()
-                result = True
-
-            except mysql.connector.Error as err:
+            else:
                 shared.print_error_message(err)
-                raise Exception("There was an error updating the record.")
+                # raise Exception("There was an error reading the record(s).")
 
-        elif delete:
-            pass
+        finally:
+            # If there was no error in the execution:
+            self.affected_rows = cursor.rowcount
+            self.insert_id = cursor.lastrowid
 
-        else:
-            shared.print_error_message("Must inform the (CRUD) operation.")
-            raise Exception("Must inform the (CRUD) operation.")
+            # Closes the cursor.
+            cursor.close()
 
-        # If there was no error in the execution:
-        self.affected_rows = cursor.rowcount
-        self.insert_id = cursor.lastrowid
+            # THE CONNECTION SHOULD NOT BE CLOSED.
+            # Autodesk Maya executes correctly the first time, but shows an error
+            # from the second time foward. See reference.
+            # ----------------------------------------------------------------------
+            # Closes the connection.
+            # database_functions.db_disconnect(self.connection_db)
 
-        # Closes the cursor.
-        cursor.close()
-
-        # THE CONNECTION SHOULD NOT BE CLOSED.
-        # Autodesk Maya executes correctly the first time, but shows an error
-        # from the second time foward. See reference.
-        # ----------------------------------------------------------------------
-        # Closes the connection.
-        #   Chose not to use this function because it is slow.
-        #   database_functions.db_disconnect(self.connection_db)
-        # self.connection_db.close()
-
-        return result
+            return result
 
     def escape_string(self, string_to_escape):
         u"""**NOT NECESSARY** (see reference).
