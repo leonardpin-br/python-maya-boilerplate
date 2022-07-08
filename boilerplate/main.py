@@ -243,7 +243,7 @@ def main():
     # else:
     #     print("The ID was not found.")
 
-    print(shared.has_length('abcd', {"min": 1, "max": 5, "exact": 4}))
+    print(shared.has_valid_email_format("popular_website15@comPany.com"))
 
 
 main()

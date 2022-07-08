@@ -8,17 +8,25 @@ __all__ = [
     'is_set',
     'list_equals',
     'trim',
+    'in_list',
     # ----------
     'is_blank',
     'has_presence',
     'has_length_greater_than',
     'has_length_less_than',
     'has_length_exactly',
-    'has_length'
+    'has_length',
+    'has_inclusion_of',
+    'has_exclusion_of',
+    'has_string',
+    'has_valid_email_format',
+    'has_unique_username'
 ]
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __link__ = u"https://www.leonardopinheiro.net"
+
+import re
 
 
 # Utility functions (used by the validation functions)
@@ -123,6 +131,33 @@ def trim(value):
     """
     return value.strip()
 
+
+def in_list(needle, haystack):
+    u"""Checks if a value exists in a list.
+
+    Args:
+        needle (Any): The searched value.
+        haystack (list): The list.
+
+    Returns:
+        bool: Returns True if needle is found in the list, False otherwise.
+
+    References:
+        `in_array`_
+
+        `How to check if an element exists in a Python array (Equivalent of PHP in_array)?`_
+
+    .. _in_array:
+       https://www.php.net/manual/en/function.in-array.php
+    .. _How to check if an element exists in a Python array (Equivalent of PHP in_array)?:
+       https://stackoverflow.com/a/14743170
+    """
+
+    if needle in haystack:
+        return True
+
+    return False
+
 # Validation functions
 # ==============================================================================
 
@@ -225,12 +260,10 @@ def has_length_exactly(value, exact):
     return length == exact
 
 
-def has_length(value, options={'min': 0, 'max': 0, 'exact': 0}):
+def has_length(value, options):
     u"""Validate string length. Combines functions greater_than, less_than and
     exactly. Spaces count towards length. Use ``trim()`` if spaces should not
     count.
-
-    options=dict(min=0, max=0, exact=0)
 
     Args:
         value (str): The string to be verified.
@@ -242,7 +275,7 @@ def has_length(value, options={'min': 0, 'max': 0, 'exact': 0}):
     Example:
         Calling this function::
 
-            shared.has_length('abcd', {"min": 1, "max": 5, "exact": 4})
+            shared.has_length('abcd', {"min": 3, "max": 5})
 
     References:
         `Dictionary with some mandatory keys as function input`_
@@ -250,8 +283,121 @@ def has_length(value, options={'min': 0, 'max': 0, 'exact': 0}):
     .. _Dictionary with some mandatory keys as function input:
        https://stackoverflow.com/a/21014868
     """
-    # length = len(value)
-    # return length == exact
-    print(options['min'])
-    print(options['max'])
-    print(options['exact'])
+
+    if "min" in options and not has_length_greater_than(value, options['min'] - 1):
+        return False
+    elif "max" in options and not has_length_less_than(value, options['max'] + 1):
+        return False
+    elif "exact" in options and not has_length_exactly(value, options['exact']):
+        return False
+    else:
+        return True
+
+
+def has_inclusion_of(value, set):
+    u"""Validate inclusion in a set.
+
+    Args:
+        value (Any): The value to be searched in the set.
+        set (list[Any]): The list to search in.
+
+    Returns:
+        bool: True if found. False otherwise.
+
+    Example:
+        Calling this function::
+
+            shared.has_inclusion_of(5, [1, 3, 5, 7, 9])
+    """
+
+    return in_list(value, set)
+
+
+def has_exclusion_of(value, set):
+    u"""Validate exclusion from a set.
+
+    Args:
+        value (Any): The value to search in the set.
+        set (list[Any]): The list to search for the value
+
+    Returns:
+        bool: True if not in the list. False otherwise.
+
+    Example:
+        Calling this function::
+
+            shared.has_exclusion_of(12, [1, 3, 5, 7, 9])
+    """
+
+    return not in_list(value, set)
+
+
+def has_string(value, required_string):
+    u"""Validate inclusion of character(s).
+
+    find returns the starting index of the substring or -1.
+
+    Args:
+        value (str): The bigger string.
+        required_string (str): The substring.
+
+    Returns:
+        bool: True if found. False otherwise.
+
+    Example:
+        Calling this function::
+
+            shared.has_string('nobody@nowhere.com', '.com')
+
+    References:
+        `Methods to check if a python string contains a substring`_
+
+    .. _Methods to check if a python string contains a substring:
+       https://flexiple.com/python-string-contains/#section32
+    """
+
+    if value.find(required_string) != -1:
+        return True
+    else:
+        return False
+
+
+def has_valid_email_format(value):
+    r"""Validate correct format for email addresses.
+
+    ``Format: [chars]@[chars].[2+ letters]``
+
+    Example:
+        Original regex (from the course). Not used here::
+
+            pat = '/\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\Z/i'
+
+    Args:
+        value (str): The string to be matched against the regular expression.
+
+    Returns:
+        bool: True if the string has valid format. False otherwise.
+
+    Example:
+        Calling this function::
+
+            shared.has_valid_email_format("popular_website15@comPany.com")
+
+    References:
+        `Python program to validate email address`_
+
+    .. _Python program to validate email address:
+       https://www.tutorialspoint.com/python-program-to-validate-email-address
+    """
+
+    # Original regex (from the course):
+    # pat = '/\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\Z/i'
+    # Regex from the reference:
+    pat = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
+    if re.match(pat, value):
+        return True
+    return False
+
+
+def has_unique_username(username, current_id="0"):
+    pass
