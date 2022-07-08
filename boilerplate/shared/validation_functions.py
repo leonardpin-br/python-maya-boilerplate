@@ -13,7 +13,8 @@ __all__ = [
     'has_presence',
     'has_length_greater_than',
     'has_length_less_than',
-    'has_length_exactly'
+    'has_length_exactly',
+    'has_length'
 ]
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
@@ -222,3 +223,33 @@ def has_length_exactly(value, exact):
     """
     length = len(value)
     return length == exact
+
+
+def has_length(value, options={'min': 0, 'max': 0, 'exact': 0}):
+    u"""Validate string length. Combines functions greater_than, less_than and
+    exactly. Spaces count towards length. Use ``trim()`` if spaces should not
+    count.
+
+    Args:
+        value (str): The string to be verified.
+        options (dict[min, max, exact]): Dictionary with properties to check the string length.
+
+    Returns:
+        bool: True if the string has that length. False otherwise.
+
+    Example:
+        Calling this function::
+
+            shared.has_length('abcd', {"min": 1, "max": 5, "exact": 4})
+
+    References:
+        `Dictionary with some mandatory keys as function input`_
+
+    .. _Dictionary with some mandatory keys as function input:
+       https://stackoverflow.com/a/21014868
+    """
+    # length = len(value)
+    # return length == exact
+    print(options['min'])
+    print(options['max'])
+    print(options['exact'])

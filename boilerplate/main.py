@@ -243,7 +243,7 @@ def main():
     # else:
     #     print("The ID was not found.")
 
-    print(shared.has_length_exactly('abcd', 4))
+    print(shared.has_length('abcd', {"min": 1, "max": 5, "exact": 4}))
 
 
 main()
