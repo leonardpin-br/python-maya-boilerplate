@@ -235,9 +235,9 @@ def main():
         }
 
         bike.merge_attributes(**kwargs)
-        result = bike.update()
+        result = bike.save()
         if result:
-            print("The bicycle was updated.")
+            print("The bicycle was updated successfully.")
         else:
             print("There was an error in the update process.")
     else:

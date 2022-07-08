@@ -204,7 +204,7 @@ class Bicycle(object):
 
         return obj
 
-    def create(self):
+    def _create(self):
         u"""Creates a record in the database with the properties' values of the
         current instance in memory.
 
@@ -261,12 +261,12 @@ class Bicycle(object):
 
         return result
 
-    def update(self):
+    def _update(self):
         u"""Updates the database with the properties' values of the current
         instance in memory.
 
         Returns:
-            (bool): The result of the query() method executed inside this
+            bool: The result of the query() method executed inside this
             method. True if the update is successful. False otherwise.
 
         References:
@@ -296,6 +296,19 @@ class Bicycle(object):
 
         result = self._database.query(sql, values=data)
         return result
+
+    def save(self):
+        u"""Executes the update() or the create() instance methods based on the
+        presence of an ID.
+
+        Returns:
+            (list[dict] | list[] | bool): Returns the same as the instance
+            method that was executed.
+        """
+
+        if shared.is_set(self.id):
+            return self._update()
+        return self._create()
 
     def merge_attributes(self, **kwargs):
         u"""Merges the attributes from the given dictionary into the object in
