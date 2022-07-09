@@ -208,42 +208,55 @@ def main():
     #     "condition_id": 3,
     #     "description": ""
     # }
+    # kwargs = {
+    #     "brand": "Schwinn",
+    #     "model": "Sanctuary 7-Speed",
+    #     "year": 2016,
+    #     "category": "Cruiser",
+    #     "color": "purple",
+    #     "gender": "Womens",
+    #     "price": 190,
+    #     "weight_kg": 19.5,
+    #     "condition_id": 3,
+    #     "description": ""
+    # }
 
     # bicycle = Bicycle(**kwargs)
-    # result = bicycle.create()
+    # result = bicycle.save()
     # if result:
     #     print("The new ID is: {id}".format(id=bicycle.id))
     #     print("The bicycle was created successfully.")
+    # else:
+    #     print(shared.display_errors(bicycle.errors))
 
     # UPDATING A RECORD
     # ==========================================================================
-    # bike = Bicycle.find_by_id(26)
+    bike = Bicycle.find_by_id(35)
 
-    # if bike:
+    if bike:
 
-    #     kwargs = {
-    #         "id": bike.id,
-    #         "brand": bike.brand,
-    #         "model": "Bob's Overdrive", # Bob's Overdrive
-    #         "year": bike.year,
-    #         "category": bike.category,
-    #         "gender": bike.gender,
-    #         "color": bike.color,
-    #         "weight_kg": bike.weight_kg,
-    #         "condition": bike.condition,
-    #         "price": bike.price
-    #     }
+        kwargs = {
+            "id": bike.id,
+            "brand": 'Schwinn', # bike.brand
+            "model": bike.model, # Bob's Overdrive
+            "year": bike.year,
+            "category": bike.category,
+            "gender": bike.gender,
+            "color": bike.color,
+            "weight_kg": bike.weight_kg,
+            "condition": bike.condition,
+            "price": bike.price
+        }
 
-    #     bike.merge_attributes(**kwargs)
-    #     result = bike.save()
-    #     if result:
-    #         print("The bicycle was updated successfully.")
-    #     else:
-    #         print("There was an error in the update process.")
-    # else:
-    #     print("The ID was not found.")
+        bike.merge_attributes(**kwargs)
+        result = bike.save()
+        if result:
+            print("The bicycle was updated successfully.")
+        else:
+            print(shared.display_errors(bike.errors))
+    else:
+        print("The ID was not found.")
 
-    print(shared.has_valid_email_format("popular_website15@comPany.com"))
 
 
 main()

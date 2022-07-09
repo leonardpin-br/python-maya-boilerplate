@@ -58,6 +58,8 @@ class Bicycle(object):
     _db_columns = ['id', 'brand', 'model', 'year', 'category', 'color',
                    'gender', 'price', 'weight_kg', 'condition_id', 'description']
 
+    errors = []
+
     @classmethod
     def set_database(cls, database):
         u"""**Not implemented.**
@@ -204,6 +206,24 @@ class Bicycle(object):
 
         return obj
 
+    def _validate(self):
+        u"""Every class that extends this one (DatabaseObject) must implement
+        this method.
+
+        Returns:
+            list[str]: The errors string list.
+        """
+
+        self.errors = []
+
+        if shared.is_blank(self.brand):
+            self.errors.append("Brand cannot be blank.")
+
+        if shared.is_blank(self.model):
+            self.errors.append("Model cannot be blank.")
+
+        return self.errors
+
     def _create(self):
         u"""Creates a record in the database with the properties' values of the
         current instance in memory.
@@ -221,6 +241,8 @@ class Bicycle(object):
 
             `Prepared Statements`_
 
+            `How to check if a list is empty in python?`_
+
         .. _How to Convert a List to String in Python:
            https://www.simplilearn.com/tutorials/python-tutorial/list-to-string-in-python#how_to_convert_a_list_to_string_in_python
         .. _Last Key in Python Dictionary:
@@ -229,7 +251,13 @@ class Bicycle(object):
            https://stackoverflow.com/a/16730584
         .. _Prepared Statements:
            https://www.php.net/manual/en/mysqli.quickstart.prepared-statements.php
+        .. _How to check if a list is empty in python?:
+           https://flexiple.com/check-if-list-is-empty-python/
         """
+
+        self._validate()
+        if self.errors:
+            return False
 
         attributes = self._sanitized_attributes()
 
@@ -276,6 +304,10 @@ class Bicycle(object):
            https://www.simplilearn.com/tutorials/python-tutorial/list-to-string-in-python#how_to_convert_a_list_to_string_in_python
         """
 
+        self._validate()
+        if self.errors:
+            return False
+
         attributes = self._sanitized_attributes()
         key_list = []
         value_list = []
@@ -306,7 +338,7 @@ class Bicycle(object):
             method that was executed.
         """
 
-        if shared.is_set(self.id):
+        if self.id > 0:
             return self._update()
         return self._create()
 
