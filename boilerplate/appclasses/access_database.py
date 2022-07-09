@@ -154,3 +154,53 @@ class Bicycle(DatabaseObject):
             self.errors.append("Model cannot be blank.")
 
         return self.errors
+
+
+class Admin(DatabaseObject):
+
+    _table_name = "admins"
+    _db_columns = ['id', 'first_name', 'last_name', 'email', 'username',
+                   'hashed_password']
+
+    def __init__(self, **kwargs):
+        u"""Creates an instance of Admin.
+
+        Args:
+            **kwargs: Keyword arguments with the admin properties.
+        """
+
+        super(Admin, self).__init__()
+
+        # Public instance properties:
+        self.id = kwargs['id'] if 'id' in kwargs else 0
+        self.first_name = kwargs['first_name'] if 'first_name' in kwargs else ''
+        self.last_name = kwargs['last_name'] if 'last_name' in kwargs else ''
+        self.email = kwargs['email'] if 'email' in kwargs else ''
+        self.username = kwargs['username'] if 'username' in kwargs else ''
+        self.password = kwargs['password'] if 'password' in kwargs else ''
+        self.confirm_password = kwargs['confirm_password'] if 'confirm_password' in kwargs else ''
+
+        # Protected instance property:
+        self._hashed_password = ''
+
+    @property
+    def hashed_password(self):
+        return self._hashed_password
+
+    @hashed_password.setter
+    def hashed_password(self, value):
+        self._hashed_password = shared.password_hash(value)
+
+    def full_name(self):
+        return "{self.first_name} {self.last_name}".format(self=self)
+
+    def _create(self):
+        self.hashed_password = self.password
+        return super(Admin, self)._create()
+
+    def _update(self):
+        self._set_hashed_password()
+        return super(Admin, self)._update()
+
+    def _validate(self):
+        pass

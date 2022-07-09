@@ -31,10 +31,14 @@ class DatabaseObject(object):
 
         `Is it possible to make abstract classes in Python?`_
 
+        `18. The 'ABC' of Abstract Base Classes`_
+
     .. _Conditional import of modules in Python:
        https://stackoverflow.com/a/3496790
     .. _Is it possible to make abstract classes in Python?:
        https://stackoverflow.com/a/13646263
+    .. _18. The 'ABC' of Abstract Base Classes:
+       https://python-course.eu/oop/the-abc-of-abstract-base-classes.php
 
     """
 
@@ -261,10 +265,12 @@ class DatabaseObject(object):
         # Prepared statement, stage 1: prepare
         # ----------------------------------------------------------------------
         temporary_list = []
+        place_holder = '' # %s
         sql = "INSERT INTO " + self._table_name + " ("
 
         # Loops through the dictionary:
         for key in attributes:
+            place_holder += '%s'
             sql += key
             temporary_list.append(attributes[key])
 
@@ -272,9 +278,10 @@ class DatabaseObject(object):
             if key == attributes.keys()[-1]:
                 break
 
+            place_holder += ", "
             sql += ", "
 
-        sql += ") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        sql += ") VALUES (" + place_holder + ")"
 
         data = tuple(temporary_list)
 

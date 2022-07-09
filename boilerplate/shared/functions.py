@@ -8,6 +8,7 @@ __all__ = [
     'constant',
     'get_subdir_full_paths',
     'number_format',
+    'password_hash',
     'print_error_message',
     'print_sys_path'
 ]
@@ -133,6 +134,23 @@ def number_format(num, places=0):
     """
 
     return locale.format_string("%.*f", (places, num), True)
+
+
+def password_hash(password):
+    add_site_packages_to_sys_path(__file__)
+
+    import bcrypt
+
+    # Convert the password to the array of bytes first.
+    bytePwd = password.encode('utf-8')
+
+    # Generate salt
+    mySalt = bcrypt.gensalt()
+
+    # Hash password
+    hash = bcrypt.hashpw(bytePwd, mySalt)
+
+    return hash
 
 
 def print_error_message(error_message):

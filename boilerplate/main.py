@@ -100,7 +100,7 @@ import sys
 
 import shared
 import activerecord
-from appclasses.access_database import Bicycle
+from appclasses.access_database import Bicycle, Admin
 
 
 def untested_function():
@@ -271,19 +271,62 @@ def main():
 
     # DELETING A RECORD
     # ==========================================================================
-    bike = Bicycle.find_by_id(380)
+    # bike = Bicycle.find_by_id(380)
 
-    if bike:
+    # if bike:
 
-        result = bike.delete()
-        if result:
-            print("{name} was deleted successfully.".format(name=bike.name()))
-        else:
-            print("There was an error deleting the bicycle.")
+    #     result = bike.delete()
+    #     if result:
+    #         print("{name} was deleted successfully.".format(name=bike.name()))
+    #     else:
+    #         print("There was an error deleting the bicycle.")
 
-    else:
-        print("The ID was not found.")
+    # else:
+    #     print("The ID was not found.")
+
+    # ADMIN FIND ALL
+    # ==========================================================================
+    # admins = Admin.find_all()
+
+    # for admin in admins:
+    #     print(admin.first_name)
+    #     print(admin.last_name)
+    #     print(admin.email)
+    #     print(admin.username)
+    #     print("====================================================\n\n")
+
+    # ADMIN FIND BY ID
+    # ==========================================================================
+    # admin = Admin.find_by_id(1)
+
+    # if admin:
+    #     print(admin.full_name())
+    #     print("-------------------------------------------")
+    #     print(admin.first_name)
+    #     print(admin.last_name)
+    #     print(admin.email)
+    #     print(admin.username)
+    # else:
+    #     print("The ID was not found.")
 
 
+    # ADMIN CREATING A RECORD
+    # ==========================================================================
+    # kwargs = {
+    #     "first_name": "Kevin",
+    #     "last_name": "Skoglund",
+    #     "email": "kevin@nowhere.com",
+    #     "username": "kskoglund",
+    #     "password": "secretpassword",
+    #     "confirm_password": ""
+    # }
+
+    # admin = Admin(**kwargs)
+    # result = admin.save()
+    # if result:
+    #     print("The ID of the new admin is: {id}".format(id=admin.id))
+    #     print("The admin was created successfully.")
+    # else:
+    #     print(shared.display_errors(admin.errors))
 
 main()
