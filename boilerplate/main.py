@@ -220,6 +220,18 @@ def main():
     #     "condition_id": 3,
     #     "description": ""
     # }
+    # kwargs = {
+    #     "brand": "Junk Bike",
+    #     "model": "Delete me",
+    #     "year": 1998,
+    #     "category": "Road",
+    #     "color": "white",
+    #     "gender": "Mens",
+    #     "price": 2,
+    #     "weight_kg": 1,
+    #     "condition_id": 3,
+    #     "description": ""
+    # }
 
     # bicycle = Bicycle(**kwargs)
     # result = bicycle.save()
@@ -231,29 +243,44 @@ def main():
 
     # UPDATING A RECORD
     # ==========================================================================
-    bike = Bicycle.find_by_id(35)
+    # bike = Bicycle.find_by_id(35)
+
+    # if bike:
+
+    #     kwargs = {
+    #         "id": bike.id,
+    #         "brand": 'Schwinn', # bike.brand
+    #         "model": bike.model, # Bob's Overdrive
+    #         "year": bike.year,
+    #         "category": bike.category,
+    #         "gender": bike.gender,
+    #         "color": bike.color,
+    #         "weight_kg": bike.weight_kg,
+    #         "condition": bike.condition,
+    #         "price": bike.price
+    #     }
+
+    #     bike.merge_attributes(**kwargs)
+    #     result = bike.save()
+    #     if result:
+    #         print("The bicycle was updated successfully.")
+    #     else:
+    #         print(shared.display_errors(bike.errors))
+    # else:
+    #     print("The ID was not found.")
+
+    # DELETING A RECORD
+    # ==========================================================================
+    bike = Bicycle.find_by_id(36)
 
     if bike:
 
-        kwargs = {
-            "id": bike.id,
-            "brand": 'Schwinn', # bike.brand
-            "model": bike.model, # Bob's Overdrive
-            "year": bike.year,
-            "category": bike.category,
-            "gender": bike.gender,
-            "color": bike.color,
-            "weight_kg": bike.weight_kg,
-            "condition": bike.condition,
-            "price": bike.price
-        }
-
-        bike.merge_attributes(**kwargs)
-        result = bike.save()
+        result = bike.delete()
         if result:
-            print("The bicycle was updated successfully.")
+            print("{name} was deleted successfully.".format(name=bike.name()))
         else:
-            print(shared.display_errors(bike.errors))
+            print("There was an error deleting the bicycle.")
+
     else:
         print("The ID was not found.")
 

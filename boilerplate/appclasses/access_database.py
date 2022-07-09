@@ -44,6 +44,7 @@ from databaseobject.connection_db import ConnectionDB
 class Bicycle(object):
 
     # ----- START OF ACTIVE RECORD CODE -----
+
     _database = ConnectionDB()
     u"""databaseobject.connection_db.ConnectionDB: Holds the connection
     information used by static methods.
@@ -434,6 +435,37 @@ class Bicycle(object):
             sanitized[key] = self._database.escape_string(value)
 
         return sanitized
+
+    def delete(self):
+        u"""Deletes, in the database, the record that corresponds to the current
+        instance object in memory.
+
+        After deleting, the instance of the object will still exist, even though
+        the database record does not. This can be useful, as in the example
+        below.
+
+        Returns:
+            (False | obj): The return value will be:
+            An object with information provided by MySQL.
+            False if there is no answer.
+
+        Example:
+            This is how it can be used::
+
+                print("{user.first_name} was deleted.".format(user=user))
+                # But, for example, we can't call user.update() after
+                # calling user.delete().
+        """
+
+        sql = "DELETE FROM bicycles "
+        sql += "WHERE id=%s "
+        sql += "LIMIT 1"
+
+        data = (self.id, )
+
+        result = self._database.query(sql, values=data)
+
+        return result
 
     # ----- END OF ACTIVE RECORD CODE -----
 
