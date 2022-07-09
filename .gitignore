@@ -8,7 +8,7 @@
 docs/sphinx/build/*
 
 # Exclude the db_credentials.py file:
-boilerplate/databaseobject/db_credentials.py
+boilerplate/activerecord/db_credentials.py
 
 # Exclude the node_modules folder.
 node_modules/*

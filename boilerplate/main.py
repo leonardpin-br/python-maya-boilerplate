@@ -99,7 +99,7 @@ import os
 import sys
 
 import shared
-import databaseobject
+import activerecord
 from appclasses.access_database import Bicycle
 
 
@@ -156,19 +156,19 @@ def main():
 
     # FIND ALL
     # ==========================================================================
-    bikes = Bicycle.find_all()
+    # bikes = Bicycle.find_all()
 
-    for bike in bikes:
-        print(bike.brand)
-        print(bike.model)
-        print(bike.year)
-        print(bike.category)
-        print(bike.gender)
-        print(bike.color)
-        print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.weight_kg, weight_lbs=bike.weight_lbs))
-        print(bike.condition_id)
-        print(bike.price)
-        print("====================================================\n\n")
+    # for bike in bikes:
+    #     print(bike.brand)
+    #     print(bike.model)
+    #     print(bike.year)
+    #     print(bike.category)
+    #     print(bike.gender)
+    #     print(bike.color)
+    #     print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.get_weight_kg(), weight_lbs=bike.weight_lbs))
+    #     print(bike.condition_id)
+    #     print(bike.price)
+    #     print("====================================================\n\n")
 
     # FIND BY ID
     # ==========================================================================
@@ -184,7 +184,7 @@ def main():
     #     print(bike.category)
     #     print(bike.gender)
     #     print(bike.color)
-    #     print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.weight_kg, weight_lbs=bike.weight_lbs))
+    #     print("{weight_kg} / {weight_lbs}".format(weight_kg=bike.get_weight_kg(), weight_lbs=bike.weight_lbs))
     #     print(bike.condition())
     #     print("${price}".format(price=bike.price))
     # else:
@@ -243,13 +243,13 @@ def main():
 
     # UPDATING A RECORD
     # ==========================================================================
-    # bike = Bicycle.find_by_id(35)
+    # bike = Bicycle.find_by_id(39)
 
     # if bike:
 
     #     kwargs = {
     #         "id": bike.id,
-    #         "brand": 'Schwinn', # bike.brand
+    #         "brand": 'Junk Bike', # bike.brand
     #         "model": bike.model, # Bob's Overdrive
     #         "year": bike.year,
     #         "category": bike.category,
@@ -271,18 +271,18 @@ def main():
 
     # DELETING A RECORD
     # ==========================================================================
-    # bike = Bicycle.find_by_id(36)
+    bike = Bicycle.find_by_id(380)
 
-    # if bike:
+    if bike:
 
-    #     result = bike.delete()
-    #     if result:
-    #         print("{name} was deleted successfully.".format(name=bike.name()))
-    #     else:
-    #         print("There was an error deleting the bicycle.")
+        result = bike.delete()
+        if result:
+            print("{name} was deleted successfully.".format(name=bike.name()))
+        else:
+            print("There was an error deleting the bicycle.")
 
-    # else:
-    #     print("The ID was not found.")
+    else:
+        print("The ID was not found.")
 
 
 

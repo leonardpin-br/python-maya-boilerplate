@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 
-
 __all__ = ['ConnectionDB']
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
-
 import shared
 shared.add_site_packages_to_sys_path(__file__)
 import database_functions
 
-from mysql.connector import errorcode
 import mysql.connector
-
+from mysql.connector import errorcode
 
 class ConnectionDB(object):
     u"""Mimics (loosely and in a very crud way) the mysqli (PHP) class.
