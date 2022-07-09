@@ -9,16 +9,12 @@ References:
 
 """
 
-import os
-import sys
-
+import db_credentials
 import shared
 shared.add_site_packages_to_sys_path(__file__)
 
-import mysql.connector
 from mysql.connector import errorcode
-
-import db_credentials
+import mysql.connector
 
 
 def confirm_db_connect(connection):
@@ -80,7 +76,8 @@ def db_connect():
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             shared.print_error_message(
                 "Something is wrong with your username or password.")
-            raise Exception("Something is wrong with your username or password.")
+            raise Exception(
+                "Something is wrong with your username or password.")
 
         elif err.errno == errorcode.ER_DBACCESS_DENIED_ERROR:
             shared.print_error_message("Database does not exist.")
@@ -92,7 +89,9 @@ def db_connect():
 
 
 def db_disconnect(connection):
-    u"""Chose not to use this function because it is slow.
+    u"""Chose not to use this function because it is slow and, when using
+    Autodesk Maya, the connection should not be closed (Maya only executes
+    the first time and then shows an error message from the second time foward).
 
     Closes the database connection.
     """

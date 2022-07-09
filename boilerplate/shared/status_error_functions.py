@@ -28,6 +28,3 @@ def display_errors(errors):
         for error in errors:
             output += "    " + error + "\n"
     return output
-
-
-
