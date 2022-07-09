@@ -19,12 +19,12 @@ from connection_db import ConnectionDB
 
 
 class DatabaseObject(object):
-    u"""Abstract superclass to access databases.
+    u"""Abstract superclass to be instantiated from all the others that access
+    the database.
 
     Last modified in 2022-07-09
 
     Python version 2.7.11 (Maya 2018 and 2020)
-
 
     References:
         `Conditional import of modules in Python`_
