@@ -312,21 +312,21 @@ def main():
 
     # ADMIN CREATING A RECORD
     # ==========================================================================
-    # kwargs = {
-    #     "first_name": "Kevin",
-    #     "last_name": "Skoglund",
-    #     "email": "kevin@nowhere.com",
-    #     "username": "kskoglund",
-    #     "password": "secretpassword",
-    #     "confirm_password": ""
-    # }
+    kwargs = {
+        "first_name": "Kevin",
+        "last_name": "Skoglund",
+        "email": "kevin@nowhere.com",
+        "username": "kskoglund",
+        "password": "secretpassword",
+        "confirm_password": ""
+    }
 
-    # admin = Admin(**kwargs)
-    # result = admin.save()
-    # if result:
-    #     print("The ID of the new admin is: {id}".format(id=admin.id))
-    #     print("The admin was created successfully.")
-    # else:
-    #     print(shared.display_errors(admin.errors))
+    admin = Admin(**kwargs)
+    result = admin.save()
+    if result:
+        print("The ID of the new admin is: {id}".format(id=admin.id))
+        print("The admin was created successfully.")
+    else:
+        print(shared.display_errors(admin.errors))
 
 main()

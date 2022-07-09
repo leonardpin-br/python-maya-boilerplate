@@ -136,18 +136,33 @@ def number_format(num, places=0):
     return locale.format_string("%.*f", (places, num), True)
 
 
+add_site_packages_to_sys_path(__file__)
+import bcrypt
+
+
 def password_hash(password):
-    add_site_packages_to_sys_path(__file__)
+    u"""Creates a password hash, using BCrypt.
 
-    import bcrypt
+    Args:
+        password (str): The password to be hashed.
 
-    # Convert the password to the array of bytes first.
+    Returns:
+        str: The hashed password.
+
+    References:
+        `Hashing Passwords in Python with BCrypt`_
+
+    .. _Hashing Passwords in Python with BCrypt:
+       https://stackabuse.com/hashing-passwords-in-python-with-bcrypt/
+    """
+
+    # Convert the password to the array of bytes first (see reference).
     bytePwd = password.encode('utf-8')
 
-    # Generate salt
+    # Generate salt.
     mySalt = bcrypt.gensalt()
 
-    # Hash password
+    # Hash password.
     hash = bcrypt.hashpw(bytePwd, mySalt)
 
     return hash

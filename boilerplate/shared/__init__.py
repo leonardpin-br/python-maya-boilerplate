@@ -6,6 +6,8 @@ Exports:
 
     ``validation_functions``
 
+    ``status_error_functions``
+
 Warning:
     The way of importing::
 
