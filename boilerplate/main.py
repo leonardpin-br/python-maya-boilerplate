@@ -155,7 +155,7 @@ def main():
     # bike = Bicycle(brand='Schwinn', model_make='Cutter', year_make=2016,
     #                category_make='City', color_make='white', description='', gender='Unisex', price=587, weight_kg=18.7, condition_id=4)
 
-    # FIND ALL
+    # BICYCLE: FIND ALL
     # ==========================================================================
     # bikes = Bicycle.find_all()
 
@@ -171,7 +171,7 @@ def main():
     #     print(bike.price)
     #     print("====================================================\n\n")
 
-    # FIND BY ID
+    # BICYCLE: FIND BY ID
     # ==========================================================================
     # bike = Bicycle.find_by_id(2)
 
@@ -191,7 +191,7 @@ def main():
     # else:
     #     print("The ID was not found.")
 
-    # CREATING A RECORD
+    # BICYCLE: CREATING A RECORD
     # ==========================================================================
     # bicycle = Bicycle(brand="Schwinn", model="Cutter", year=2016, category="City", color="white",
     #                   gender="Unisex", price=450, weight_kg=18, condition_id=4, description="")
@@ -242,9 +242,9 @@ def main():
     # else:
     #     print(shared.display_errors(bicycle.errors))
 
-    # UPDATING A RECORD
+    # BICYCLE: UPDATING A RECORD
     # ==========================================================================
-    # bike = Bicycle.find_by_id(39)
+    # bike = Bicycle.find_by_id(44)
 
     # if bike:
 
@@ -270,9 +270,9 @@ def main():
     # else:
     #     print("The ID was not found.")
 
-    # DELETING A RECORD
+    # BICYCLE: DELETING A RECORD
     # ==========================================================================
-    # bike = Bicycle.find_by_id(380)
+    # bike = Bicycle.find_by_id(44)
 
     # if bike:
 
@@ -285,7 +285,7 @@ def main():
     # else:
     #     print("The ID was not found.")
 
-    # ADMIN FIND ALL
+    # ADMIN: FIND ALL
     # ==========================================================================
     # admins = Admin.find_all()
 
@@ -296,7 +296,7 @@ def main():
     #     print(admin.username)
     #     print("====================================================\n\n")
 
-    # ADMIN FIND BY ID
+    # ADMIN: FIND BY ID
     # ==========================================================================
     # admin = Admin.find_by_id(1)
 
@@ -311,13 +311,13 @@ def main():
     #     print("The ID was not found.")
 
 
-    # ADMIN CREATING A RECORD
+    # ADMIN: CREATING A RECORD
     # ==========================================================================
     # kwargs = {
     #     "first_name": "Bob",
     #     "last_name": "Smith",
     #     "email": "b@b.com",
-    #     "username": "bobsmith",
+    #     "username": "bobsmithzzz",
     #     "password": "Password#1234",
     #     "confirm_password": "Password#1234"
     # }
@@ -330,9 +330,9 @@ def main():
     # else:
     #     print(shared.display_errors(admin.errors))
 
-    # ADMIN UPDATING A RECORD
+    # ADMIN: UPDATING A RECORD
     # ==========================================================================
-    # admin = Admin.find_by_id(12)
+    # admin = Admin.find_by_id(1)
 
     # if admin:
 
@@ -341,8 +341,8 @@ def main():
     #         "last_name": admin.last_name,
     #         "email": admin.email,
     #         "username": admin.username,
-    #         "password": "Password#1234",
-    #         "confirm_password": "Password#1234"
+    #         "password": "",
+    #         "confirm_password": ""
     #     }
 
     #     admin.merge_attributes(**kwargs)
@@ -354,16 +354,34 @@ def main():
     # else:
     #     print("The admin ID was not found.")
 
-    # ADMIN PASSWORD VERIFY
+    # ADMIN: PASSWORD VERIFY
     # ==========================================================================
-    username = "bobsmith"
-    password = "Password#1234"
-    admin = Admin.find_by_username(username)
+    # username = "bobsmith"
+    # password = "Password#1234"
+    # admin = Admin.find_by_username(username)
 
-    if admin and admin.verify_password(password):
-        print("The given password match with the one stored in the database.")
+    # if admin and admin.verify_password(password):
+    #     print("The given password match with the one stored in the database.")
+    # else:
+    #     print("The admin password does not match with the original.")
+
+    # ADMIN: DELETING A RECORD
+    # ==========================================================================
+    admin = Admin.find_by_id(14)
+
+    if admin:
+
+        result = admin.delete()
+        if result:
+            print("The admin {name} was deleted successfully.".format(name=admin.full_name()))
+        else:
+            print("There was an error deleting the admin.")
+
     else:
-        print("The admin password does not match with the original.")
+        print("The ID of the admin was not found.")
+
+
+    # print("hello")
 
 
 main()

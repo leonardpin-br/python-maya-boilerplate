@@ -138,11 +138,20 @@ def number_format(num, places=0):
 
 
 add_site_packages_to_sys_path(__file__)
-import bcrypt
+# Maya cannot load the .pyd file from BCrypt.
+# <project_root>/py27env/Lib/site-packages/bcrypt/_bcrypt.pyd
+# But, outside of Maya, the line below works OK.
+# import bcrypt
 
 
 def password_hash(password):
     u"""Creates a password hash, using BCrypt.
+
+    Maya cannot load the .pyd file from BCrypt::
+
+        <project_root>/py27env/Lib/site-packages/bcrypt/_bcrypt.pyd
+
+    But, outside of Maya, this function works OK.
 
     Args:
         password (str): The password to be hashed.
@@ -157,17 +166,18 @@ def password_hash(password):
        https://stackabuse.com/hashing-passwords-in-python-with-bcrypt/
     """
 
-    # Convert the password to the array of bytes first (see reference).
-    bytePwd = password.encode('utf-8')
+    # # Convert the password to the array of bytes first (see reference).
+    # bytePwd = password.encode('utf-8')
 
-    # Generate salt.
-    mySalt = bcrypt.gensalt()
+    # # Generate salt.
+    # mySalt = bcrypt.gensalt()
 
-    # Hash password.
-    hash = bcrypt.hashpw(bytePwd, mySalt)
+    # # Hash password.
+    # hash = bcrypt.hashpw(bytePwd, mySalt)
 
-    return hash
+    # return hash
 
+    pass
 
 def password_verify(password, hash_from_database):
     u"""Verifies the given password against the one stored in the database.

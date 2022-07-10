@@ -185,7 +185,11 @@ class Admin(DatabaseObject):
         self.hashed_password = None
 
     def set_hashed_password(self, value):
-        self.hashed_password = shared.password_hash(value)
+        # Maya cannot load the .pyd file from BCrypt.
+        # <project_root>/py27env/Lib/site-packages/bcrypt/_bcrypt.pyd
+        # But, outside of Maya, the line below works OK.
+        # self.hashed_password = shared.password_hash(value)
+        self.hashed_password = value
 
     def verify_password(self, password):
         return shared.password_verify(password, self.hashed_password)
