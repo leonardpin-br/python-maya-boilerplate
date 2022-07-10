@@ -219,8 +219,16 @@ class DatabaseObject(object):
         References:
             `Is it possible to make abstract classes in Python?`_
 
+            `Python RegEx: re.match(), re.search(), re.findall() with Example`_
+
+            `Regex match any single character (one character only)`_
+
         .. _Is it possible to make abstract classes in Python?:
            https://stackoverflow.com/a/13646263
+        .. _Python RegEx\: re.match(), re.search(), re.findall() with Example:
+           https://www.guru99.com/python-regular-expressions-complete-tutorial.html
+        .. _Regex match any single character (one character only):
+           https://stackoverflow.com/a/47545451
         """
 
         pass

@@ -97,6 +97,7 @@ References:
 
 import os
 import sys
+import re
 
 import shared
 import activerecord
@@ -312,21 +313,57 @@ def main():
 
     # ADMIN CREATING A RECORD
     # ==========================================================================
-    kwargs = {
-        "first_name": "Kevin",
-        "last_name": "Skoglund",
-        "email": "kevin@nowhere.com",
-        "username": "kskoglund",
-        "password": "secretpassword",
-        "confirm_password": ""
-    }
+    # kwargs = {
+    #     "first_name": "Bob",
+    #     "last_name": "Smith",
+    #     "email": "b@b.com",
+    #     "username": "bobsmith",
+    #     "password": "Password#1234",
+    #     "confirm_password": "Password#1234"
+    # }
 
-    admin = Admin(**kwargs)
-    result = admin.save()
-    if result:
-        print("The ID of the new admin is: {id}".format(id=admin.id))
-        print("The admin was created successfully.")
+    # admin = Admin(**kwargs)
+    # result = admin.save()
+    # if result:
+    #     print("The ID of the new admin is: {id}".format(id=admin.id))
+    #     print("The admin was created successfully.")
+    # else:
+    #     print(shared.display_errors(admin.errors))
+
+    # ADMIN UPDATING A RECORD
+    # ==========================================================================
+    # admin = Admin.find_by_id(12)
+
+    # if admin:
+
+    #     kwargs = {
+    #         "first_name": admin.first_name,
+    #         "last_name": admin.last_name,
+    #         "email": admin.email,
+    #         "username": admin.username,
+    #         "password": "Password#1234",
+    #         "confirm_password": "Password#1234"
+    #     }
+
+    #     admin.merge_attributes(**kwargs)
+    #     result = admin.save()
+    #     if result:
+    #         print("The admin was updated successfully.")
+    #     else:
+    #         print(shared.display_errors(admin.errors))
+    # else:
+    #     print("The admin ID was not found.")
+
+    # ADMIN PASSWORD VERIFY
+    # ==========================================================================
+    username = "bobsmith"
+    password = "Password#1234"
+    admin = Admin.find_by_username(username)
+
+    if admin and admin.verify_password(password):
+        print("The given password match with the one stored in the database.")
     else:
-        print(shared.display_errors(admin.errors))
+        print("The admin password does not match with the original.")
+
 
 main()

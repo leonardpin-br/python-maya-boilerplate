@@ -9,6 +9,7 @@ __all__ = [
     'get_subdir_full_paths',
     'number_format',
     'password_hash',
+    'password_verify',
     'print_error_message',
     'print_sys_path'
 ]
@@ -166,6 +167,35 @@ def password_hash(password):
     hash = bcrypt.hashpw(bytePwd, mySalt)
 
     return hash
+
+
+def password_verify(password, hash_from_database):
+    u"""Verifies the given password against the one stored in the database.
+
+    Args:
+        password (str): The given password (from the object in memory).
+        hash_from_database (str): The hash stored in the database.
+
+    Returns:
+        bool: True if they match. False otherwise.
+
+    References:
+        `Hashing Passwords in Python with BCrypt`_
+
+        `bcrypt.checkpw returns TypeError: Unicode-objects must be encoded before checking`_
+
+    .. _Hashing Passwords in Python with BCrypt:
+       https://stackabuse.com/hashing-passwords-in-python-with-bcrypt/
+    .. _bcrypt.checkpw returns TypeError\: Unicode-objects must be encoded before checking:
+       https://stackoverflow.com/a/40578384
+    """
+
+    encoded_password = password.encode('utf8')
+    encoded_hash = hash_from_database.encode('utf8')
+
+    result = bcrypt.checkpw(encoded_password, encoded_hash)
+
+    return result
 
 
 def print_error_message(error_message):

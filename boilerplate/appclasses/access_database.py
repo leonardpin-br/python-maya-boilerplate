@@ -35,6 +35,7 @@ __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __link__ = u"https://www.leonardopinheiro.net"
 
 import decimal
+import re
 
 import shared
 from shared import constant
@@ -161,6 +162,7 @@ class Admin(DatabaseObject):
     _table_name = "admins"
     _db_columns = ['id', 'first_name', 'last_name', 'email', 'username',
                    'hashed_password']
+    _password_required = True
 
     def __init__(self, **kwargs):
         u"""Creates an instance of Admin.
@@ -173,34 +175,99 @@ class Admin(DatabaseObject):
 
         # Public instance properties:
         self.id = kwargs['id'] if 'id' in kwargs else 0
-        self.first_name = kwargs['first_name'] if 'first_name' in kwargs else ''
-        self.last_name = kwargs['last_name'] if 'last_name' in kwargs else ''
-        self.email = kwargs['email'] if 'email' in kwargs else ''
-        self.username = kwargs['username'] if 'username' in kwargs else ''
-        self.password = kwargs['password'] if 'password' in kwargs else ''
-        self.confirm_password = kwargs['confirm_password'] if 'confirm_password' in kwargs else ''
+        self.first_name = kwargs['first_name'] if 'first_name' in kwargs else None
+        self.last_name = kwargs['last_name'] if 'last_name' in kwargs else None
+        self.email = kwargs['email'] if 'email' in kwargs else None
+        self.username = kwargs['username'] if 'username' in kwargs else None
+        self.password = kwargs['password'] if 'password' in kwargs else None
+        self.confirm_password = kwargs['confirm_password'] if 'confirm_password' in kwargs else None
 
-        # Protected instance property:
-        self._hashed_password = ''
+        self.hashed_password = None
 
-    @property
-    def hashed_password(self):
-        return self._hashed_password
+    def set_hashed_password(self, value):
+        self.hashed_password = shared.password_hash(value)
 
-    @hashed_password.setter
-    def hashed_password(self, value):
-        self._hashed_password = shared.password_hash(value)
+    def verify_password(self, password):
+        return shared.password_verify(password, self.hashed_password)
 
     def full_name(self):
         return "{self.first_name} {self.last_name}".format(self=self)
 
     def _create(self):
-        self.hashed_password = self.password
+        self.set_hashed_password(self.password)
         return super(Admin, self)._create()
 
     def _update(self):
-        self._set_hashed_password()
+
+        # If the user is being updated, but the password is not, it will
+        # allow updating the record, skipping the validation.
+        # If it comes from a form (like an UI) and the password field is
+        # empty, the validation will be skipped.
+        if self.password != '':
+            self.set_hashed_password(self.password)
+            # Validate password.
+        else:
+            # Password not being updated, skip hashing and validation.
+            self._password_required = False
         return super(Admin, self)._update()
 
     def _validate(self):
-        pass
+        self.errors = []
+
+        if shared.is_blank(self.first_name):
+            self.errors.append('First name cannot be blank.')
+        elif not shared.has_length(self.first_name, {'min': 2, 'max': 255}):
+            self.errors.append('First name must be between 2 and 255 characters.')
+
+        if shared.is_blank(self.last_name):
+            self.errors.append('Last name cannot be blank.')
+        elif not shared.has_length(self.last_name, {'min': 2, 'max': 255}):
+            self.errors.append('Last name must be between 2 and 255 characters.')
+
+        if shared.is_blank(self.email):
+            self.errors.append('Email cannot be blank.')
+        elif not shared.has_length(self.email, {'max': 255}):
+            self.errors.append('Email must be less than 255 characters.')
+        elif not shared.has_valid_email_format(self.email):
+            self.errors.append('Email must be a valid format.')
+
+        if shared.is_blank(self.username):
+            self.errors.append('Username cannot be blank.')
+        elif not shared.has_length(self.username, {'min': 8, 'max': 255}):
+            self.errors.append('Username must be between 8 and 255 characters.')
+        elif not shared.has_unique_username(self.username, self.id if self.id > 0 else 0):
+            self.errors.append('Username not allowed. Try another.')
+
+        if self._password_required:
+            if shared.is_blank(self.password):
+                self.errors.append('Password cannot be blank.')
+            elif not shared.has_length(self.password, {'min': 12}):
+                self.errors.append('Password must contain 12 or more characters.')
+            elif not re.search(r"[A-Z]", self.password):
+                self.errors.append('Password must contain at least 1 uppercase letter.')
+            elif not re.search(r"[a-z]", self.password):
+                self.errors.append('Password must contain at least 1 lowercase letter.')
+            elif not re.search(r"[0-9]", self.password):
+                self.errors.append('Password must contain at least 1 number.')
+            elif not re.search(r"[^A-Za-z0-9\s]", self.password):
+                self.errors.append('Password must contain at least 1 symbol.')
+
+            if shared.is_blank(self.confirm_password):
+                self.errors.append('Confirm password cannot be blank.')
+            elif self.password != self.confirm_password:
+                self.errors.append('Password and confirm password must match.')
+
+        return self.errors
+
+    @classmethod
+    def find_by_username(cls, username):
+
+        sql = "SELECT * FROM " + cls._table_name + " "
+        sql += "WHERE username='{username}'".format(username=cls._database.escape_string(username))
+        object_list = cls.find_by_sql(sql)
+
+        # Checks if the list is NOT empty (does not need the "not" keyword).
+        if object_list:
+            return object_list[0]
+        else:
+            return False

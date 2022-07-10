@@ -28,6 +28,7 @@ __link__ = u"https://www.leonardopinheiro.net"
 
 import re
 
+import appclasses
 
 # Utility functions (used by the validation functions)
 # ==============================================================================
@@ -400,4 +401,10 @@ def has_valid_email_format(value):
 
 
 def has_unique_username(username, current_id="0"):
-    pass
+    admin = appclasses.access_database.Admin.find_by_username(username)
+    if not admin or admin.id == current_id:
+        # Is unique.
+        return True
+    else:
+        # Not unique.
+        return False
