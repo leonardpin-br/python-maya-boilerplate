@@ -298,17 +298,17 @@ def main():
 
     # ADMIN: FIND BY ID
     # ==========================================================================
-    # admin = Admin.find_by_id(1)
+    admin = Admin.find_by_id(1)
 
-    # if admin:
-    #     print(admin.full_name())
-    #     print("-------------------------------------------")
-    #     print(admin.first_name)
-    #     print(admin.last_name)
-    #     print(admin.email)
-    #     print(admin.username)
-    # else:
-    #     print("The ID was not found.")
+    if admin:
+        print(admin.full_name())
+        print("-------------------------------------------")
+        print(admin.first_name)
+        print(admin.last_name)
+        print(admin.email)
+        print(admin.username)
+    else:
+        print("The ID was not found.")
 
 
     # ADMIN: CREATING A RECORD
@@ -318,7 +318,7 @@ def main():
     #     "last_name": "Smith",
     #     "email": "b@b.com",
     #     "username": "bobsmithzzz",
-    #     "password": "Password#1234",
+        # "password": "Password#1234",
     #     "confirm_password": "Password#1234"
     # }
 
@@ -367,18 +367,18 @@ def main():
 
     # ADMIN: DELETING A RECORD
     # ==========================================================================
-    admin = Admin.find_by_id(14)
+    # admin = Admin.find_by_id(14)
 
-    if admin:
+    # if admin:
 
-        result = admin.delete()
-        if result:
-            print("The admin {name} was deleted successfully.".format(name=admin.full_name()))
-        else:
-            print("There was an error deleting the admin.")
+    #     result = admin.delete()
+    #     if result:
+    #         print("The admin {name} was deleted successfully.".format(name=admin.full_name()))
+    #     else:
+    #         print("There was an error deleting the admin.")
 
-    else:
-        print("The ID of the admin was not found.")
+    # else:
+    #     print("The ID of the admin was not found.")
 
 
     # print("hello")

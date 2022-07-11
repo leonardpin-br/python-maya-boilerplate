@@ -200,12 +200,14 @@ def password_verify(password, hash_from_database):
        https://stackoverflow.com/a/40578384
     """
 
-    encoded_password = password.encode('utf8')
-    encoded_hash = hash_from_database.encode('utf8')
+    # encoded_password = password.encode('utf8')
+    # encoded_hash = hash_from_database.encode('utf8')
 
-    result = bcrypt.checkpw(encoded_password, encoded_hash)
+    # result = bcrypt.checkpw(encoded_password, encoded_hash)
 
-    return result
+    # return result
+
+    pass
 
 
 def print_error_message(error_message):
