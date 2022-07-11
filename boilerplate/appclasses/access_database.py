@@ -28,7 +28,8 @@ References:
 """
 
 __all__ = [
-    'Bicycle'
+    'Bicycle',
+    'Admin'
 ]
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
@@ -239,7 +240,7 @@ class Admin(DatabaseObject):
             self.errors.append('Username cannot be blank.')
         elif not shared.has_length(self.username, {'min': 8, 'max': 255}):
             self.errors.append('Username must be between 8 and 255 characters.')
-        elif not shared.has_unique_username(self.username, self.id if self.id > 0 else 0):
+        elif not Admin.has_unique_username(self.username, self.id if self.id > 0 else 0):
             self.errors.append('Username not allowed. Try another.')
 
         if self._password_required:
@@ -274,4 +275,14 @@ class Admin(DatabaseObject):
         if object_list:
             return object_list[0]
         else:
+            return False
+
+    @classmethod
+    def has_unique_username(cls, username, current_id="0"):
+        admin = cls.find_by_username(username)
+        if not admin or admin.id == current_id:
+            # Is unique.
+            return True
+        else:
+            # Not unique.
             return False

@@ -301,7 +301,7 @@ def main():
     #     "first_name": "Kevin",
     #     "last_name": "Skoglund",
     #     "email": "kevin@nowhere.com",
-    #     "username": "kskoglund",
+    #     "username": "kskoglundQQQQQQQQQ",
     #     "password": "Password#1234",
     #     "confirm_password": "Password#1234"
     # }
@@ -324,7 +324,7 @@ def main():
 
     # ADMIN: UPDATING A RECORD
     # ==========================================================================
-    # admin = Admin.find_by_id(7)
+    # admin = Admin.find_by_id(15)
 
     # if admin:
 
@@ -332,7 +332,7 @@ def main():
     #         "first_name": admin.first_name,
     #         "last_name": admin.last_name,
     #         "email": admin.email,
-    #         "username": "bobsmithBBB",
+    #         "username": "kskoglundzzzzzzzzzzzz",
     #         "password": "",
     #         "confirm_password": ""
     #     }
@@ -362,21 +362,21 @@ def main():
 
     # ADMIN: DELETING A RECORD
     # ==========================================================================
-    admin = Admin.find_by_id(7)
+    # admin = Admin.find_by_id(15)
 
-    if admin:
+    # if admin:
 
-        result = admin.delete()
-        if result:
-            print("The admin {name} was deleted successfully.".format(name=admin.full_name()))
-        else:
-            print("There was an error deleting the admin.")
+    #     result = admin.delete()
+    #     if result:
+    #         print("The admin {name} was deleted successfully.".format(name=admin.full_name()))
+    #     else:
+    #         print("There was an error deleting the admin.")
 
-    else:
-        print("The ID of the admin was not found.")
+    # else:
+    #     print("The ID of the admin was not found.")
 
 
-    # print("hello")
+    print("hello")
 
 
 main()

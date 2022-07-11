@@ -19,16 +19,13 @@ __all__ = [
     'has_inclusion_of',
     'has_exclusion_of',
     'has_string',
-    'has_valid_email_format',
-    'has_unique_username'
+    'has_valid_email_format'
 ]
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
 __copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
 __link__ = u"https://www.leonardopinheiro.net"
 
 import re
-
-import appclasses
 
 # Utility functions (used by the validation functions)
 # ==============================================================================
@@ -398,13 +395,3 @@ def has_valid_email_format(value):
     if re.match(pat, value):
         return True
     return False
-
-
-def has_unique_username(username, current_id="0"):
-    admin = appclasses.access_database.Admin.find_by_username(username)
-    if not admin or admin.id == current_id:
-        # Is unique.
-        return True
-    else:
-        # Not unique.
-        return False

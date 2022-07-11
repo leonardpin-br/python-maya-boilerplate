@@ -53,8 +53,11 @@ Note:
 """
 
 from . functions import *
-from . validation_functions import *
 from . status_error_functions import *
+from . validation_functions import *
 
 
-__all__ = (functions.__all__ + validation_functions.__all__ + status_error_functions.__all__)
+__all__ = (functions.__all__ +
+           status_error_functions.__all__ +
+           validation_functions.__all__)
+
