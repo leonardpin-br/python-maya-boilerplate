@@ -179,6 +179,7 @@ def password_hash(password):
 
     pass
 
+
 def password_verify(password, hash_from_database):
     u"""Verifies the given password against the one stored in the database.
 

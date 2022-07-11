@@ -298,27 +298,35 @@ def main():
 
     # ADMIN: FIND BY ID
     # ==========================================================================
-    admin = Admin.find_by_id(1)
+    # admin = Admin.find_by_id(3)
 
-    if admin:
-        print(admin.full_name())
-        print("-------------------------------------------")
-        print(admin.first_name)
-        print(admin.last_name)
-        print(admin.email)
-        print(admin.username)
-    else:
-        print("The ID was not found.")
+    # if admin:
+    #     print(admin.full_name())
+    #     print("-------------------------------------------")
+    #     print(admin.first_name)
+    #     print(admin.last_name)
+    #     print(admin.email)
+    #     print(admin.username)
+    # else:
+    #     print("The ID was not found.")
 
 
     # ADMIN: CREATING A RECORD
     # ==========================================================================
     # kwargs = {
+    #     "first_name": "Kevin",
+    #     "last_name": "Skoglund",
+    #     "email": "kevin@nowhere.com",
+    #     "username": "kskoglund",
+    #     "password": "Password#1234",
+    #     "confirm_password": "Password#1234"
+    # }
+    # kwargs = {
     #     "first_name": "Bob",
     #     "last_name": "Smith",
     #     "email": "b@b.com",
-    #     "username": "bobsmithzzz",
-        # "password": "Password#1234",
+    #     "username": "bobsmith",
+    #     "password": "Password#1234",
     #     "confirm_password": "Password#1234"
     # }
 
@@ -332,27 +340,27 @@ def main():
 
     # ADMIN: UPDATING A RECORD
     # ==========================================================================
-    # admin = Admin.find_by_id(1)
+    admin = Admin.find_by_id(6)
 
-    # if admin:
+    if admin:
 
-    #     kwargs = {
-    #         "first_name": admin.first_name,
-    #         "last_name": admin.last_name,
-    #         "email": admin.email,
-    #         "username": admin.username,
-    #         "password": "",
-    #         "confirm_password": ""
-    #     }
+        kwargs = {
+            "first_name": admin.first_name,
+            "last_name": admin.last_name,
+            "email": admin.email,
+            "username": "bobsmith",
+            "password": "",
+            "confirm_password": ""
+        }
 
-    #     admin.merge_attributes(**kwargs)
-    #     result = admin.save()
-    #     if result:
-    #         print("The admin was updated successfully.")
-    #     else:
-    #         print(shared.display_errors(admin.errors))
-    # else:
-    #     print("The admin ID was not found.")
+        admin.merge_attributes(**kwargs)
+        result = admin.save()
+        if result:
+            print("The admin was updated successfully.")
+        else:
+            print(shared.display_errors(admin.errors))
+    else:
+        print("The admin ID was not found.")
 
     # ADMIN: PASSWORD VERIFY
     # ==========================================================================
@@ -360,14 +368,17 @@ def main():
     # password = "Password#1234"
     # admin = Admin.find_by_username(username)
 
-    # if admin and admin.verify_password(password):
-    #     print("The given password match with the one stored in the database.")
+    # if admin:
+    #     if admin.verify_password(password):
+    #         print("The given password match with the one stored in the database.")
+    #     else:
+    #         print("The admin password does not match with the original.")
     # else:
-    #     print("The admin password does not match with the original.")
+    #     print("The admin username was not found.")
 
     # ADMIN: DELETING A RECORD
     # ==========================================================================
-    # admin = Admin.find_by_id(14)
+    # admin = Admin.find_by_id(5)
 
     # if admin:
 
