@@ -137,7 +137,7 @@ def number_format(num, places=0):
     return locale.format_string("%.*f", (places, num), True)
 
 
-add_site_packages_to_sys_path(__file__)
+# add_site_packages_to_sys_path(__file__)
 # Maya cannot load the .pyd file from BCrypt.
 # <project_root>/py27env/Lib/site-packages/bcrypt/_bcrypt.pyd
 # But, outside of Maya, the line below works OK.

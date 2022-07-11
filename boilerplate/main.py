@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 u"""Entry point of this script/app.
 
-Last modified in 2022-06-29
+Last modified in 2022-07-11
 
 Python version 2.7.11 (Autodesk Maya 2018 and 2020)
 
@@ -77,6 +77,10 @@ References:
 
     `Unpacking kwargs`_
 
+    `PEP 484`_
+
+    `Python docstring rendering\: reStructuredText markup inside directives not recognized`_
+
 .. _sphinx-apidoc ignoring some modules/packages:
    https://chadrick-kwag.net/sphinx-apidoc-ignoring-some-modules-packages/
 .. _Coverage.py:
@@ -91,16 +95,16 @@ References:
    https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html
 .. _Unpacking kwargs:
    https://stackoverflow.com/a/28771348
-
+.. _PEP 484:
+   https://www.python.org/dev/peps/pep-0484/
+.. _Python docstring rendering\: reStructuredText markup inside directives not recognized:
+   https://youtrack.jetbrains.com/issue/PY-40010
 
 """
 
 import os
-import sys
-import re
 
 import shared
-import activerecord
 from appclasses.access_database import Bicycle, Admin
 
 
@@ -134,26 +138,6 @@ def main():
 
     # myWin = maya_ui_template.ScriptName()
     # myWin.show()
-
-    # CREATING CLASS INSTANCES
-    # ==========================================================================
-    # obj = example_classes.ExampleSubclass()
-    # print(obj.return_message())
-    # print(obj.greeter())
-
-    # CONNECTING TO A DATABASE
-    # ==========================================================================
-    # database = databaseobject.ConnectionDB()
-    # result = database.query("""SELECT * from bicycles""")
-    # print("BRAND: {}".format(result[0]['brand']))
-
-    # escaped_string = database.escape_string("Bob's Overdrive")
-    # print(escaped_string)
-
-    # CREATING A BICYCLE INSTANCE
-    # ==========================================================================
-    # bike = Bicycle(brand='Schwinn', model_make='Cutter', year_make=2016,
-    #                category_make='City', color_make='white', description='', gender='Unisex', price=587, weight_kg=18.7, condition_id=4)
 
     # BICYCLE: FIND ALL
     # ==========================================================================
@@ -244,7 +228,7 @@ def main():
 
     # BICYCLE: UPDATING A RECORD
     # ==========================================================================
-    # bike = Bicycle.find_by_id(44)
+    # bike = Bicycle.find_by_id(27)
 
     # if bike:
 
@@ -272,7 +256,7 @@ def main():
 
     # BICYCLE: DELETING A RECORD
     # ==========================================================================
-    # bike = Bicycle.find_by_id(44)
+    # bike = Bicycle.find_by_id(28)
 
     # if bike:
 
@@ -298,7 +282,7 @@ def main():
 
     # ADMIN: FIND BY ID
     # ==========================================================================
-    # admin = Admin.find_by_id(3)
+    # admin = Admin.find_by_id(4)
 
     # if admin:
     #     print(admin.full_name())
@@ -340,27 +324,27 @@ def main():
 
     # ADMIN: UPDATING A RECORD
     # ==========================================================================
-    admin = Admin.find_by_id(6)
+    # admin = Admin.find_by_id(7)
 
-    if admin:
+    # if admin:
 
-        kwargs = {
-            "first_name": admin.first_name,
-            "last_name": admin.last_name,
-            "email": admin.email,
-            "username": "bobsmith",
-            "password": "",
-            "confirm_password": ""
-        }
+    #     kwargs = {
+    #         "first_name": admin.first_name,
+    #         "last_name": admin.last_name,
+    #         "email": admin.email,
+    #         "username": "bobsmithBBB",
+    #         "password": "",
+    #         "confirm_password": ""
+    #     }
 
-        admin.merge_attributes(**kwargs)
-        result = admin.save()
-        if result:
-            print("The admin was updated successfully.")
-        else:
-            print(shared.display_errors(admin.errors))
-    else:
-        print("The admin ID was not found.")
+    #     admin.merge_attributes(**kwargs)
+    #     result = admin.save()
+    #     if result:
+    #         print("The admin was updated successfully.")
+    #     else:
+    #         print(shared.display_errors(admin.errors))
+    # else:
+    #     print("The admin ID was not found.")
 
     # ADMIN: PASSWORD VERIFY
     # ==========================================================================
@@ -378,18 +362,18 @@ def main():
 
     # ADMIN: DELETING A RECORD
     # ==========================================================================
-    # admin = Admin.find_by_id(5)
+    admin = Admin.find_by_id(7)
 
-    # if admin:
+    if admin:
 
-    #     result = admin.delete()
-    #     if result:
-    #         print("The admin {name} was deleted successfully.".format(name=admin.full_name()))
-    #     else:
-    #         print("There was an error deleting the admin.")
+        result = admin.delete()
+        if result:
+            print("The admin {name} was deleted successfully.".format(name=admin.full_name()))
+        else:
+            print("There was an error deleting the admin.")
 
-    # else:
-    #     print("The ID of the admin was not found.")
+    else:
+        print("The ID of the admin was not found.")
 
 
     # print("hello")
