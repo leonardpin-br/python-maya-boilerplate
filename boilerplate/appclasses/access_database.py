@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
-u"""An example superclass to show inheritance and documentation.
+u"""This module (file) has two classes that serve as examples to show
+inheritance and documentation.
 
-This superclass is only an example to serve as a reference or be deleted.
+These classes access the (MySQL) database. To do that, they inherit from the
+abstract class DatabaseObject (activerecord.database_object.DatabaseObject).
 
-Last modified in 2022-04-25
+Last modified in 2022-07-11
 
-Python version 2.7.11 (Maya 2020)
-
-Example:
-    This is how to write **bold**, `italic`, *italic* and ``code`` text.
-
-Unit tests:
-    This is how unit tests are run::
-
-        $ python -m unittest discover
+Python version 2.7.11 (Autodesk Maya 2018 and 2020)
 
 References:
     `PEP 484`_

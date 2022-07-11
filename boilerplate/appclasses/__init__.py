@@ -1,48 +1,14 @@
 # -*- coding: utf-8 -*-
-u"""Package with my custom modules.
+u"""Package with the classes used in this app.
+
+This boilerplate has packages that are meant to be reused, like the
+``activerecord`` and the ``shared`` packages.
+
+This package (``appclasses``) has the classes specific to this app and would
+change for every project that uses this boilerplate.
 
 Exports:
     ``access_database``
-
-Note:
-    The way of importing::
-
-        from <package> import *
-
-    is handy because it allows accessing the functions directly. For example::
-
-        clear()
-
-    Still, it is not recommended. It is advisable to write::
-
-        <package>.function_name()
-
-    Here, inside ``__init__.py``, it is a good practice, though.
-
-Note:
-    The way of allowing this type of importing::
-
-        from <package> import *
-
-    is the construction below inside ``__init__.py``::
-
-        __all__ = (utils.__all__ +
-                    <package>.__all__)
-
-    This is how it is done in this boilerplate's package::
-
-        from . example_classes import *
-
-
-        __all__ = (example_classes.__all__)
-
-Note:
-    Every file should have a list of what is being "exported"::
-
-        __all__ = [
-            'ExampleSuperclass',
-            'ExampleSubclass'
-        ]
 
 """
 

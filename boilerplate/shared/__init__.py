@@ -4,9 +4,9 @@ u"""Package with useful functions that are shared by other packages.
 Exports:
     ``functions``
 
-    ``validation_functions``
-
     ``status_error_functions``
+
+    ``validation_functions``
 
 Warning:
     The way of importing::

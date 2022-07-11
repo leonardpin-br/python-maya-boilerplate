@@ -147,11 +147,10 @@ def number_format(num, places=0):
 def password_hash(password):
     u"""Creates a password hash, using BCrypt.
 
-    Maya cannot load the .pyd file from BCrypt::
+    This function works fine outside of Autodesk Maya. But, that program
+    cannot load the .pyd file from BCrypt::
 
         <project_root>/py27env/Lib/site-packages/bcrypt/_bcrypt.pyd
-
-    But, outside of Maya, this function works OK.
 
     Args:
         password (str): The password to be hashed.
@@ -215,7 +214,7 @@ def print_error_message(error_message):
     u"""Prints a formatted (and easy to read in the console) error message.
 
     Args:
-        error_message (Union[str, Error]): A string to be printed or an instance
+        error_message (str | Error): A string to be printed or an instance
             of Error.
 
     References:

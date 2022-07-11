@@ -342,7 +342,7 @@ class DatabaseObject(object):
         return result
 
     def save(self):
-        u"""Executes the update() or the create() instance methods based on the
+        u"""Executes the _update() or the _create() instance methods based on the
         presence of an ID.
 
         Returns:
@@ -356,7 +356,7 @@ class DatabaseObject(object):
 
     def merge_attributes(self, **kwargs):
         u"""Merges the attributes from the given dictionary into the object in
-        memory created from the findById() method.
+        memory created from the find_by_id() method.
 
         Args:
             **kwargs: The dictionary containing the new values to be merged and later updated.
@@ -463,9 +463,15 @@ class DatabaseObject(object):
         Example:
             This is how it can be used::
 
-                print("{user.first_name} was deleted.".format(user=user))
-                # But, for example, we can't call user.update() after
-                # calling user.delete().
+                admin = Admin.find_by_id(15)
+
+                if admin:
+                    result = admin.delete()
+
+                    if result:
+                        print("{user.first_name} was deleted.".format(user=user))
+                        # But, for example, we can't call user.update() after
+                        # calling user.delete().
         """
 
         sql = "DELETE FROM " + self._table_name + " "

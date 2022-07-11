@@ -3,7 +3,7 @@ r"""This file MUST be run from Maya even during development.
 
 A shelf button button should be created and this code executed from there.
 
-Note:
+Error:
 	Defining the window icon does not work in Maya.
     Qt Designer shows it perfectly on the preview, but Maya does not.
 

@@ -58,7 +58,7 @@ Note:
     To exclude certain modules from being documented, it is necessary to pass
     them as arguments to ``sphinx-apidoc``::
 
-        sphinx-apidoc --force -o ./docs/sphinx/source ./boilerplate ./boilerplate/databaseobject/db_credentials.py
+        sphinx-apidoc --force -o ./docs/sphinx/source ./boilerplate ./boilerplate/activerecord/db_credentials.py
 
     The example above is in the **package.json** file as the ``build:source:doc`` script.
 

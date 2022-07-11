@@ -4,11 +4,11 @@ u"""Usefull validation functions available to other packages in this project.
 """
 
 __all__ = [
+    'in_list',
     'is_none',
     'is_set',
     'list_equals',
     'trim',
-    'in_list',
     # ----------
     'is_blank',
     'has_presence',
@@ -27,8 +27,35 @@ __link__ = u"https://www.leonardopinheiro.net"
 
 import re
 
+
 # Utility functions (used by the validation functions)
 # ==============================================================================
+
+def in_list(needle, haystack):
+    u"""Checks if a value exists in a list.
+
+    Args:
+        needle (Any): The searched value.
+        haystack (list): The list.
+
+    Returns:
+        bool: Returns True if needle is found in the list, False otherwise.
+
+    References:
+        `in_array`_
+
+        `How to check if an element exists in a Python array (Equivalent of PHP in_array)?`_
+
+    .. _in_array:
+       https://www.php.net/manual/en/function.in-array.php
+    .. _How to check if an element exists in a Python array (Equivalent of PHP in_array)?:
+       https://stackoverflow.com/a/14743170
+    """
+
+    if needle in haystack:
+        return True
+
+    return False
 
 
 def is_none(variable):
@@ -129,32 +156,6 @@ def trim(value):
     """
     return value.strip()
 
-
-def in_list(needle, haystack):
-    u"""Checks if a value exists in a list.
-
-    Args:
-        needle (Any): The searched value.
-        haystack (list): The list.
-
-    Returns:
-        bool: Returns True if needle is found in the list, False otherwise.
-
-    References:
-        `in_array`_
-
-        `How to check if an element exists in a Python array (Equivalent of PHP in_array)?`_
-
-    .. _in_array:
-       https://www.php.net/manual/en/function.in-array.php
-    .. _How to check if an element exists in a Python array (Equivalent of PHP in_array)?:
-       https://stackoverflow.com/a/14743170
-    """
-
-    if needle in haystack:
-        return True
-
-    return False
 
 # Validation functions
 # ==============================================================================

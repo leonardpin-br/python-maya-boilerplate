@@ -15,7 +15,8 @@ def display_errors(errors):
     u"""Combines all the error messages in the errors list into one string.
 
     Args:
-        errors (list[str]): The errors list.
+        errors (list[str]): The errors list (property inside the DatabaseObject
+            class).
 
     Returns:
         str: A string containing all the errors in the errors list.
