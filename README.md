@@ -66,9 +66,9 @@ Root
 ```
 
 ## Which file will be executed?
-Using this starter kit, the main.py (\<projectRoot\>/boilerplate/main.py) will be
+Using this starter kit, the main.py (``<projectRoot>/boilerplate/main.py``) will be
 the file being executed from Autodesk Maya.
 
 It is recommended to create a shelf button that imports the main.py file (there is
-an example in the resources/example_files folder).
+an example in the ``resources/example_files`` folder).
 
