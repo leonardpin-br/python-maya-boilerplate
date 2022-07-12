@@ -1,16 +1,9 @@
-Main reference for this tutorial
-Learn Sphinx python documentation | Episode 01.
-https://www.youtube.com/watch?v=fX07G5eUSsY
+================================================================================
 ================================================================================
 
-
-
-How to make a folder clean with PowerShell
-	How Can I Delete a File or Folder from the Command Line Using Windows PowerShell?
-	https://petri.com/delete-folder-file-from-command-line-powershell/
+VIRTUAL ENVIRONMENT
 ================================================================================
-
-Remove-Item -Path ./docs/* -Recurse -Force
+================================================================================
 
 
 
@@ -29,6 +22,15 @@ virtualenv py27env
 
 # Activation of the virtual environment:
 source ./py27env/Scripts/activate
+
+
+
+================================================================================
+================================================================================
+
+SPHINX
+================================================================================
+================================================================================
 
 
 
@@ -60,27 +62,28 @@ pip install todo
 pip install autodoc
 
 
+
 Project Folder structure:
 ================================================================================
 
-project_root_folder
-├── boilerplate
-├   ├── subpackage
-├   |   ├── example_classes.py          <= File to be documented.
-├   ├── main.py                         <= File to be documented.
-├── docs
-├   ├── coverage
-├   ├── sphinx
-├── resources
-├── scripts
-├── tests                               <= TESTS WILL NOT BE DOCUMENTED.
-├   ├── subpackage
-├   |   ├── test_example_classes.py
-├   ├── test_main.py
-├── .coveragerc
-├── package.json
-
-* The __init__.py files were omitted.
+<project_root>
+|- boilerplate
+    |- activerecord
+    |- appclasses
+    |- shared
+    |- userinterface
+|- docs
+    |- coverage
+    |- sphinx
+|- py27env
+|- resources
+    |- example_files
+    |- img
+    |- qss
+    |- sql
+    |- ui
+|- scripts
+|- tests                <= TESTS ARE NOT GOING TO BE DOCUMENTED.
 
 
 Sphinx - 1: Running the assistant
@@ -90,14 +93,15 @@ Sphinx - 1: Running the assistant
 
 sphinx-quickstart docs/sphinx
 
-Separate source and build directories (y/n) [n]: Write "y" (without quotes) and press Enter.
+# Write "y" (without quotes) and press Enter.
+Separate source and build directories (y/n) [n]:
 
 
 Folder structure (inside docs) created by the Sphinx's assistant
 --------------------------------------------------------------------------------
 
 docs
-├── coverage (folder inside was omitted)
+├── coverage (folder inside was omitted in this structure)
 ├── sphinx
 ├   ├── build
 ├   ├── source
@@ -115,9 +119,9 @@ Sphinx - 2: Editing the configuration files
 
 
 Editing the file ./docs/sphinx/source/conf.py
+    https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autodoc_mock_imports
 --------------------------------------------------------------------------------
-https://stackoverflow.com/questions/8658043/how-to-mock-an-import
-Uncomment
+# Uncomment
 	import os
 	import sys
 
@@ -178,19 +182,49 @@ Sphinx - 3: Creating the HTML files
 cd ./docs/sphinx; make html; cd ..; cd ..;
 
 
+Important to know
+--------------------------------------------------------------------------------
+The boilerplate folder (the old src folder) MUST NOT have the __init__.py file,
+that is, must not be a package, bacause Sphinx shows an error and does not
+create the documentation.
+
+The subfolders inside the boilerplate folder (old src) must have the __init__.py
+file, that is, the subfolders must be packages.
+
+The Maya modules can be 'mocked' (for Sphinx) importing the mock module (not a
+good idea) or adding the autodoc_mock_imports list to the conf.py file
+(preferred).
+
+The tests folder will not be documented.
 
 
+
+================================================================================
+================================================================================
 
 UNIT TESTS
 ================================================================================
+================================================================================
 
 
+Installation of mock package inside the virtual environment
+--------------------------------------------------------------------------------
 
-# Not necessary for documentation, but it is for running unit tests.
+# Necessary for running unit tests.
 pip install mock
-    import mock     <= (It is not necessary for documentation, but it's essential to unittest in the test_main.py file)
 
-maya_modules = [    <= (It is not necessary for documentation, but it's essential to unittest in the test_main.py file)
+
+Code inside the unit tests modules
+    https://stackoverflow.com/questions/8658043/how-to-mock-an-import
+--------------------------------------------------------------------------------
+
+import os
+import sys
+import unittest     <= (It is not necessary for documentation, but it's essential to unittest in the test_main.py file)
+import mock         <= (It is not necessary for documentation, but it's essential to unittest in the test_main.py file)
+
+# Autodesk Maya modules that need to be mocked:
+maya_modules = [
     'maya',
     'maya.app',
     'maya.app.general',
@@ -207,28 +241,55 @@ maya_modules = [    <= (It is not necessary for documentation, but it's essentia
     'QUiLoader'
 ]
 
-for mod in maya_modules:                    <= (It is not necessary for documentation, but it's essential to unittest in the test_main.py file)
+# Creates a mock for every module in the maya_modules list.
+for mod in maya_modules:
     sys.modules[mod] = mock.MagicMock()     <= (It is not necessary for documentation, but it's essential to unittest in the test_main.py file)
 
+# Adds the boilerplate folder to sys.path, if it not already there,
+# so unit tests can see the modules:
+currentdir = os.path.dirname(os.path.realpath(__file__))    # tests
+rootdir = os.path.dirname(currentdir)                       # <root_directory>
+boilerplate_dir = os.path.join(rootdir, "boilerplate")
+
+for path in sys.path:
+    if path == boilerplate_dir:
+        break
+else:
+    sys.path.append(boilerplate_dir)
+
+# Imports the <root_directory>/boilerplate/main.py module.
+import main
+
+
+Important to know
+--------------------------------------------------------------------------------
+The __init__.py files were omitted from coverage reports (.coveragerc).
+
+The tests folder and the subfolders MUST be packages (have __init__.py in them)
+for unittest to work.
+
+To avoid execution (and unavoidable failure) of Maya modules, it is necessary to
+mock those modules. This technique is commonly used in unit testing.
 
 
 
-Relationship with unittest
-    The boilerplate folder (the old src folder) MUST NOT have
-    the __init__.py file, that is, must not be a package,
-    bacause Sphinx shows an error and does not create the
-    documentation.
-    The subfolders inside the boilerplate folder (old src)
-    must have the __init__.py file, that is, the
-    subfolders must be packages.
-
-    The tests folder and the subfolders MUST be packages
-    (have __init__.py in them) for unittest to work.
-    The tests folder will not be documented.
-
-    To avoid execution (and unavoidable failure) of Maya modules,
-    it is necessary to mock those modules. This technique is
-    commonly used in unit testing.
-    The Maya modules can be 'mocked' importing the mock module
-    or adding the autodoc_mock_imports array in the conf.py file.
 ================================================================================
+================================================================================
+
+REFERENCES
+================================================================================
+================================================================================
+
+
+Main reference for this tutorial
+Learn Sphinx python documentation | Episode 01.
+https://www.youtube.com/watch?v=fX07G5eUSsY
+--------------------------------------------------------------------------------
+
+
+How to make a folder clean with PowerShell
+	How Can I Delete a File or Folder from the Command Line Using Windows PowerShell?
+	https://petri.com/delete-folder-file-from-command-line-powershell/
+--------------------------------------------------------------------------------
+
+Remove-Item -Path ./docs/* -Recurse -Force

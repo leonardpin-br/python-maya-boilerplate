@@ -17,6 +17,7 @@ import sys
 import unittest
 import mock
 
+# Autodesk Maya modules that need to be mocked:
 maya_modules = [
     'maya',
     'maya.app',
@@ -34,21 +35,23 @@ maya_modules = [
     'QUiLoader'
 ]
 
+# Creates a mock for every module in the maya_modules list.
 for mod in maya_modules:
     sys.modules[mod] = mock.MagicMock()
 
+# Adds the boilerplate folder to sys.path, if it not already there,
+# so unit tests can see the modules:
 currentdir = os.path.dirname(os.path.realpath(__file__))    # tests
 rootdir = os.path.dirname(currentdir)                       # <root_directory>
 boilerplate_dir = os.path.join(rootdir, "boilerplate")
 
-# If the path is not in sys.path:
 for path in sys.path:
     if path == boilerplate_dir:
         break
 else:
     sys.path.append(boilerplate_dir)
 
-
+# Imports the <root_directory>/boilerplate/main.py module.
 import main
 
 
