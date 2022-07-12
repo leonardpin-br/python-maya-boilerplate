@@ -38,10 +38,16 @@ for mod in maya_modules:
     sys.modules[mod] = mock.MagicMock()
 
 currentdir = os.path.dirname(os.path.realpath(__file__))    # tests
-rootdir = os.path.dirname(currentdir)                       # Boilerplate (root)
+rootdir = os.path.dirname(currentdir)                       # <root_directory>
 boilerplate_dir = os.path.join(rootdir, "boilerplate")
 
-sys.path.append(boilerplate_dir)
+# If the path is not in sys.path:
+for path in sys.path:
+    if path == boilerplate_dir:
+        break
+else:
+    sys.path.append(boilerplate_dir)
+
 
 import main
 
@@ -49,10 +55,16 @@ import main
 class mainTest(unittest.TestCase):
 
     def setUp(self):
-        pass
+        self.obj = main.main()
 
     def tearDown(self):
         pass
 
     def test_greeter(self):
-        self.assertTrue(main.print_sys_path())
+        expected = u"hello"
+        result = self.obj
+        self.assertEqual(expected, result)
+
+    @unittest.skip(u"demonstrating skipping")
+    def test_does_nothing(self):
+        self.fail()

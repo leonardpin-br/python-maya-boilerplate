@@ -34,9 +34,18 @@ Example:
         reload(main)
 
 Note:
-    If unit tests are in place, this is how they can be run::
+    If **unit tests** are in place, this is how they can be run::
 
         python -m unittest discover
+
+    If coverage is being used too, this is how it can be run::
+
+        coverage erase
+        coverage run -m unittest discover
+        coverage html
+
+    In this starter kit, it is not necessary to run those commands manually,
+    though. They are preconfigure in the ``package.json`` file as scripts.
 
 Important:
     Sphinx (and its packages) **MUST** be installed in the virtual environment
@@ -103,6 +112,7 @@ References:
 """
 
 import os
+import sys
 
 import shared
 from appclasses.access_database import Bicycle, Admin
@@ -375,8 +385,7 @@ def main():
     # else:
     #     print("The ID of the admin was not found.")
 
-
-    print("hello")
+    return "hello"
 
 
 main()

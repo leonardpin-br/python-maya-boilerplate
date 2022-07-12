@@ -14,15 +14,19 @@
 
     "build:source:doc": "sphinx-apidoc --force -o ./docs/sphinx/source ./boilerplate ./boilerplate/activerecord/db_credentials.py",
     "build:html:doc": "cd ./docs/sphinx && make clean && make html && cd .. && cd ..",
-	"build:doc": "npm run build:source:doc && npm run build:html:doc",
-	"watch:doc": "nodemon --ext py --watch ./boilerplate --exec \"npm run build:doc\"",
-	"server:doc": "live-server ./docs/sphinx/build/html --no-css-inject --port=8080 --wait=5000",
+    "build:doc": "npm run build:source:doc && npm run build:html:doc",
+    "watch:doc": "npx nodemon --ext py --watch ./boilerplate --exec \"npm run build:doc\"",
+    "server:doc": "npx live-server ./docs/sphinx/build/html --no-css-inject --port=8080 --wait=5000",
 
     "clear:coverage": "coverage erase",
     "build:source:coverage": "coverage run -m unittest discover",
     "build:html:coverage": "coverage html",
     "test": "npm run clear:coverage && npm run build:source:coverage && npm run build:html:coverage",
-    "watch:test": "nodemon --ext py --watch ./boilerplate --watch ./tests --exec \"npm run test\"",
-    "server:test": "live-server ./docs/coverage/htmlcov --no-css-inject --port=8181"
+    "watch:test": "npx nodemon --ext py --watch ./boilerplate --watch ./tests --exec \"npm run test\"",
+    "server:test": "npx live-server ./docs/coverage/htmlcov --no-css-inject --port=8181"
+  },
+  "devDependencies": {
+    "live-server": "^1.1.0",
+    "nodemon": "^2.0.19"
   }
 }

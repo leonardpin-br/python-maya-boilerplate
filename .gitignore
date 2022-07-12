@@ -4,6 +4,9 @@
 # Exclude all __pycache__ folders
 **/__pycache__
 
+# Exclude the .coverage file:
+docs/coverage/.coverage
+
 # Exclude the contentes of docs/sphinx/build:
 docs/sphinx/build/*
 
