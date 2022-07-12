@@ -40,8 +40,8 @@ Root
     |- activerecord     (modules that implement the active record design pattern)
     |- appclasses       (classes specific for the application being developed)
     |- shared           (usefull functions shared by the packages)
-    |- userinterface    (example of user interface class)
-|- docs                 (generated HTML documentation)
+    |- userinterface    (example of user interface class and related modules)
+|- docs                 (generated HTML documentation and coverage reports)
     |- coverage         (generated HTML code coverage reports)
     |- sphinx           (generated HTML documentation)
 |- py27env              (virtual environment folder)
@@ -60,4 +60,5 @@ Root
 Using this starter kit, the main.py (\<projectRoot\>/boilerplate/main.py) will be
 the file being executed from Autodesk Maya.
 
+It is recommended to create a shelf button that imports the main.py file.
 
