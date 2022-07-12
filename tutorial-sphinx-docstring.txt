@@ -1,38 +1,45 @@
 Main reference for this tutorial
 Learn Sphinx python documentation | Episode 01.
 https://www.youtube.com/watch?v=fX07G5eUSsY
-================================================================
+================================================================================
 
 
 
 How to make a folder clean with PowerShell
 	How Can I Delete a File or Folder from the Command Line Using Windows PowerShell?
 	https://petri.com/delete-folder-file-from-command-line-powershell/
-================================================================
+================================================================================
 
 Remove-Item -Path ./docs/* -Recurse -Force
 
 
 
 Virtual environment
-================================================================
+It is necessary to install, in the operating system, the same
+Python version as the interpreter embedded in Autodesk Maya.
+Then, it is necessary to install the virtual environment
+package (in that same Python version).
+================================================================================
 
 pip install virtualenv
 
+# In this starter kit, the virtual environment folder is py27env.
+# Below is the creation of the virtual environment.
 virtualenv py27env
 
+# Activation of the virtual environment:
 source ./py27env/Scripts/activate
 
 
 
-Installation
-================================================================
+Installation of documentation packages
+================================================================================
 
 
 Sphinx's intallation, upgrade and verification.
 	pip install
 	https://pip.pypa.io/en/latest/cli/pip_install/#cmdoption-U
-----------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 pip install sphinx
 
@@ -40,12 +47,9 @@ pip install --upgrade sphinx
 
 sphinx-build --version
 
-pip install mock (It works, but it is not necessary)
-
-
 
 Sphinx's packages installation
-----------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 pip install sphinxcontrib-napoleon
 
@@ -57,7 +61,7 @@ pip install autodoc
 
 
 Project Folder structure:
-================================================================
+================================================================================
 
 project_root_folder
 ├── boilerplate
@@ -82,7 +86,7 @@ project_root_folder
 Sphinx - 1: Running the assistant
 	What Sphinx calls "root path" is the docs folder.
 	The command below runs the assistant in the docs foler.
-================================================================
+================================================================================
 
 sphinx-quickstart docs/sphinx
 
@@ -90,7 +94,7 @@ Separate source and build directories (y/n) [n]: Write "y" (without quotes) and 
 
 
 Folder structure (inside docs) created by the Sphinx's assistant
-----------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 docs
 ├── coverage (folder inside was omitted)
@@ -107,15 +111,83 @@ docs
 
 
 Sphinx - 2: Editing the configuration files
-================================================================
+================================================================================
 
 
 Editing the file ./docs/sphinx/source/conf.py
-----------------------------------------------------------------
+--------------------------------------------------------------------------------
 https://stackoverflow.com/questions/8658043/how-to-mock-an-import
 Uncomment
 	import os
 	import sys
+
+sys.path.insert(0, os.path.abspath('../../../boilerplate')) <= From . to ../../../boilerplate
+
+extensions = [
+    'sphinxcontrib.napoleon',
+    'sphinx.ext.todo',
+    'sphinx.ext.autodoc'
+]
+
+autodoc_mock_imports = [    <= Auto mock in the conf.py file.
+    'maya',
+    'pymel',
+    'PySide2'
+]
+
+master_doc = 'index'    <= Added
+
+html_theme = 'sphinx_rtd_theme'
+
+
+Creation of Sphinx sources (use sphinx.ext.autodoc)
+	Sphinx sources are the base to the creation of the HTML documentation.
+
+	Flags:
+	--force	Force overwriting of any existing generated files.
+	-o		Directory to place the output files. If it does not exist, it is created.
+
+	It will create one .rst file for each python script.
+--------------------------------------------------------------------------------
+
+sphinx-apidoc --force -o ./docs/sphinx/source ./boilerplate
+
+
+Editing the file ./docs/sphinx/source/index.rst
+	The step above created some files, including modules.rst.
+	This file acts as a list to the names of the other .rst
+	files that were created.
+
+	The name (without extension) of this file (modules.rst) must be placed
+	in the index.rst below (and aligned with) the .. toctree::
+--------------------------------------------------------------------------------
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+	modules		<= Name inserted.
+
+
+
+Sphinx - 3: Creating the HTML files
+	Run command in each sub directory using PowerShell
+	https://stackoverflow.com/questions/13249034/run-command-in-each-sub-directory-using-powershell#answer-13251065
+================================================================================
+
+cd ./docs/sphinx; make html; cd ..; cd ..;
+
+
+
+
+
+UNIT TESTS
+================================================================================
+
+
+
+# Not necessary for documentation, but it is for running unit tests.
+pip install mock
     import mock     <= (It is not necessary for documentation, but it's essential to unittest in the test_main.py file)
 
 maya_modules = [    <= (It is not necessary for documentation, but it's essential to unittest in the test_main.py file)
@@ -138,61 +210,6 @@ maya_modules = [    <= (It is not necessary for documentation, but it's essentia
 for mod in maya_modules:                    <= (It is not necessary for documentation, but it's essential to unittest in the test_main.py file)
     sys.modules[mod] = mock.MagicMock()     <= (It is not necessary for documentation, but it's essential to unittest in the test_main.py file)
 
-sys.path.insert(0, os.path.abspath('../../../boilerplate')) <= From . to ../../../boilerplate
-
-extensions = [
-    'sphinxcontrib.napoleon',
-    'sphinx.ext.todo',
-    'sphinx.ext.autodoc'
-]
-
-autodoc_mock_imports = [    <= Much cleaner solution for mock in the conf.py file.
-    'maya',
-    'pymel',
-    'PySide2'
-]
-
-master_doc = 'index'    <= Added
-
-html_theme = 'sphinx_rtd_theme'
-
-
-Creation of Sphinx sources (use sphinx.ext.autodoc)
-	Sphinx sources are the base to the creation of the HTML documentation.
-
-	Flags:
-	--force	Force overwriting of any existing generated files.
-	-o		Directory to place the output files. If it does not exist, it is created.
-
-	It will create one .rst file for each python script.
-----------------------------------------------------------------
-
-sphinx-apidoc --force -o ./docs/sphinx/source ./boilerplate
-
-
-Editing the file ./docs/sphinx/source/index.rst
-	The step above created some files, including modules.rst.
-	This file acts as a list to the names of the other .rst
-	files that were created.
-
-	The name (without extension) of this file (modules.rst) must be placed
-	in the index.rst below (and aligned with) the .. toctree::
-----------------------------------------------------------------
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-	modules		<= Name inserted.
-
-
-
-Sphinx - 3: Creating the HTML files
-	Run command in each sub directory using PowerShell
-	https://stackoverflow.com/questions/13249034/run-command-in-each-sub-directory-using-powershell#answer-13251065
-================================================================
-
-cd ./docs/sphinx; make html; cd ..; cd ..;
 
 
 
@@ -214,4 +231,4 @@ Relationship with unittest
     commonly used in unit testing.
     The Maya modules can be 'mocked' importing the mock module
     or adding the autodoc_mock_imports array in the conf.py file.
-================================================================
+================================================================================
