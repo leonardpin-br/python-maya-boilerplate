@@ -23,4 +23,4 @@ clear_cache() {
 
 }
 
-clear_cache
+# clear_cache
