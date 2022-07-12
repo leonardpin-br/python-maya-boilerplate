@@ -33,6 +33,14 @@ one. If your scripts do not access a database, you do not need it.
 
 If you use a Database Management System (DBMS) different from MySQL, editing the code will be easy.
 
+It is important to install the correct Python version (2.7.11 for Maya 2020 and below)
+in the operating system and to create a virtual environment (py27env folder).
+
+After that, it is important to install the necessary packages using:
+```
+pip install -r requirements.txt
+```
+
 ## Folder structure
 ```
 Root
