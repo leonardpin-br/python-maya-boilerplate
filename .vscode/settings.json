@@ -15,5 +15,6 @@
     "files.exclude": {
         "**/__pycache__": true,
         "**/*.pyc": true
-    }
+    },
+    "files.eol": "\n"
 }
