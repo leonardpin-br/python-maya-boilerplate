@@ -1,13 +1,14 @@
-#!/bin/bash
+#!/bin/bash -xv
 
 # https://askubuntu.com/questions/153144/how-can-i-recursively-search-for-directory-names-with-a-particular-string-where
 # https://www.cyberciti.biz/faq/how-to-find-and-delete-directory-recursively-on-linux-or-unix-like-system/
 # https://stackoverflow.com/questions/2135770/bash-for-loop-with-wildcards-and-hidden-files
+# https://stackoverflow.com/questions/11616835/r-command-not-found-bashrc-bash-profile
 
 include() {
-	# MY_DIR corresponde ao diretório do arquivo principal.
-	MY_DIR=$(dirname $(readlink -f $0))
-	. $MY_DIR/$1
+    # MY_DIR is the <root_directory>.
+    MY_DIR=$(dirname $(readlink -f $0))
+    . $MY_DIR/$1
 }
 
 # Included files
@@ -15,14 +16,15 @@ include "clear_cache.sh"
 
 remove_almost_everything_inside_folder() {
 
-    local GITIGNORE=".gitignore"
+    local current_directory=$1
+    local GITIGNORE="$current_directory/.gitignore"
 
     # Enable working with hidden files.
     shopt -s dotglob
     for folder_item in "$1"/*; do
 
         # Keeps the hidden file (.gitignore)
-        if [ -f $GITIGNORE ]; then
+        if [ $folder_item = "$GITIGNORE" ]; then
             continue
         fi
 
