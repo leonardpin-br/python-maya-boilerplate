@@ -36,7 +36,8 @@ If you use a Database Management System (DBMS) different from MySQL, editing the
 It is important to install the correct Python version (2.7.11 for Maya 2020 and below)
 in the operating system and to create a virtual environment (py27env folder).
 
-After that, it is important to install the necessary packages using:
+After that, it is important to install the necessary packages (inside the virtual
+environment) using:
 ```
 pip install -r requirements.txt
 ```
