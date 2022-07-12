@@ -12,12 +12,15 @@ even if PHP is not your primary focus.
 This starter kit allows the development of a more powerfull tool. Instead of creating a single script, the user of this kit will be able to create a small application.
 
 ## It includes
-    1. Easy password hashing and verification (bcrypt). Even though Autodesk Maya is not able to load the BCrypt package, if the user of this kit needs to hash and verify a password, it is already preconfigured.
+    1. Easy password hashing and verification (bcrypt). Even though Autodesk Maya is not able to load
+    the BCrypt package, if the user of this kit needs to hash and verify a password, it is already
+    preconfigured.
     2. An abstract class to be inherited by all the others that access
     the database. It is an application of the __active record__ design pattern.
     3. Two example subclasses are provided. One for a product and one for
     an admin, both are subclasses of the database one (active record).
-    4. The code is heavly documented (using Sphinx and Google style docstrings) and HTML generation is preconfigured.
+    4. The code is heavly documented (using Sphinx and Google style docstrings) and HTML generation
+    is preconfigured.
     5. General and validation functions that can be easily reused in other
     projects.
     6. Unit tests and coverage are preconfigured.
@@ -34,6 +37,10 @@ If you use a Database Management System (DBMS) different from MySQL, editing the
 ```
 Root
 |- boilerplate          (the app)
+    |- activerecord     (modules that implement the active record design pattern)
+    |- appclasses       (classes specific for the application being developed)
+    |- shared           (usefull functions shared by the packages)
+    |- userinterface    (example of user interface class)
 |- docs                 (generated HTML documentation)
     |- coverage         (generated HTML code coverage reports)
     |- sphinx           (generated HTML documentation)
