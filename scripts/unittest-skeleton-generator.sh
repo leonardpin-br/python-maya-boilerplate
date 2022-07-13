@@ -19,55 +19,9 @@ include() {
 # Included files
 include "utils.sh"
 
-# Removes Cygwin prefix.
-# param1 (string): The root directory path.
-removesCygwinPrefix() {
-
-    local ROOT_DIR=$1
-
-    # The Cygwin prefix /cygdrive/e, if exists, must be removed.
-    if [[ "$ROOT_DIR" =~ ^\/cygdrive\/[a-z] ]]; then
-
-        # Removes /cygdrive/.
-        ROOT_DIR=${ROOT_DIR/\/cygdrive\//}
-
-        # Capitalizes the drive letter (first character).
-        ROOT_DIR="${ROOT_DIR^}"
-
-        # Swaps the first / for :/
-        ROOT_DIR=${ROOT_DIR/\//\:\/}
-
-    fi
-
-    echo -e "$ROOT_DIR"
-}
-
-# Removes Unix prefix.
-# param1 (string): The root directory path.
-removesUnixPrefix() {
-
-    local ROOT_DIR=$1
-
-    # The Unix prefix /e, if exists, must be removed.
-    if [[ "$ROOT_DIR" =~ ^\/[a-z]\/[a-z]+ ]]; then
-
-        # Removes the first /.
-        ROOT_DIR=${ROOT_DIR/\//}
-
-        # Capitalizes the drive letter (first character).
-        ROOT_DIR="${ROOT_DIR^}"
-
-        # Swaps the (now) first / for :/
-        ROOT_DIR=${ROOT_DIR/\//\:\/}
-
-    fi
-
-    echo -e "$ROOT_DIR"
-}
-
 # Creates an unit test file from the filename given as argument.
 # param1 (string): The filename.
-unittestSkeletonGenerator() {
+unittest_skeleton_generator() {
 
     # Clear the terminal window.
     clear
@@ -75,29 +29,38 @@ unittestSkeletonGenerator() {
     # Receives the ${fileBasename} (filename with extension).
     local file_to_be_tested="$1"
 
+    local root_dir=$(get_root_directory)
+    local application_folder="$root_dir/boilerplate"
+    local file_full_path=$(find "$application_folder" -name "$file_to_be_tested")
+
     # Verifies if the argument was passed, and if the file exists.
     # https://stackoverflow.com/a/21164441
     if [ -f $file_to_be_tested ]; then
         echo -e "This script receives, as argument, the name of the python file (with extension) that is going to be tested."
         exit 1
-    elif [[ -z `find /this/is/path -name $file_to_be_tested` ]]; then
+    elif [[ ! -f $file_full_path ]]; then
         echo -e "File not found."
         exit 1
     fi
 
     # Builds the full file path to the file that is going to be tested.
-    local file_relative_folder=$(get_file_relative_folder "$file_to_be_tested")
-    # local file_full_folder_path=$(realpath $file_relative_folder)
-    # local file_full_path="${file_full_folder_path}/${file_to_be_tested}"
+    # local file_relative_folder=$(get_file_relative_folder "$file_to_be_tested")
+    # # local file_full_folder_path=$(realpath $file_relative_folder)
+    # # local file_full_path="${file_full_folder_path}/${file_to_be_tested}"
+
+    # --------------------------------------------------------
+    # Levels:
+    # boilerplate           0
+    # main.py               1
+    # shared/functions.py   2
+    # --------------------------------------------------------
+
+    echo -e "$file_full_path"
 
 
-    echo -e "$file_relative_folder"
-
-
-    # local ROOT_DIR=$(get_root_directory)
 
     # # Creates the full folder path for the test file that will be created.
-    # local tests_full_folder_path="${ROOT_DIR}/tests"
+    # local tests_full_folder_path="${root_dir}/tests"
     # # local tests_full_folder_path=${file_full_folder_path/src/"$tests_replacement"}
 
 
@@ -110,13 +73,13 @@ unittestSkeletonGenerator() {
     # # Checks if a string starts with a value:
     # # see   https://stackoverflow.com/questions/2172352/in-bash-how-can-i-check-if-a-string-begins-with-some-value
     # if [[ $environment == CYGWIN* ]]; then
-    #     ROOT_DIR=$(removesCygwinPrefix $ROOT_DIR)
+    #     root_dir=$(remove_cygwin_prefix $root_dir)
     # elif [[ $environment == MINGW* ]]; then
-    #     ROOT_DIR=$(removesUnixPrefix $ROOT_DIR)
+    #     root_dir=$(remove_unix_prefix $root_dir)
     # fi
 
     # # Establishes the paths to the project folders.
-    # local RESOURCES_DIR="$ROOT_DIR/resources"
+    # local RESOURCES_DIR="$root_dir/resources"
     # local IMG_DIR="$RESOURCES_DIR/img"
 
     # # Array with the filenames of the images used in the (Combinear.qss) theme.
@@ -151,4 +114,4 @@ unittestSkeletonGenerator() {
 
 }
 
-unittestSkeletonGenerator $1
+unittest_skeleton_generator $1
