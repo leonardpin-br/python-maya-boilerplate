@@ -11,7 +11,7 @@
 # https://stackoverflow.com/questions/29713541/recursive-unittest-discover#answer-29715336
 
 include() {
-    # MY_DIR corresponde ao diretório do arquivo principal.
+    # MY_DIR corresponds to the folder where this file is.
     MY_DIR=$(dirname $(readlink -f $0))
     . $MY_DIR/$1
 }
@@ -29,8 +29,9 @@ unittest_skeleton_generator() {
     # Receives the ${fileBasename} (filename with extension).
     local file_to_be_tested="$1"
 
+    local app_folder="boilerplate"
     local root_dir=$(get_root_directory)
-    local application_folder="$root_dir/boilerplate"
+    local application_folder="$root_dir/$app_folder"
     local file_full_path=$(find "$application_folder" -name "$file_to_be_tested")
 
     # Verifies if the argument was passed, and if the file exists.
@@ -55,7 +56,6 @@ unittest_skeleton_generator() {
     # shared/functions.py   2
     # --------------------------------------------------------
 
-    echo -e "$file_full_path"
 
 
 
