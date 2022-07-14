@@ -94,6 +94,10 @@ unittest_skeleton_generator() {
     # Create the test file
     # Work the content of the file using levels deep
     # Refactor the remove prefix for a function in utils.sh
+    # Function for "test header" (imports, mock...)
+    # Function for sys.path and import
+    # Function for class creation
+    # Function for methods creation
     echo -e "Test"
 
     # # Will hold every image path in the file.
