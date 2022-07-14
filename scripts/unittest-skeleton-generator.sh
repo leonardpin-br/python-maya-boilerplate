@@ -30,9 +30,11 @@ unittest_skeleton_generator() {
     local file_to_be_tested="$1"
 
     local app_folder="boilerplate"
+    local tests_folder="tests"
     local root_dir=$(get_root_directory)
-    local application_folder="$root_dir/$app_folder"
-    local file_full_path=$(find "$application_folder" -name "$file_to_be_tested")
+    local app_folder_full_path="$root_dir/$app_folder"
+    local tests_folder_full_path="$root_dir/$tests_folder"
+    local file_full_path=$(find "$app_folder_full_path" -name "$file_to_be_tested")
 
     # Verifies if the argument was passed, and if the file exists.
     # https://stackoverflow.com/a/21164441
@@ -44,54 +46,55 @@ unittest_skeleton_generator() {
         exit 1
     fi
 
-    # Builds the full file path to the file that is going to be tested.
-    # local file_relative_folder=$(get_file_relative_folder "$file_to_be_tested")
-    # # local file_full_folder_path=$(realpath $file_relative_folder)
-    # # local file_full_path="${file_full_folder_path}/${file_to_be_tested}"
+    # Builds the relative path, removing the first part of the string path:
+    # https://stackoverflow.com/a/16623897
+    local file_relative_path=${file_full_path#"$root_dir"}  # /boilerplate/shared/functions.py
 
-    # --------------------------------------------------------
-    # Levels:
-    # boilerplate           0
-    # main.py               1
-    # shared/functions.py   2
-    # --------------------------------------------------------
+    # Builds the test relative path:
+    # https://stackoverflow.com/a/23715370
+    local test_relative_path=$(echo "$file_relative_path" | sed -e "s/$app_folder/$tests_folder/")
 
+    # Back up of IFS.
+    # https://stackoverflow.com/a/10586169
+    local original_IFS=$IFS
 
+    # Changes IFS and breaks the path into an array.
+    IFS='/' read -r -a path_array <<< "$file_relative_path"
 
+    # Restores IFS.
+    IFS=$original_IFS
 
-    # # Creates the full folder path for the test file that will be created.
-    # local tests_full_folder_path="${root_dir}/tests"
-    # # local tests_full_folder_path=${file_full_folder_path/src/"$tests_replacement"}
+    # Stores the number of levels the file is below the app_folder.
+    local levels_deep=0
 
+    # Loops through array backwards:
+    # https://stackoverflow.com/a/13360181
+    # https://www.baeldung.com/linux/bash-script-counter#2-using-the-bash-arithmetic-expansion
+    for (( idx=${#path_array[@]}-1 ; idx>=0 ; idx-- )) ; do
+        if [ "${path_array[idx]}" = "$app_folder" ]; then
+            break
+        fi
+        levels_deep=$(( levels_deep + 1 ))
+    done
 
-    # echo -e "$tests_full_folder_path"
+    # Discovers the environment this script is running on:
+    # see   https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
+    local environment="$(uname -s)"
 
-    # # Discovers the environment this script is running on:
-    # # see   https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
-    # local environment="$(uname -s)"
+    # Checks if a string starts with a value:
+    # see   https://stackoverflow.com/questions/2172352/in-bash-how-can-i-check-if-a-string-begins-with-some-value
+    if [[ $environment == CYGWIN* ]]; then
+        root_dir=$(remove_cygwin_prefix $root_dir)
+    elif [[ $environment == MINGW* ]]; then
+        root_dir=$(remove_unix_prefix $root_dir)
+    fi
 
-    # # Checks if a string starts with a value:
-    # # see   https://stackoverflow.com/questions/2172352/in-bash-how-can-i-check-if-a-string-begins-with-some-value
-    # if [[ $environment == CYGWIN* ]]; then
-    #     root_dir=$(remove_cygwin_prefix $root_dir)
-    # elif [[ $environment == MINGW* ]]; then
-    #     root_dir=$(remove_unix_prefix $root_dir)
-    # fi
-
-    # # Establishes the paths to the project folders.
-    # local RESOURCES_DIR="$root_dir/resources"
-    # local IMG_DIR="$RESOURCES_DIR/img"
-
-    # # Array with the filenames of the images used in the (Combinear.qss) theme.
-    # local image_files=(
-    #     "arrow-down.png"
-    #     "arrow-left.png"
-    #     "arrow-right.png"
-    #     "arrow-up.png"
-    #     "check.png"
-    #     "tree-closed.png"
-    #     "tree-open.png"
-    # )
+    # TODO:
+    # If test folder does not exist, create it.
+    # Create the test file
+    # Work the content of the file using levels deep
+    # Refactor the remove prefix for a function in utils.sh
+    echo -e "Test"
 
     # # Will hold every image path in the file.
     # local NEW_FILE_PATH=""
@@ -114,4 +117,5 @@ unittest_skeleton_generator() {
 
 }
 
-unittest_skeleton_generator $1
+# unittest_skeleton_generator $1
+unittest_skeleton_generator "functions.py"
