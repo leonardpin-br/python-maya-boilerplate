@@ -42,17 +42,8 @@ updateQssTheme() {
 
     local ROOT_DIR=$(get_root_directory)
 
-    # Discovers the environment this script is running on:
-    # see   https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
-    local environment="$(uname -s)"
-
-    # Checks if a string starts with a value:
-    # see   https://stackoverflow.com/questions/2172352/in-bash-how-can-i-check-if-a-string-begins-with-some-value
-    if [[ $environment == CYGWIN* ]]; then
-        ROOT_DIR=$(remove_cygwin_prefix $ROOT_DIR)
-    elif [[ $environment == MINGW* ]]; then
-        ROOT_DIR=$(remove_unix_prefix $ROOT_DIR)
-    fi
+    # Removes the prefix if necessary.
+    ROOT_DIR=$(remove_prefix $ROOT_DIR)
 
     # Establishes the paths to the project folders.
     local RESOURCES_DIR="$ROOT_DIR/resources"

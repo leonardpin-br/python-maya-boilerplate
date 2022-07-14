@@ -18,6 +18,14 @@ get_file_relative_folder() {
     echo "$file_relative_folder"
 }
 
+# Prints an error message that is easy to read in the console.
+# param1 (string): The error message to be printed.
+print_error_message() {
+    echo -e "\n--------------------------------------------------------------\n"
+    echo -e "$1"
+    echo -e "\n--------------------------------------------------------------\n\n"
+}
+
 # Removes Cygwin prefix.
 # param1 (string): The root directory path.
 remove_cygwin_prefix() {
@@ -62,4 +70,24 @@ remove_unix_prefix() {
     fi
 
     echo -e "$ROOT_DIR"
+}
+
+# Removes the environment (MINGW, Cygwin...) from the string path.
+# param1 (string): The root directory path.
+remove_prefix() {
+
+    # Discovers the environment this script is running on:
+    # see   https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
+    local environment="$(uname -s)"
+
+    # Checks if a string starts with a value:
+    # see   https://stackoverflow.com/questions/2172352/in-bash-how-can-i-check-if-a-string-begins-with-some-value
+    if [[ $environment == CYGWIN* ]]; then
+        root_dir=$(remove_cygwin_prefix $root_dir)
+    elif [[ $environment == MINGW* ]]; then
+        root_dir=$(remove_unix_prefix $root_dir)
+    fi
+
+    echo -e "$root_dir"
+
 }
