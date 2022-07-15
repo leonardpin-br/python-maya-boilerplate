@@ -9,6 +9,9 @@ Python version 2.7.11 (Autodesk Maya 2018 and 2020)
 This is the file to run from Autodesk Maya. It is advisable to create a shelf
 button to run this app from there.
 
+Important:
+    Project structure:
+
 Example:
     How a shelf button can be written::
 
