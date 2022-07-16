@@ -64,7 +64,7 @@ Project Folder structure:
 ================================================================================
 
 project_root_folder
-├── boilerplate
+├── src
 ├   ├── subpackage
 ├   |   ├── example_classes.py          <= File to be documented.
 ├   ├── main.py                         <= File to be documented.
@@ -121,7 +121,7 @@ Uncomment
 	import os
 	import sys
 
-sys.path.insert(0, os.path.abspath('../../../boilerplate')) <= From . to ../../../boilerplate
+sys.path.insert(0, os.path.abspath('../../../src')) <= From . to ../../../src
 
 extensions = [
     'sphinxcontrib.napoleon',
@@ -150,7 +150,7 @@ Creation of Sphinx sources (use sphinx.ext.autodoc)
 	It will create one .rst file for each python script.
 --------------------------------------------------------------------------------
 
-sphinx-apidoc --force -o ./docs/sphinx/source ./boilerplate
+sphinx-apidoc --force -o ./docs/sphinx/source ./src
 
 
 Editing the file ./docs/sphinx/source/index.rst
@@ -214,13 +214,11 @@ for mod in maya_modules:                    <= (It is not necessary for document
 
 
 Relationship with unittest
-    The boilerplate folder (the old src folder) MUST NOT have
-    the __init__.py file, that is, must not be a package,
-    bacause Sphinx shows an error and does not create the
-    documentation.
-    The subfolders inside the boilerplate folder (old src)
-    must have the __init__.py file, that is, the
-    subfolders must be packages.
+    The src folder MUST NOT have the __init__.py file, that is,
+    must not be a package, bacause Sphinx shows an error and does
+    not create the documentation.
+    The subfolders inside the src folder must have the __init__.py
+    file, that is, the subfolders must be packages.
 
     The tests folder and the subfolders MUST be packages
     (have __init__.py in them) for unittest to work.

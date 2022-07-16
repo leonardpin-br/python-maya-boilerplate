@@ -10,5 +10,5 @@ Note:
  */
 
 QLabel#label_2 {
-	/* background-image: url("E:/cloud/Backup/Libraries/scripts/maya/Boilerplate/resources/img/logo-leonardo-pinheiro-branca.png"); */
+	/* background-image: url("E:/cloud/Backup/Libraries/scripts/maya/python-maya-boilerplate/resources/img/logo-leonardo-pinheiro-branca.png"); */
 }

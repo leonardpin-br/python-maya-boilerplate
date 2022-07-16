@@ -19,6 +19,37 @@ include() {
 # Included files
 include "utils.sh"
 
+# Gets the number of levels deep (number of subfolders) the file is in.
+# param1 (string): The file relative path.
+get_levels_deep() {
+
+    # Back up of IFS.
+    # https://stackoverflow.com/a/10586169
+    local original_IFS=$IFS
+
+    # Changes IFS and breaks the path into an array.
+    IFS='/' read -r -a path_array <<< "$1"
+
+    # Restores IFS.
+    IFS=$original_IFS
+
+    # Stores the number of levels the file is below the src_folder.
+    local levels_deep=0
+
+    # Loops through array backwards:
+    # https://stackoverflow.com/a/13360181
+    # https://www.baeldung.com/linux/bash-script-counter#2-using-the-bash-arithmetic-expansion
+    for (( idx=${#path_array[@]}-1 ; idx>=0 ; idx-- )) ; do
+        if [ "${path_array[idx]}" = "$src_folder" ]; then
+            break
+        fi
+        levels_deep=$(( levels_deep + 1 ))
+    done
+
+    echo -e "$levels_deep"
+
+}
+
 # Inserts the header in the given test file.
 # param1 (string): The test file full path.
 insert_test_header() {
@@ -52,11 +83,89 @@ insert_test_header() {
             file_content="${file_content}\t'QUiLoader'\n"
             file_content="${file_content}]\n"
             file_content="${file_content}\n"
+            file_content="${file_content}# Creates the mocks.\n"
             file_content="${file_content}for mod in maya_modules:\n"
             file_content="${file_content}\tsys.modules[mod] = mock.MagicMock()\n"
-            file_content="${file_content}\n"
 
     echo -e "$file_content" >> $1
+}
+
+# Solves and inserts the import of the modules being tested.
+# param1 (string): The test file full path.
+# param2 (int): The number of levels deep.
+# param3 (string): The module being tested.
+insert_test_imports() {
+
+    local test_full_path="$1"
+    local levels_deep=$2
+    local   module_name="$3"
+            module_name=${module_name%".py"}
+
+    local file_content="# Gets the src_dir.\n"
+    local tests_dir="os.path.realpath(__file__)"
+
+    # https://stackoverflow.com/a/169517
+    for i in $(seq 1 $levels_deep); do
+        tests_dir="os.path.dirname(${tests_dir})"
+    done
+
+    file_content="${file_content}tests_dir = ${tests_dir}\n"
+    file_content="${file_content}root_dir = os.path.dirname(tests_dir)\n"
+    file_content="${file_content}src_dir = os.path.join(root_dir, \"src\")\n"
+    file_content="${file_content}\n"
+    file_content="${file_content}# If the path is not in sys.path:\n"
+    file_content="${file_content}for path in sys.path:\n"
+    file_content="${file_content}\tif path == src_dir:\n"
+    file_content="${file_content}\t\tbreak\n"
+    file_content="${file_content}else:\n"
+    file_content="${file_content}\tsys.path.append(src_dir)\n"
+    file_content="${file_content}\n"
+    file_content="${file_content}\n"
+    file_content="${file_content}import ${module_name}\n\n"
+
+    echo -e "$file_content" >> $test_full_path
+
+}
+
+# Inserts the class definition.
+# param1 (string): The test file full path.
+# param2 (string): The module being tested.
+insert_class_definition() {
+
+    local test_full_path="$1"
+    local   class_name="$2"
+            class_name=${class_name%".py"}
+            class_name="${class_name^}"
+    local class_definition="class ${class_name}TestCase(unittest.TestCase):"
+
+    local   file_content="${class_definition}\n"
+            file_content="${file_content}\n"
+            file_content="${file_content}\tdef setUp(self):\n"
+            file_content="${file_content}\t\tpass\n"
+            file_content="${file_content}\n"
+            file_content="${file_content}\tdef tearDown(self):\n"
+            file_content="${file_content}\t\tpass\n"
+
+    echo -e "$file_content" >> $test_full_path
+
+}
+
+# Fills the test file with code.
+# param1 (string): The test file full path.
+# param2 (int): The number of levels deep.
+# param3 (string): The module being tested.
+fill_test_file() {
+
+    local test_full_path="$1"
+    local levels_deep="$2"
+    local file_to_be_tested="$3"
+
+    insert_test_header $test_full_path
+
+    insert_test_imports $test_full_path $levels_deep $file_to_be_tested
+
+    insert_class_definition $test_full_path $file_to_be_tested
+
 }
 
 # Creates an unit test file from the filename given as argument.
@@ -69,57 +178,37 @@ unittest_skeleton_generator() {
     # Receives the ${fileBasename} (filename with extension).
     local file_to_be_tested="$1"
 
-    local app_folder="boilerplate"
+    local src_folder="src"
     local tests_folder="tests"
     local root_dir=$(get_root_directory)
-    local app_folder_full_path="$root_dir/$app_folder"
-    local file_full_path=$(find "$app_folder_full_path" -name "$file_to_be_tested")
+    local src_folder_full_path="$root_dir/$src_folder"
+
+    # Limits the search to only the src_folder.
+    local file_full_path=$(find "$src_folder_full_path" -name "$file_to_be_tested")
 
     # Verifies if the argument was passed, and if the file exists.
     # https://stackoverflow.com/a/21164441
     if [ -f $file_to_be_tested ]; then
-        print_error_message "This script receives, as argument, the name of the python file (with extension) that is going to be tested."
+        print_error_message "This script receives, as argument, the name of the python file (with extension) that is going to be tested.\nThe file must be in the src folder or inside a subfolder."
         exit 1
     elif [[ ! -f $file_full_path ]]; then
-        print_error_message "File to be tested not found."
+        print_error_message "File (from which the test will be create from) not found."
         exit 1
     fi
 
     # Builds the relative path, removing the first part of the string path:
     # https://stackoverflow.com/a/16623897
-    local file_relative_path=${file_full_path#"$root_dir"}  # /boilerplate/shared/functions.py
+    local file_relative_path=${file_full_path#"$root_dir"}  # /src/shared/functions.py
 
     # Builds the test relative path:
     # https://stackoverflow.com/a/23715370
-    local test_relative_path=$(echo "$file_relative_path" | sed -e "s/$app_folder/$tests_folder/")
+    local test_relative_path=$(echo "$file_relative_path" | sed -e "s/$src_folder/$tests_folder/")
 
-    # Back up of IFS.
-    # https://stackoverflow.com/a/10586169
-    local original_IFS=$IFS
-
-    # Changes IFS and breaks the path into an array.
-    IFS='/' read -r -a path_array <<< "$file_relative_path"
-
-    # Restores IFS.
-    IFS=$original_IFS
-
-    # Stores the number of levels the file is below the app_folder.
-    local levels_deep=0
-
-    # Loops through array backwards:
-    # https://stackoverflow.com/a/13360181
-    # https://www.baeldung.com/linux/bash-script-counter#2-using-the-bash-arithmetic-expansion
-    for (( idx=${#path_array[@]}-1 ; idx>=0 ; idx-- )) ; do
-        if [ "${path_array[idx]}" = "$app_folder" ]; then
-            break
-        fi
-        levels_deep=$(( levels_deep + 1 ))
-    done
+    # Gets the number of levels deep
+    local levels_deep=$(get_levels_deep $file_relative_path)
 
     # Removes the prefix if necessary.
     root_dir=$(remove_prefix $root_dir)
-
-
 
     local test_full_path="${root_dir}${test_relative_path}"
 
@@ -128,60 +217,34 @@ unittest_skeleton_generator() {
     local test_folder_full_path=${test_full_path%"$file_to_be_tested"}
     local init_file="${test_folder_full_path}__init__.py"
 
-    # Create test folder (the path to it) if it does not exist.
+    # Creates the test folder (and the path to it) if it does not exist.
     # https://stackoverflow.com/a/793867/3768670
     mkdir -p $test_folder_full_path
 
     # If the __init__.py does not exist, create it.
     if [ ! -f $init_file ]; then
-
-        # Creates the __init__.py file.
         touch $init_file
-
     fi
 
     # If the test file already exists, exit this script.
     if [ -f $test_full_path ]; then
-
         print_error_message "The test file already exists."
         exit 1
-
     fi
 
     # Creates the test file.
+    test_full_path="${test_folder_full_path}test_${file_to_be_tested}"
     touch $test_full_path
 
-    insert_test_header $test_full_path
+    fill_test_file $test_full_path $levels_deep $file_to_be_tested
 
 
     # TODO:
-    # Work the content of the file using levels deep
-    # Function for sys.path and import
-    # Function for class creation
+    # Test functioning until now.
     # Function for methods creation
-    echo -e "test"
 
-
-
-
-    # # Will hold every image path in the file.
-    # local NEW_FILE_PATH=""
-
-    # # Loops through the array searching for each
-    # # image filename in the theme file.
-    # for i in "${image_files[@]}"; do
-
-    #     # Builds the new line.
-    #     NEW_FILE_PATH="    image: url(\"$IMG_DIR/$i\");"
-
-    #     # Removes the old line containing the image filename
-    #     # and adds the new one.
-    #     sed -i "s+.*$i.*+$NEW_FILE_PATH+" $THEME
-
-    # done
-
-    # echo -e "The paths in the theme file were updated."
-    # exit 0
+    echo -e "The test skeleton file for ${file_to_be_tested} was created successfully."
+    exit 0
 
 }
 

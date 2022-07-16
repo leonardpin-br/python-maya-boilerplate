@@ -11,7 +11,7 @@ docs/coverage/.coverage
 docs/sphinx/build/*
 
 # Exclude the db_credentials.py file:
-boilerplate/activerecord/db_credentials.py
+src/activerecord/db_credentials.py
 
 # Exclude the node_modules folder.
 node_modules/*

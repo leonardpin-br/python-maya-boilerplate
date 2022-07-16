@@ -39,14 +39,14 @@ import mock
 
 currentdir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))    # tests
 rootdir = os.path.dirname(currentdir)                       # <root_directory>
-boilerplate_dir = os.path.join(rootdir, "boilerplate")
+src_dir = os.path.join(rootdir, "src")
 
 # If the path is not in sys.path:
 for path in sys.path:
-    if path == boilerplate_dir:
+    if path == src_dir:
         break
 else:
-    sys.path.append(boilerplate_dir)
+    sys.path.append(src_dir)
 
 
 import shared.functions

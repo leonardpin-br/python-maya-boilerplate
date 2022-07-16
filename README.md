@@ -45,7 +45,7 @@ pip install -r requirements.txt
 ## Folder structure
 ```
 <project_root>
-|- boilerplate          (the app)
+|- src                  (the app)
     |- activerecord     (modules that implement the active record design pattern)
     |- appclasses       (classes specific for the application being developed)
     |- shared           (usefull functions shared by the packages)
@@ -66,7 +66,7 @@ pip install -r requirements.txt
 ```
 
 ## Which file will be executed?
-Using this starter kit, the main.py (``<project_root>/boilerplate/main.py``) will be
+Using this starter kit, the main.py (``<project_root>/src/main.py``) will be
 the file being executed from Autodesk Maya.
 
 It is recommended to create a shelf button that imports the main.py file (there is

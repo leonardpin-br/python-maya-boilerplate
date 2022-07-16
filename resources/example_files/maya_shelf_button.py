@@ -7,7 +7,7 @@ with the Sphinx's sphinx-apidoc tool.
 
 import sys
 
-module_path = 'E:\\cloud\\Backup\\Libraries\\scripts\\maya\\Boilerplate\\boilerplate'
+module_path = 'E:\\cloud\\Backup\\Libraries\\scripts\\maya\\python-maya-boilerplate\\src'
 
 # Se o caminho não faz parte do path:
 for path in sys.path:

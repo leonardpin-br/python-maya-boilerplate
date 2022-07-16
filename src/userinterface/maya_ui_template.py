@@ -20,7 +20,7 @@ Examples:
 
     How to convert from ``.qrc`` to ``py`` using PySide2 integrated in Maya (**must be run in Powershell and must swap the double backslashes for single slashes**)::
 
-    &"C:\Program Files\Autodesk\Maya2020\bin\pyside2-rcc.exe" .\resources\\ui_resources.qrc -o .\boilerplate\\userinterface\\ui_resources.py
+    &"C:\Program Files\Autodesk\Maya2020\bin\pyside2-rcc.exe" .\resources\\ui_resources.qrc -o .\src\\userinterface\\ui_resources.py
 
 References:
     `Example Google Style Python Docstrings`_
