@@ -174,15 +174,16 @@ insert_method_definition() {
 
     # Stores the grep output into an array BASH 4+.
     readarray -d '' -t function_definitions < <(grep "def" "$file_full_path")
+    function_definitions=("cat" "dog" "mouse" "frog")
 
-    local ignore_pattern="def"
+    local ignore_pattern="__init__"
 
     for i in "${function_definitions[@]}"; do
 
         i=$(remove_leading_whitespace_only "$i")
 
-        if [[ $i = $ignore_pattern* ]]; then
-            echo -e "Begins with ${ignore_pattern}"
+        if grep -q "$ignore_pattern" <<< "$i"; then
+            echo -e "Contains substring"
         fi
 
         echo -e "$i"
@@ -297,5 +298,5 @@ unittest_skeleton_generator() {
 
 }
 
-unittest_skeleton_generator $1
-# unittest_skeleton_generator maya_ui_template.py
+# unittest_skeleton_generator $1
+unittest_skeleton_generator maya_ui_template.py
