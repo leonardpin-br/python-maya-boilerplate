@@ -165,8 +165,22 @@ insert_method_definition() {
     # https://unix.stackexchange.com/questions/671374/linux-find-all-occurrences-of-a-certain-pattern-in-a-line-of-a-file
     # https://unix.stackexchange.com/questions/146225/find-all-occurrences-in-a-file-with-sed
     # https://stackoverflow.com/questions/15650506/how-can-i-print-out-all-lines-of-a-file-containing-a-specific-string-in-unix
+    # https://ostechnix.com/the-grep-command-tutorial-with-examples-for-beginners/
+    # https://stackoverflow.com/a/24890830
 
-    echo -e "Inside insert_method_definition"
+    local test_full_path="$1"
+    local file_full_path="$2"
+
+    # Stores the grep output into an array BASH 4+.
+    readarray -d '' -t function_definitions < <(grep "def " "$file_full_path")
+
+    for i in "${function_definitions[@]}"; do
+
+
+
+        echo -e "$i"
+
+    done
 
 
 }
@@ -175,11 +189,13 @@ insert_method_definition() {
 # param1 (string): The test file full path.
 # param2 (int): The number of levels deep.
 # param3 (string): The module being tested.
+# param4 (string): The full path of the module being tested.
 fill_test_file() {
 
     local test_full_path="$1"
     local levels_deep="$2"
     local file_to_be_tested="$3"
+    local file_full_path="$4"
 
     insert_test_header $test_full_path
 
@@ -187,7 +203,7 @@ fill_test_file() {
 
     insert_class_definition $test_full_path $file_to_be_tested
 
-    insert_method_definition $test_full_path $file_to_be_tested
+    insert_method_definition $test_full_path $file_full_path
 
 }
 
@@ -262,7 +278,7 @@ unittest_skeleton_generator() {
     test_full_path="${test_folder_full_path}test_${file_to_be_tested}"
     touch $test_full_path
 
-    fill_test_file $test_full_path $levels_deep $file_to_be_tested
+    fill_test_file $test_full_path $levels_deep $file_to_be_tested $file_full_path
 
 
     # TODO:
