@@ -96,12 +96,15 @@ insert_test_header() {
 # param3 (string): The module being tested.
 insert_test_imports() {
 
+    local this_script=`basename "$0"`
     local test_full_path="$1"
     local levels_deep=$2
     local   module_name="$3"
             module_name=${module_name%".py"}
 
-    local file_content="# Gets the src_dir.\n"
+    local file_content="# Automatically calculated by ${this_script} to easily import ${3}:\n"
+    file_content="${file_content}# Gets the src_dir.\n"
+
     local tests_dir="os.path.realpath(__file__)"
 
     # https://stackoverflow.com/a/169517
@@ -113,7 +116,7 @@ insert_test_imports() {
     file_content="${file_content}root_dir = os.path.dirname(tests_dir)\n"
     file_content="${file_content}src_dir = os.path.join(root_dir, \"src\")\n"
     file_content="${file_content}\n"
-    file_content="${file_content}# If the path is not in sys.path:\n"
+    file_content="${file_content}# Adds src_dir to sys.path if it is not already there:\n"
     file_content="${file_content}for path in sys.path:\n"
     file_content="${file_content}\tif path == src_dir:\n"
     file_content="${file_content}\t\tbreak\n"
@@ -130,6 +133,8 @@ insert_test_imports() {
 # Inserts the class definition.
 # param1 (string): The test file full path.
 # param2 (string): The module being tested.
+# References:
+# https://docs.python.org/2.7/library/unittest.html#organizing-test-code
 insert_class_definition() {
 
     local test_full_path="$1"
@@ -150,6 +155,19 @@ insert_class_definition() {
 
 }
 
+# Inserts the methods definitions for the tested file.
+# param1 (string): The test file full path.
+# param2 (string): The module being tested.
+# References:
+# https://unix.stackexchange.com/a/251532
+insert_method_definition() {
+
+
+    echo -e "Inside insert_method_definition"
+
+
+}
+
 # Fills the test file with code.
 # param1 (string): The test file full path.
 # param2 (int): The number of levels deep.
@@ -165,6 +183,8 @@ fill_test_file() {
     insert_test_imports $test_full_path $levels_deep $file_to_be_tested
 
     insert_class_definition $test_full_path $file_to_be_tested
+
+    insert_method_definition $test_full_path $file_to_be_tested
 
 }
 
@@ -191,8 +211,11 @@ unittest_skeleton_generator() {
     if [ -f $file_to_be_tested ]; then
         print_error_message "This script receives, as argument, the name of the python file (with extension) that is going to be tested.\nThe file must be in the src folder or inside a subfolder."
         exit 1
+    elif [[ $file_to_be_tested != *\.py ]]; then
+        print_error_message "The file must have the \".py\" extension."
+        exit 1
     elif [[ ! -f $file_full_path ]]; then
-        print_error_message "File (from which the test will be create from) not found."
+        print_error_message "File (from which the test will be create) not found in the src folder or in its subfolders."
         exit 1
     fi
 
@@ -240,7 +263,6 @@ unittest_skeleton_generator() {
 
 
     # TODO:
-    # Test functioning until now.
     # Function for methods creation
 
     echo -e "The test skeleton file for ${file_to_be_tested} was created successfully."
@@ -249,4 +271,4 @@ unittest_skeleton_generator() {
 }
 
 unittest_skeleton_generator $1
-# unittest_skeleton_generator "ui_functions.py"
+# unittest_skeleton_generator ui_functions.py
