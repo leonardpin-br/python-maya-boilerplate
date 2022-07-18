@@ -112,7 +112,6 @@ remove_trailing_whitespace_only() {
 # param1 (string): The string to be trimmed.
 # https://stackoverflow.com/a/3232433
 trim() {
-    local   result=$(remove_leading_whitespace_only $1)
-            result=$(remove_trailing_whitespace_only $result)
+    local   result="$(echo -e "${1}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
     echo "$result"
 }

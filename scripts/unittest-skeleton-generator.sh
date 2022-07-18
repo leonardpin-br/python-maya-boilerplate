@@ -13,7 +13,7 @@
 include() {
     # MY_DIR corresponds to the folder where this file is.
     MY_DIR=$(dirname $(readlink -f $0))
-    MY_DIR=/home/web/Documents/GitHub/python-maya-boilerplate/scripts
+    # MY_DIR=/home/web/Documents/GitHub/python-maya-boilerplate/scripts
     . $MY_DIR/$1
 }
 
@@ -161,35 +161,65 @@ insert_class_definition() {
 # param2 (string): The module being tested.
 # References:
 # https://unix.stackexchange.com/a/251532
+# https://unix.stackexchange.com/questions/671374/linux-find-all-occurrences-of-a-certain-pattern-in-a-line-of-a-file
+# https://unix.stackexchange.com/questions/146225/find-all-occurrences-in-a-file-with-sed
+# https://stackoverflow.com/questions/15650506/how-can-i-print-out-all-lines-of-a-file-containing-a-specific-string-in-unix
+# https://ostechnix.com/the-grep-command-tutorial-with-examples-for-beginners/
+# https://stackoverflow.com/a/24890830
+# https://stackoverflow.com/a/10586169
 insert_method_definition() {
-
-    # https://unix.stackexchange.com/questions/671374/linux-find-all-occurrences-of-a-certain-pattern-in-a-line-of-a-file
-    # https://unix.stackexchange.com/questions/146225/find-all-occurrences-in-a-file-with-sed
-    # https://stackoverflow.com/questions/15650506/how-can-i-print-out-all-lines-of-a-file-containing-a-specific-string-in-unix
-    # https://ostechnix.com/the-grep-command-tutorial-with-examples-for-beginners/
-    # https://stackoverflow.com/a/24890830
 
     local test_full_path="$1"
     local file_full_path="$2"
 
-    # Stores the grep output into an array BASH 4+.
-    readarray -d '' -t function_definitions < <(grep "def" "$file_full_path")
-    function_definitions=("cat" "dog" "mouse" "frog")
+    # Back up of IFS.
+    local original_IFS=$IFS
 
+    # Changes IFS.
+    IFS='\n'
+
+    # Stores all function/method definitions inside an array.
+
+    # If the file has CRLF (Windows end of lines).
+    if [[ $(grep -c $'\r' "$file_full_path") -gt 0 ]]; then
+        sed "s/$(printf '\r')\$//" "$file_full_path" > "temp_file.txt"
+        readarray original_function_definitions < <(grep "def" temp_file.txt)
+        rm "temp_file.txt"
+    else
+        readarray original_function_definitions < <(grep "def" "$file_full_path")
+    fi
+
+    # Restores IFS.
+    IFS=$original_IFS
+
+    # Gets only the name of the function/method, skipping __init__:
+    local new_function_definitions=()
     local ignore_pattern="__init__"
 
-    for i in "${function_definitions[@]}"; do
+    for i in "${original_function_definitions[@]}"; do
 
-        i=$(remove_leading_whitespace_only "$i")
+        # Removes leading and trailing spaces.
+        i=$(trim "$i")
 
         if grep -q "$ignore_pattern" <<< "$i"; then
-            echo -e "Contains substring"
+            continue
         fi
 
-        echo -e "$i"
+        # Removes the prefix.
+        i=${i#"def "}
+
+        # Removes the suffix.
+        i=$(sed -e "s/[(].*$//" <<< "$i")
+
+        new_function_definitions+="$i "
 
     done
 
+    for j in "${new_function_definitions[@]}"; do
+        echo -e "$j\n"
+    done
+
+    echo -e "test"
 
 }
 
@@ -228,7 +258,7 @@ unittest_skeleton_generator() {
     local src_folder="src"
     local tests_folder="tests"
     local   root_dir=$(get_root_directory)
-            root_dir=/home/web/Documents/GitHub/python-maya-boilerplate
+            # root_dir=/home/web/Documents/GitHub/python-maya-boilerplate
     local src_folder_full_path="$root_dir/$src_folder"
 
     # Limits the search to only the src_folder.
