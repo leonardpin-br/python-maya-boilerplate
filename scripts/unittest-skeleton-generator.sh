@@ -162,6 +162,9 @@ insert_class_definition() {
 # https://unix.stackexchange.com/a/251532
 insert_method_definition() {
 
+    # https://unix.stackexchange.com/questions/671374/linux-find-all-occurrences-of-a-certain-pattern-in-a-line-of-a-file
+    # https://unix.stackexchange.com/questions/146225/find-all-occurrences-in-a-file-with-sed
+    # https://stackoverflow.com/questions/15650506/how-can-i-print-out-all-lines-of-a-file-containing-a-specific-string-in-unix
 
     echo -e "Inside insert_method_definition"
 
