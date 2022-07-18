@@ -13,6 +13,7 @@
 include() {
     # MY_DIR corresponds to the folder where this file is.
     MY_DIR=$(dirname $(readlink -f $0))
+    MY_DIR=/home/web/Documents/GitHub/python-maya-boilerplate/scripts
     . $MY_DIR/$1
 }
 
@@ -172,11 +173,17 @@ insert_method_definition() {
     local file_full_path="$2"
 
     # Stores the grep output into an array BASH 4+.
-    readarray -d '' -t function_definitions < <(grep "def " "$file_full_path")
+    readarray -d '' -t function_definitions < <(grep "def" "$file_full_path")
+
+    local ignore_pattern="def"
 
     for i in "${function_definitions[@]}"; do
 
+        i=$(remove_leading_whitespace_only "$i")
 
+        if [[ $i = $ignore_pattern* ]]; then
+            echo -e "Begins with ${ignore_pattern}"
+        fi
 
         echo -e "$i"
 
@@ -219,7 +226,8 @@ unittest_skeleton_generator() {
 
     local src_folder="src"
     local tests_folder="tests"
-    local root_dir=$(get_root_directory)
+    local   root_dir=$(get_root_directory)
+            root_dir=/home/web/Documents/GitHub/python-maya-boilerplate
     local src_folder_full_path="$root_dir/$src_folder"
 
     # Limits the search to only the src_folder.
@@ -290,4 +298,4 @@ unittest_skeleton_generator() {
 }
 
 unittest_skeleton_generator $1
-# unittest_skeleton_generator ui_functions.py
+# unittest_skeleton_generator maya_ui_template.py

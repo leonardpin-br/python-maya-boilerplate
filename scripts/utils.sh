@@ -91,3 +91,28 @@ remove_prefix() {
     echo -e "$root_dir"
 
 }
+
+# Trims the begining of the given string.
+# param1 (string): The string to be trimmed.
+# https://stackoverflow.com/a/3232433
+remove_leading_whitespace_only() {
+    local no_lead_whitespace="$(echo -e "${1}" | sed -e 's/^[[:space:]]*//')"
+    echo -e "$no_lead_whitespace"
+}
+
+# Trims the end of the given string.
+# param1 (string): The string to be trimmed.
+# https://stackoverflow.com/a/3232433
+remove_trailing_whitespace_only() {
+    local no_trail_whitespace="$(echo -e "${1}" | sed -e 's/[[:space:]]*$//')"
+    echo -e "$no_trail_whitespace"
+}
+
+# Trims a given string.
+# param1 (string): The string to be trimmed.
+# https://stackoverflow.com/a/3232433
+trim() {
+    local   result=$(remove_leading_whitespace_only $1)
+            result=$(remove_trailing_whitespace_only $result)
+    echo "$result"
+}
