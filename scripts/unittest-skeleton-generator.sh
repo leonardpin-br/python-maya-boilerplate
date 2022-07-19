@@ -13,9 +13,9 @@
 include() {
     # MY_DIR corresponds to the folder where this file is.
     MY_DIR=$(dirname $(readlink -f $0))
-    # . $MY_DIR/$1
+    . $MY_DIR/$1
     # ==========================================================================
-    MY_DIR=/home/web/Documents/GitHub/python-maya-boilerplate/scripts
+    # MY_DIR=/home/web/Documents/GitHub/python-maya-boilerplate/scripts
 }
 
 # Included files:
@@ -281,9 +281,9 @@ unittest_skeleton_generator() {
 
     local src_folder="src"
     local tests_folder="tests"
-    # local   root_dir=$(get_root_directory)
+    local root_dir=$(get_root_directory)
     # ==========================================================================
-    local root_dir=/home/web/Documents/GitHub/python-maya-boilerplate
+    # local root_dir=/home/web/Documents/GitHub/python-maya-boilerplate
     local src_folder_full_path="$root_dir/$src_folder"
 
     # Limits the search to only the src_folder.
@@ -314,7 +314,7 @@ unittest_skeleton_generator() {
     local levels_deep=$(get_levels_deep $file_relative_path)
 
     # Removes the prefix if necessary.
-    # root_dir=$(remove_prefix $root_dir)
+    root_dir=$(remove_prefix $root_dir)
     # ==========================================================================
 
     local test_full_path="${root_dir}${test_relative_path}"
@@ -353,5 +353,5 @@ unittest_skeleton_generator() {
 
 }
 
-# unittest_skeleton_generator $1
-unittest_skeleton_generator functions.py
+unittest_skeleton_generator $1
+# unittest_skeleton_generator functions.py
