@@ -167,6 +167,7 @@ insert_class_definition() {
 # https://ostechnix.com/the-grep-command-tutorial-with-examples-for-beginners/
 # https://stackoverflow.com/a/24890830
 # https://stackoverflow.com/a/10586169
+# https://stackoverflow.com/a/9294015
 insert_method_definition() {
 
     local test_full_path="$1"
@@ -193,7 +194,7 @@ insert_method_definition() {
     IFS=$original_IFS
 
     # Gets only the name of the function/method, skipping __init__:
-    local new_function_definitions=()
+    local function_definitions_as_string=""
     local ignore_pattern="__init__"
 
     for i in "${original_function_definitions[@]}"; do
@@ -210,16 +211,22 @@ insert_method_definition() {
 
         # Removes the suffix.
         i=$(sed -e "s/[(].*$//" <<< "$i")
-# https://stackoverflow.com/a/9294015
-        new_function_definitions+="$i "
+        function_definitions_as_string+="$i "
 
     done
+
+    # Expands the string into an array.
+    local new_function_definitions=($function_definitions_as_string)
+
+    local file_content=""
 
     for j in "${new_function_definitions[@]}"; do
-        echo -e "$j\n"
+        file_content="${file_content}\t# Covers ${j}.\n"
+        file_content="${file_content}\tdef test_${j}(self):\n"
+        file_content="${file_content}\t\tpass\n\n"
     done
 
-    echo -e "test"
+    echo -e "$file_content" >> $test_full_path
 
 }
 
@@ -328,5 +335,5 @@ unittest_skeleton_generator() {
 
 }
 
-# unittest_skeleton_generator $1
-unittest_skeleton_generator maya_ui_template.py
+unittest_skeleton_generator $1
+# unittest_skeleton_generator maya_ui_template.py
