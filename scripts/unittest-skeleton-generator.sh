@@ -92,6 +92,7 @@ insert_test_header() {
             file_content="${file_content}${tabs_as_spaces}sys.modules[mod] = mock.MagicMock()\n"
 
     echo -e "$file_content" >> $1
+
 }
 
 # Solves and inserts the import of the modules being tested.
@@ -133,7 +134,7 @@ insert_test_imports() {
 
     # If the imported module is the main.py:
     if [ $file_relative_path_from_src == "main.py" ]; then
-        insertion=""
+        insertion=${file_relative_path_from_src%".py."}
     else
         insertion=$(sed -e "s|/|\.|" <<< "$insertion")
         insertion=${insertion%".py."}
@@ -279,8 +280,8 @@ unittest_skeleton_generator() {
 
     local src_folder="src"
     local tests_folder="tests"
-    # local   root_dir=$(get_root_directory)
-    local root_dir=/home/web/Documents/GitHub/python-maya-boilerplate
+    local   root_dir=$(get_root_directory)
+    # local root_dir=/home/web/Documents/GitHub/python-maya-boilerplate
     local src_folder_full_path="$root_dir/$src_folder"
 
     # Limits the search to only the src_folder.
@@ -311,7 +312,7 @@ unittest_skeleton_generator() {
     local levels_deep=$(get_levels_deep $file_relative_path)
 
     # Removes the prefix if necessary.
-    # root_dir=$(remove_prefix $root_dir)
+    root_dir=$(remove_prefix $root_dir)
 
     local test_full_path="${root_dir}${test_relative_path}"
 
@@ -344,14 +345,10 @@ unittest_skeleton_generator() {
 
     fill_test_file $test_full_path $levels_deep $file_to_be_tested $file_full_path $file_relative_path_from_src
 
-
-    # TODO:
-    # Function for methods creation
-
     echo -e "The test skeleton file for ${file_to_be_tested} was created successfully."
     exit 0
 
 }
 
-# unittest_skeleton_generator $1
-unittest_skeleton_generator functions.py
+unittest_skeleton_generator $1
+# unittest_skeleton_generator functions.py
