@@ -68,25 +68,25 @@ insert_test_header() {
             file_content="${file_content}import mock\n"
             file_content="${file_content}\n"
             file_content="${file_content}maya_modules = [\n"
-            file_content="${file_content}\t'maya',\n"
-            file_content="${file_content}\t'maya.app',\n"
-            file_content="${file_content}\t'maya.app.general',\n"
-            file_content="${file_content}\t'maya.app.general.mayaMixin',\n"
-            file_content="${file_content}\t'cmds',\n"
-            file_content="${file_content}\t'mel',\n"
-            file_content="${file_content}\t'pymel',\n"
-            file_content="${file_content}\t'pymel.core'\n"
-            file_content="${file_content}\t'MayaQWidgetBaseMixin',\n"
-            file_content="${file_content}\t'MayaQWidgetDockableMixin',\n"
-            file_content="${file_content}\t'PySide2',\n"
-            file_content="${file_content}\t'PySide2.QtUiTools',\n"
-            file_content="${file_content}\t'QtWidgets',\n"
-            file_content="${file_content}\t'QUiLoader'\n"
+            file_content="${file_content}    'maya',\n"
+            file_content="${file_content}    'maya.app',\n"
+            file_content="${file_content}    'maya.app.general',\n"
+            file_content="${file_content}    'maya.app.general.mayaMixin',\n"
+            file_content="${file_content}    'cmds',\n"
+            file_content="${file_content}    'mel',\n"
+            file_content="${file_content}    'pymel',\n"
+            file_content="${file_content}    'pymel.core'\n"
+            file_content="${file_content}    'MayaQWidgetBaseMixin',\n"
+            file_content="${file_content}    'MayaQWidgetDockableMixin',\n"
+            file_content="${file_content}    'PySide2',\n"
+            file_content="${file_content}    'PySide2.QtUiTools',\n"
+            file_content="${file_content}    'QtWidgets',\n"
+            file_content="${file_content}    'QUiLoader'\n"
             file_content="${file_content}]\n"
             file_content="${file_content}\n"
             file_content="${file_content}# Creates the mocks.\n"
             file_content="${file_content}for mod in maya_modules:\n"
-            file_content="${file_content}\tsys.modules[mod] = mock.MagicMock()\n"
+            file_content="${file_content}    sys.modules[mod] = mock.MagicMock()\n"
 
     echo -e "$file_content" >> $1
 }
@@ -119,10 +119,10 @@ insert_test_imports() {
     file_content="${file_content}\n"
     file_content="${file_content}# Adds src_dir to sys.path if it is not already there:\n"
     file_content="${file_content}for path in sys.path:\n"
-    file_content="${file_content}\tif path == src_dir:\n"
-    file_content="${file_content}\t\tbreak\n"
+    file_content="${file_content}    if path == src_dir:\n"
+    file_content="${file_content}        break\n"
     file_content="${file_content}else:\n"
-    file_content="${file_content}\tsys.path.append(src_dir)\n"
+    file_content="${file_content}    sys.path.append(src_dir)\n"
     file_content="${file_content}\n"
     file_content="${file_content}\n"
     file_content="${file_content}import ${module_name}\n\n"
@@ -146,11 +146,11 @@ insert_class_definition() {
 
     local   file_content="${class_definition}\n"
             file_content="${file_content}\n"
-            file_content="${file_content}\tdef setUp(self):\n"
-            file_content="${file_content}\t\tpass\n"
+            file_content="${file_content}    def setUp(self):\n"
+            file_content="${file_content}        pass\n"
             file_content="${file_content}\n"
-            file_content="${file_content}\tdef tearDown(self):\n"
-            file_content="${file_content}\t\tpass\n"
+            file_content="${file_content}    def tearDown(self):\n"
+            file_content="${file_content}        pass\n"
 
     echo -e "$file_content" >> $test_full_path
 
@@ -221,9 +221,9 @@ insert_method_definition() {
     local file_content=""
 
     for j in "${new_function_definitions[@]}"; do
-        file_content="${file_content}\t# Covers ${j}.\n"
-        file_content="${file_content}\tdef test_${j}(self):\n"
-        file_content="${file_content}\t\tpass\n\n"
+        file_content="${file_content}    # Covers ${j}.\n"
+        file_content="${file_content}    def test_${j}(self):\n"
+        file_content="${file_content}        pass\n\n"
     done
 
     echo -e "$file_content" >> $test_full_path
@@ -280,7 +280,7 @@ unittest_skeleton_generator() {
         print_error_message "The file must have the \".py\" extension."
         exit 1
     elif [[ ! -f $file_full_path ]]; then
-        print_error_message "File (from which the test will be create) not found in the src folder or in its subfolders."
+        print_error_message "File (from which the test will be created) not found in the src folder or in its subfolders."
         exit 1
     fi
 
