@@ -210,7 +210,7 @@ insert_method_definition() {
 
         # Removes the suffix.
         i=$(sed -e "s/[(].*$//" <<< "$i")
-
+# https://stackoverflow.com/a/9294015
         new_function_definitions+="$i "
 
     done
