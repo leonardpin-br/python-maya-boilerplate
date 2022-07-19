@@ -17,8 +17,11 @@ include() {
     . $MY_DIR/$1
 }
 
-# Included files
+# Included files:
 include "utils.sh"
+
+# Global variables:
+tabs_as_spaces="    "
 
 # Gets the number of levels deep (number of subfolders) the file is in.
 # param1 (string): The file relative path.
@@ -68,25 +71,25 @@ insert_test_header() {
             file_content="${file_content}import mock\n"
             file_content="${file_content}\n"
             file_content="${file_content}maya_modules = [\n"
-            file_content="${file_content}    'maya',\n"
-            file_content="${file_content}    'maya.app',\n"
-            file_content="${file_content}    'maya.app.general',\n"
-            file_content="${file_content}    'maya.app.general.mayaMixin',\n"
-            file_content="${file_content}    'cmds',\n"
-            file_content="${file_content}    'mel',\n"
-            file_content="${file_content}    'pymel',\n"
-            file_content="${file_content}    'pymel.core'\n"
-            file_content="${file_content}    'MayaQWidgetBaseMixin',\n"
-            file_content="${file_content}    'MayaQWidgetDockableMixin',\n"
-            file_content="${file_content}    'PySide2',\n"
-            file_content="${file_content}    'PySide2.QtUiTools',\n"
-            file_content="${file_content}    'QtWidgets',\n"
-            file_content="${file_content}    'QUiLoader'\n"
+            file_content="${file_content}${tabs_as_spaces}'maya',\n"
+            file_content="${file_content}${tabs_as_spaces}'maya.app',\n"
+            file_content="${file_content}${tabs_as_spaces}'maya.app.general',\n"
+            file_content="${file_content}${tabs_as_spaces}'maya.app.general.mayaMixin',\n"
+            file_content="${file_content}${tabs_as_spaces}'cmds',\n"
+            file_content="${file_content}${tabs_as_spaces}'mel',\n"
+            file_content="${file_content}${tabs_as_spaces}'pymel',\n"
+            file_content="${file_content}${tabs_as_spaces}'pymel.core'\n"
+            file_content="${file_content}${tabs_as_spaces}'MayaQWidgetBaseMixin',\n"
+            file_content="${file_content}${tabs_as_spaces}'MayaQWidgetDockableMixin',\n"
+            file_content="${file_content}${tabs_as_spaces}'PySide2',\n"
+            file_content="${file_content}${tabs_as_spaces}'PySide2.QtUiTools',\n"
+            file_content="${file_content}${tabs_as_spaces}'QtWidgets',\n"
+            file_content="${file_content}${tabs_as_spaces}'QUiLoader'\n"
             file_content="${file_content}]\n"
             file_content="${file_content}\n"
             file_content="${file_content}# Creates the mocks.\n"
             file_content="${file_content}for mod in maya_modules:\n"
-            file_content="${file_content}    sys.modules[mod] = mock.MagicMock()\n"
+            file_content="${file_content}${tabs_as_spaces}sys.modules[mod] = mock.MagicMock()\n"
 
     echo -e "$file_content" >> $1
 }
@@ -102,6 +105,7 @@ insert_test_imports() {
     local levels_deep=$2
     local   module_name="$3"
             module_name=${module_name%".py"}
+    local file_relative_path_from_src="$4"
 
     local file_content="# Automatically calculated by ${this_script} to easily import ${3}:\n"
     file_content="${file_content}# Gets the src_dir.\n"
@@ -119,13 +123,16 @@ insert_test_imports() {
     file_content="${file_content}\n"
     file_content="${file_content}# Adds src_dir to sys.path if it is not already there:\n"
     file_content="${file_content}for path in sys.path:\n"
-    file_content="${file_content}    if path == src_dir:\n"
-    file_content="${file_content}        break\n"
+    file_content="${file_content}${tabs_as_spaces}if path == src_dir:\n"
+    file_content="${file_content}${tabs_as_spaces}${tabs_as_spaces}break\n"
     file_content="${file_content}else:\n"
-    file_content="${file_content}    sys.path.append(src_dir)\n"
+    file_content="${file_content}${tabs_as_spaces}sys.path.append(src_dir)\n"
     file_content="${file_content}\n"
     file_content="${file_content}\n"
-    file_content="${file_content}import ${module_name}\n\n"
+
+    # If string is not empty:
+
+    file_content="${file_content}import ${file_relative_path_from_src}.${module_name}\n\n"
 
     echo -e "$file_content" >> $test_full_path
 
@@ -146,11 +153,11 @@ insert_class_definition() {
 
     local   file_content="${class_definition}\n"
             file_content="${file_content}\n"
-            file_content="${file_content}    def setUp(self):\n"
-            file_content="${file_content}        pass\n"
+            file_content="${file_content}${tabs_as_spaces}def setUp(self):\n"
+            file_content="${file_content}${tabs_as_spaces}${tabs_as_spaces}pass\n"
             file_content="${file_content}\n"
-            file_content="${file_content}    def tearDown(self):\n"
-            file_content="${file_content}        pass\n"
+            file_content="${file_content}${tabs_as_spaces}def tearDown(self):\n"
+            file_content="${file_content}${tabs_as_spaces}${tabs_as_spaces}pass\n"
 
     echo -e "$file_content" >> $test_full_path
 
@@ -221,9 +228,9 @@ insert_method_definition() {
     local file_content=""
 
     for j in "${new_function_definitions[@]}"; do
-        file_content="${file_content}    # Covers ${j}.\n"
-        file_content="${file_content}    def test_${j}(self):\n"
-        file_content="${file_content}        pass\n\n"
+        file_content="${file_content}${tabs_as_spaces}# Covers ${j}.\n"
+        file_content="${file_content}${tabs_as_spaces}def test_${j}(self):\n"
+        file_content="${file_content}${tabs_as_spaces}${tabs_as_spaces}pass\n\n"
     done
 
     echo -e "$file_content" >> $test_full_path
@@ -241,10 +248,11 @@ fill_test_file() {
     local levels_deep="$2"
     local file_to_be_tested="$3"
     local file_full_path="$4"
+    local test_folder_full_path="$5"
 
     insert_test_header $test_full_path
 
-    insert_test_imports $test_full_path $levels_deep $file_to_be_tested
+    insert_test_imports $test_full_path $levels_deep $file_to_be_tested $file_relative_path_from_src
 
     insert_class_definition $test_full_path $file_to_be_tested
 
@@ -324,7 +332,10 @@ unittest_skeleton_generator() {
     test_full_path="${test_folder_full_path}test_${file_to_be_tested}"
     touch $test_full_path
 
-    fill_test_file $test_full_path $levels_deep $file_to_be_tested $file_full_path
+    # Works the relative path for import in the test.
+    local file_relative_path_from_src=${file_relative_path#"/${src_folder}"}
+
+    fill_test_file $test_full_path $levels_deep $file_to_be_tested $file_full_path $file_relative_path_from_src
 
 
     # TODO:
@@ -336,4 +347,4 @@ unittest_skeleton_generator() {
 }
 
 unittest_skeleton_generator $1
-# unittest_skeleton_generator maya_ui_template.py
+# unittest_skeleton_generator functions.py
