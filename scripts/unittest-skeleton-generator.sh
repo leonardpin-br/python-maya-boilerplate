@@ -106,6 +106,7 @@ insert_test_imports() {
     local   module_name="$3"
             module_name=${module_name%".py"}
     local file_relative_path_from_src="$4"
+    local insertion="${file_relative_path_from_src}."
 
     local file_content="# Automatically calculated by ${this_script} to easily import ${3}:\n"
     file_content="${file_content}# Gets the src_dir.\n"
@@ -130,9 +131,15 @@ insert_test_imports() {
     file_content="${file_content}\n"
     file_content="${file_content}\n"
 
-    # If string is not empty:
+    # If the imported module is the main.py:
+    if [ $file_relative_path_from_src == "main.py" ]; then
+        insertion=""
+    else
+        insertion=$(sed -e "s|/|\.|" <<< "$insertion")
+        insertion=${insertion%".py."}
+    fi
 
-    file_content="${file_content}import ${file_relative_path_from_src}.${module_name}\n\n"
+    file_content="${file_content}import ${insertion}\n\n"
 
     echo -e "$file_content" >> $test_full_path
 
@@ -272,8 +279,8 @@ unittest_skeleton_generator() {
 
     local src_folder="src"
     local tests_folder="tests"
-    local   root_dir=$(get_root_directory)
-            # root_dir=/home/web/Documents/GitHub/python-maya-boilerplate
+    # local   root_dir=$(get_root_directory)
+    local root_dir=/home/web/Documents/GitHub/python-maya-boilerplate
     local src_folder_full_path="$root_dir/$src_folder"
 
     # Limits the search to only the src_folder.
@@ -304,7 +311,7 @@ unittest_skeleton_generator() {
     local levels_deep=$(get_levels_deep $file_relative_path)
 
     # Removes the prefix if necessary.
-    root_dir=$(remove_prefix $root_dir)
+    # root_dir=$(remove_prefix $root_dir)
 
     local test_full_path="${root_dir}${test_relative_path}"
 
@@ -333,7 +340,7 @@ unittest_skeleton_generator() {
     touch $test_full_path
 
     # Works the relative path for import in the test.
-    local file_relative_path_from_src=${file_relative_path#"/${src_folder}"}
+    local file_relative_path_from_src=${file_relative_path#"/${src_folder}/"}
 
     fill_test_file $test_full_path $levels_deep $file_to_be_tested $file_full_path $file_relative_path_from_src
 
@@ -346,5 +353,5 @@ unittest_skeleton_generator() {
 
 }
 
-unittest_skeleton_generator $1
-# unittest_skeleton_generator functions.py
+# unittest_skeleton_generator $1
+unittest_skeleton_generator functions.py
