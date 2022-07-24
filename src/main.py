@@ -9,6 +9,9 @@ Python version 2.7.11 (Autodesk Maya 2018 and 2020)
 This is the file to run from Autodesk Maya. It is advisable to create a shelf
 button to run this app from there.
 
+Important:
+    Project structure:
+
 Example:
     How a shelf button can be written::
 
@@ -21,7 +24,7 @@ Example:
 
         import sys
 
-        module_path = 'E:\\\\cloud\\\\Backup\\\\Libraries\\\\scripts\\\\maya\\\\Boilerplate\\\\boilerplate'
+        module_path = 'E:\\\\cloud\\\\Backup\\\\Libraries\\\\scripts\\\\maya\\\\python-maya-boilerplate\\\\src'
 
         # Includes the module path in sys.path if it is not already there:
         for path in sys.path:
@@ -67,7 +70,7 @@ Note:
     To exclude certain modules from being documented, it is necessary to pass
     them as arguments to ``sphinx-apidoc``::
 
-        sphinx-apidoc --force -o ./docs/sphinx/source ./boilerplate ./boilerplate/activerecord/db_credentials.py
+        sphinx-apidoc --force -o ./docs/sphinx/source ./src ./src/activerecord/db_credentials.py
 
     The example above is in the **package.json** file as the ``build:source:doc`` script.
 
@@ -90,6 +93,8 @@ References:
 
     `Python docstring rendering\: reStructuredText markup inside directives not recognized`_
 
+    `Creating the package files`_
+
 .. _sphinx-apidoc ignoring some modules/packages:
    https://chadrick-kwag.net/sphinx-apidoc-ignoring-some-modules-packages/
 .. _Coverage.py:
@@ -108,6 +113,8 @@ References:
    https://www.python.org/dev/peps/pep-0484/
 .. _Python docstring rendering\: reStructuredText markup inside directives not recognized:
    https://youtrack.jetbrains.com/issue/PY-40010
+.. _Creating the package files:
+   https://packaging.python.org/en/latest/tutorials/packaging-projects/#creating-the-package-files
 
 """
 
@@ -292,7 +299,7 @@ def main():
 
     # ADMIN: FIND BY ID
     # ==========================================================================
-    # admin = Admin.find_by_id(4)
+    # admin = Admin.find_by_id(12)
 
     # if admin:
     #     print(admin.full_name())
@@ -334,7 +341,7 @@ def main():
 
     # ADMIN: UPDATING A RECORD
     # ==========================================================================
-    # admin = Admin.find_by_id(15)
+    # admin = Admin.find_by_id(12)
 
     # if admin:
 
@@ -342,7 +349,7 @@ def main():
     #         "first_name": admin.first_name,
     #         "last_name": admin.last_name,
     #         "email": admin.email,
-    #         "username": "kskoglundzzzzzzzzzzzz",
+    #         "username": "bobsmith",
     #         "password": "",
     #         "confirm_password": ""
     #     }

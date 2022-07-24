@@ -16,15 +16,24 @@ include "clear_cache.sh"
 
 remove_almost_everything_inside_folder() {
 
+<<<<<<< HEAD
     local current_directory=$1
     local GITIGNORE="$current_directory/.gitignore"
+=======
+    local folder="$1"
+    local GITIGNORE="${folder}/.gitignore"
+>>>>>>> skeleton-generator
 
     # Enable working with hidden files.
     shopt -s dotglob
-    for folder_item in "$1"/*; do
+    for folder_item in "$folder"/*; do
 
         # Keeps the hidden file (.gitignore)
+<<<<<<< HEAD
         if [ $folder_item = "$GITIGNORE" ]; then
+=======
+        if [ $folder_item = $GITIGNORE ]; then
+>>>>>>> skeleton-generator
             continue
         fi
 

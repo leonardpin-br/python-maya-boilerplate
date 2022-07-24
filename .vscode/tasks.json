@@ -9,7 +9,7 @@
 			"type": "shell",
 			"command": "bash",
 			"args": [
-				"./scripts/clearProject.sh"
+				"./scripts/clear_project.sh"
 			],
 			"problemMatcher": []
 		},

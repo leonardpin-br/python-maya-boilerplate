@@ -13,70 +13,21 @@
 # https://stackoverflow.com/questions/11245144/replace-whole-line-containing-a-string-using-sed
 # https://stackoverflow.com/questions/12487424/uppercase-first-character-in-a-variable-with-bash
 
-# Clear the terminal window.
-clear
-
-# Gets the project root directory.
-# return (string) The root directory.
-get_root_directory() {
-
-    # The directory of this script.
-    readonly SCRIPTS_DIR=$(dirname $(readlink -f $0))
-    local ROOT_DIR=$(dirname $SCRIPTS_DIR)
-
-    # The return value.
-    echo -e "$ROOT_DIR"
+include() {
+    # MY_DIR corresponde ao diretório do arquivo principal.
+    MY_DIR=$(dirname $(readlink -f $0))
+    . $MY_DIR/$1
 }
 
-# Removes Cygwin prefix.
-# param1 (string): The root directory path.
-removesCygwinPrefix() {
-
-    local ROOT_DIR=$1
-
-    # The Cygwin prefix /cygdrive/e, if exists, must be removed.
-    if [[ "$ROOT_DIR" =~ ^\/cygdrive\/[a-z] ]]; then
-
-        # Removes /cygdrive/.
-        ROOT_DIR=${ROOT_DIR/\/cygdrive\//}
-
-        # Capitalizes the drive letter (first character).
-        ROOT_DIR="${ROOT_DIR^}"
-
-        # Swaps the first / for :/
-        ROOT_DIR=${ROOT_DIR/\//\:\/}
-
-    fi
-
-    echo -e "$ROOT_DIR"
-}
-
-# Removes Unix prefix.
-# param1 (string): The root directory path.
-removesUnixPrefix() {
-
-    local ROOT_DIR=$1
-
-    # The Unix prefix /e, if exists, must be removed.
-    if [[ "$ROOT_DIR" =~ ^\/[a-z]\/[a-z]+ ]]; then
-
-        # Removes the first /.
-        ROOT_DIR=${ROOT_DIR/\//}
-
-        # Capitalizes the drive letter (first character).
-        ROOT_DIR="${ROOT_DIR^}"
-
-        # Swaps the (now) first / for :/
-        ROOT_DIR=${ROOT_DIR/\//\:\/}
-
-    fi
-
-    echo -e "$ROOT_DIR"
-}
+# Included files
+include "utils.sh"
 
 # Updates the absolute paths in the theme .qss file.
 # param1 (string): The theme file. Defaults to ./resources/qss/Combinear.qss.
 updateQssTheme() {
+
+    # Clear the terminal window.
+    clear
 
     # Gives a default value to the parameter.
     local THEME="${1:-./resources/qss/Combinear.qss}"
@@ -91,17 +42,8 @@ updateQssTheme() {
 
     local ROOT_DIR=$(get_root_directory)
 
-    # Discovers the environment this script is running on:
-    # see   https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
-    local environment="$(uname -s)"
-
-    # Checks if a string starts with a value:
-    # see   https://stackoverflow.com/questions/2172352/in-bash-how-can-i-check-if-a-string-begins-with-some-value
-    if [[ $environment == CYGWIN* ]]; then
-        ROOT_DIR=$(removesCygwinPrefix $ROOT_DIR)
-    elif [[ $environment == MINGW* ]]; then
-        ROOT_DIR=$(removesUnixPrefix $ROOT_DIR)
-    fi
+    # Removes the prefix if necessary.
+    ROOT_DIR=$(remove_prefix $ROOT_DIR)
 
     # Establishes the paths to the project folders.
     local RESOURCES_DIR="$ROOT_DIR/resources"
