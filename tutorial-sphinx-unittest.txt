@@ -25,7 +25,8 @@ pip install virtualenv
 
 # In this starter kit, the virtual environment folder is py27env.
 # Below is the creation of the virtual environment.
-virtualenv py27env
+# https://stackoverflow.com/a/1534343
+virtualenv --python="C:/Program Files/Python27/python.exe" "./py27env"
 
 # Activation of the virtual environment:
 source ./py27env/Scripts/activate
