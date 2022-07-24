@@ -67,26 +67,6 @@ pip install autodoc
 Project Folder structure:
 ================================================================================
 
-<<<<<<< HEAD:tutorial-sphinx-and-unittest.txt
-<project_root>
-|- boilerplate
-    |- activerecord
-    |- appclasses
-    |- shared
-    |- userinterface
-|- docs
-    |- coverage
-    |- sphinx
-|- py27env
-|- resources
-    |- example_files
-    |- img
-    |- qss
-    |- sql
-    |- ui
-|- scripts
-|- tests                <= TESTS ARE NOT GOING TO BE DOCUMENTED.
-=======
 project_root_folder
 ├── src
 ├   ├── subpackage
@@ -105,7 +85,6 @@ project_root_folder
 ├── package.json
 
 * The __init__.py files were omitted.
->>>>>>> skeleton-generator:tutorial-sphinx-unittest.txt
 
 
 Sphinx - 1: Running the assistant
@@ -308,15 +287,12 @@ Learn Sphinx python documentation | Episode 01.
 https://www.youtube.com/watch?v=fX07G5eUSsY
 --------------------------------------------------------------------------------
 
-<<<<<<< HEAD:tutorial-sphinx-and-unittest.txt
-=======
 Relationship with unittest
     The src folder MUST NOT have the __init__.py file, that is,
     must not be a package, bacause Sphinx shows an error and does
     not create the documentation.
     The subfolders inside the src folder must have the __init__.py
     file, that is, the subfolders must be packages.
->>>>>>> skeleton-generator:tutorial-sphinx-unittest.txt
 
 How to make a folder clean with PowerShell
 	How Can I Delete a File or Folder from the Command Line Using Windows PowerShell?

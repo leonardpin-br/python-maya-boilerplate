@@ -24,18 +24,6 @@ maya_modules = [
     'QUiLoader'
 ]
 
-<<<<<<< HEAD
-# Creates a mock for every module in the maya_modules list.
-for mod in maya_modules:
-    sys.modules[mod] = mock.MagicMock()
-
-# Adds the boilerplate folder to sys.path, if it not already there,
-# so unit tests can see the modules:
-currentdir = os.path.dirname(os.path.realpath(__file__))    # tests
-rootdir = os.path.dirname(currentdir)                       # <root_directory>
-boilerplate_dir = os.path.join(rootdir, "boilerplate")
-
-=======
 # Creates the mocks.
 for mod in maya_modules:
     sys.modules[mod] = mock.MagicMock()
@@ -47,7 +35,6 @@ root_dir = os.path.dirname(tests_dir)
 src_dir = os.path.join(root_dir, "src")
 
 # Adds src_dir to sys.path if it is not already there:
->>>>>>> skeleton-generator
 for path in sys.path:
     if path == src_dir:
         break

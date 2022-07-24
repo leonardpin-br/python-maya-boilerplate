@@ -16,9 +16,7 @@
         "**/__pycache__": true,
         "**/*.pyc": true
     },
-<<<<<<< HEAD
-    "files.eol": "\n"
-=======
+    "files.eol": "\n",
     "python.testing.unittestArgs": [
         "-v",
         "-s",
@@ -28,5 +26,4 @@
     ],
     "python.testing.pytestEnabled": false,
     "python.testing.unittestEnabled": true
->>>>>>> skeleton-generator
 }
