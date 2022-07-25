@@ -112,13 +112,13 @@ class ConnectionDB(object):
 
         # https://dev.mysql.com/doc/connector-python/en/connector-python-tutorial-cursorbuffered.html
         try:
-            # CREATE or UPDATE (CRUD)
+            # CREATE, UPDATE or DELETE (CRUD)
             if values:
                 cursor.execute(sql, values)
                 self.connection_db.commit()
                 result = True
 
-            # READ or DELETE (CRUD)
+            # READ (CRUD)
             else:
                 # Read
                 cursor.execute(sql)
@@ -153,7 +153,7 @@ class ConnectionDB(object):
             # Autodesk Maya executes correctly the first time, but shows an error
             # from the second time foward. See reference.
             # ----------------------------------------------------------------------
-            # Closes the connection.
+            # Would close the connection.
             # database_functions.db_disconnect(self.connection_db)
 
             return result
