@@ -70,7 +70,7 @@ class FunctionsTestCase(unittest.TestCase):
 
     # # Covers get_subdir_full_paths.
     # def test_get_subdir_full_paths(self):
-        pass
+        # pass
 
     # Covers number_format.
     def test_number_format(self):

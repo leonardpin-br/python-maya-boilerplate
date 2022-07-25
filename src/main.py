@@ -392,6 +392,8 @@ def main():
     # else:
     #     print("The ID of the admin was not found.")
 
+    print("Testando.")
+
     return "hello"
 
 
