@@ -185,12 +185,11 @@ cd ./docs/sphinx; make html; cd ..; cd ..;
 
 Important to know
 --------------------------------------------------------------------------------
-The boilerplate folder (the old src folder) MUST NOT have the __init__.py file,
-that is, must not be a package, bacause Sphinx shows an error and does not
-create the documentation.
+The src folder MUST NOT have the __init__.py file, that is, must not be a
+package, bacause Sphinx shows an error and does not create the documentation.
 
-The subfolders inside the boilerplate folder (old src) must have the __init__.py
-file, that is, the subfolders must be packages.
+The subfolders inside the src folder must have the __init__.py file, that is,
+the subfolders must be packages.
 
 The Maya modules can be 'mocked' (for Sphinx) importing the mock module (not a
 good idea) or adding the autodoc_mock_imports list to the conf.py file
@@ -250,15 +249,15 @@ for mod in maya_modules:
 # so unit tests can see the modules:
 currentdir = os.path.dirname(os.path.realpath(__file__))    # tests
 rootdir = os.path.dirname(currentdir)                       # <root_directory>
-boilerplate_dir = os.path.join(rootdir, "boilerplate")
+src_dir = os.path.join(rootdir, "src")
 
 for path in sys.path:
-    if path == boilerplate_dir:
+    if path == src_dir:
         break
 else:
-    sys.path.append(boilerplate_dir)
+    sys.path.append(src_dir)
 
-# Imports the <root_directory>/boilerplate/main.py module.
+# Imports the <root_directory>/src/main.py module.
 import main
 
 
@@ -287,12 +286,6 @@ Learn Sphinx python documentation | Episode 01.
 https://www.youtube.com/watch?v=fX07G5eUSsY
 --------------------------------------------------------------------------------
 
-Relationship with unittest
-    The src folder MUST NOT have the __init__.py file, that is,
-    must not be a package, bacause Sphinx shows an error and does
-    not create the documentation.
-    The subfolders inside the src folder must have the __init__.py
-    file, that is, the subfolders must be packages.
 
 How to make a folder clean with PowerShell
 	How Can I Delete a File or Folder from the Command Line Using Windows PowerShell?
