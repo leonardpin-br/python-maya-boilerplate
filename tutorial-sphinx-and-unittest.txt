@@ -67,24 +67,30 @@ pip install autodoc
 Project Folder structure:
 ================================================================================
 
-project_root_folder
-├── src
-├   ├── subpackage
-├   |   ├── example_classes.py          <= File to be documented.
-├   ├── main.py                         <= File to be documented.
+<project_root_folder>
+├── .vscode
 ├── docs
-├   ├── coverage
-├   ├── sphinx
+│   ├── coverage
+│   └── sphinx
+├── node_modules
+├── py27env
 ├── resources
 ├── scripts
-├── tests                               <= TESTS WILL NOT BE DOCUMENTED.
-├   ├── subpackage
-├   |   ├── test_example_classes.py
-├   ├── test_main.py
+├── src          <= Files to be documented.
+├── tests        <= TESTS WILL NOT BE DOCUMENTED.
 ├── .coveragerc
+├── .gitattributes
+├── .gitignore
+├── LICENSE
+├── package-lock.json
 ├── package.json
+├── README.md
+├── requirements.txt
+└── tutorial-sphinx-and-unittest.txt
 
-* The __init__.py files were omitted.
+# Generated with the tree command (and further edited):
+tree --dirsfirst -a -I ".git|node_modules|py27env" > tree.txt
+
 
 
 Sphinx - 1: Running the assistant
@@ -104,14 +110,15 @@ Folder structure (inside docs) created by the Sphinx's assistant
 docs
 ├── coverage (folder inside was omitted in this structure)
 ├── sphinx
-├   ├── build
-├   ├── source
-├   ├	├── _static
-├   ├	├── _templates
-├   ├	├── conf.py
-├   ├	├── index.rst
-├   ├── make.bat
-├   └── Makefile
+│       ├── build
+│       ├── source
+│       │   ├── _static
+│       │   ├── _templates
+│       │   ├── .gitignore
+│       │   ├── conf.py
+│       │   └── index.rst
+│       ├── make.bat
+│       └── Makefile
 
 
 
@@ -205,6 +212,16 @@ The tests folder will not be documented.
 UNIT TESTS
 ================================================================================
 ================================================================================
+
+
+Coverage folder structure (inside docs)
+--------------------------------------------------------------------------------
+
+<project_root_folder>
+├── docs
+│   ├── coverage
+│   │   └── htmlcov
+├── sphinx (subfolders were omitted in this structure)
 
 
 Installation of mock package inside the virtual environment
