@@ -1,6 +1,3 @@
-================================================================================
-================================================================================
-
 VIRTUAL ENVIRONMENT
 ================================================================================
 ================================================================================
@@ -26,8 +23,6 @@ source ./py27env/Scripts/activate
 
 
 
-================================================================================
-================================================================================
 
 SPHINX
 ================================================================================
@@ -167,8 +162,8 @@ sphinx-apidoc --force -o ./docs/sphinx/source ./src
 
 Editing the file ./docs/sphinx/source/index.rst
 	The step above created some files, including modules.rst.
-	This file acts as a list to the names of the other .rst
-	files that were created.
+	This file acts as a list to the names of the other .rst files that were
+    created.
 
 	The name (without extension) of this file (modules.rst) must be placed
 	in the index.rst below (and aligned with) the .. toctree::
@@ -206,8 +201,6 @@ The tests folder will not be documented.
 
 
 
-================================================================================
-================================================================================
 
 UNIT TESTS
 ================================================================================
@@ -264,9 +257,9 @@ for mod in maya_modules:
 
 # Adds the boilerplate folder to sys.path, if it not already there,
 # so unit tests can see the modules:
-currentdir = os.path.dirname(os.path.realpath(__file__))    # tests
-rootdir = os.path.dirname(currentdir)                       # <root_directory>
-src_dir = os.path.join(rootdir, "src")
+tests_dir = os.path.dirname(os.path.realpath(__file__))     # tests
+root_dir = os.path.dirname(tests_dir)                       # <root_directory>
+src_dir = os.path.join(root_dir, "src")
 
 for path in sys.path:
     if path == src_dir:
@@ -290,8 +283,6 @@ mock those modules. This technique is commonly used in unit testing.
 
 
 
-================================================================================
-================================================================================
 
 REFERENCES
 ================================================================================
