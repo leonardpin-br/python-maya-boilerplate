@@ -117,7 +117,7 @@ import io
 
 from maya import cmds
 from maya import mel
-from maya.app.general.mayaMixin import MayaQWidgetBaseMixin
+from maya.app.general.mayaMixin import MayaQWidgetBaseMixin, MayaQWidgetDockableMixin
 
 from PySide2 import QtWidgets
 from PySide2.QtUiTools import QUiLoader
@@ -131,7 +131,7 @@ UI_FILE, STYLESHEET_FILE, QSS_DIR = ui_functions.build_ui_qss_filenames(
 THEME_FILE = os.path.join(QSS_DIR, "Combinear.qss")
 
 
-class ScriptName(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
+class ScriptName(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 
     def __init__(self, *args, **kwargs):
         super(ScriptName, self).__init__(*args, **kwargs)

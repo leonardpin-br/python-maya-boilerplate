@@ -123,6 +123,7 @@ import sys
 
 import shared
 from appclasses.access_database import Bicycle, Admin
+from userinterface import maya_ui_template
 
 
 def untested_function():
@@ -146,15 +147,15 @@ def main():
 
     # UI CREATION
     # ==========================================================================
-    # global myWin  # It is very necessary!
+    global myWin  # It is very necessary!
 
-    # try:
-    #     myWin.close()
-    # except:
-    #     pass
+    try:
+        myWin.close()
+    except:
+        pass
 
-    # myWin = maya_ui_template.ScriptName()
-    # myWin.show()
+    myWin = maya_ui_template.ScriptName()
+    myWin.show(dockable=True)
 
     # BICYCLE: FIND ALL
     # ==========================================================================
@@ -391,8 +392,6 @@ def main():
 
     # else:
     #     print("The ID of the admin was not found.")
-
-    print("Testando.")
 
     return "hello"
 
