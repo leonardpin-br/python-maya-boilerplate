@@ -95,6 +95,8 @@ References:
 
     `Creating the package files`_
 
+    `Maintain a Reference to your Widget`_
+
 .. _sphinx-apidoc ignoring some modules/packages:
    https://chadrick-kwag.net/sphinx-apidoc-ignoring-some-modules-packages/
 .. _Coverage.py:
@@ -115,15 +117,31 @@ References:
    https://youtrack.jetbrains.com/issue/PY-40010
 .. _Creating the package files:
    https://packaging.python.org/en/latest/tutorials/packaging-projects/#creating-the-package-files
+.. _Maintain a Reference to your Widget:
+   https://help.autodesk.com/cloudhelp/2018/ENU/Maya-SDK/files-to-wrap/GUID-66ADA1FF-3E0F-469C-84C7-74CEB36D42EC.htm
 
 """
 
 import os
 import sys
 
+from maya import OpenMayaUI as omui
+
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+from PySide2 import __version__
+from shiboken2 import wrapInstance
+
 import shared
 from appclasses.access_database import Bicycle, Admin
 from userinterface import maya_ui_template
+
+
+def maya_main_window():
+    mayaMainWindowPtr = omui.MQtUtil.mainWindow()
+    mayaMainWindow = wrapInstance(long(mayaMainWindowPtr), QWidget)
+    return mayaMainWindow
 
 
 def untested_function():
@@ -154,7 +172,7 @@ def main():
     except:
         pass
 
-    myWin = maya_ui_template.ScriptName()
+    myWin = maya_ui_template.ScriptName(parent=maya_main_window())
     myWin.show(dockable=True)
 
     # BICYCLE: FIND ALL
