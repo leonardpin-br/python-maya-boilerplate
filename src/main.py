@@ -139,6 +139,36 @@ from userinterface import maya_ui_template
 
 
 def maya_main_window():
+    u"""Parents this app widget under an existing Maya widget, that is, Maya's main window.
+
+    If the widget is un-parented, it may be destroyed by the Python interpreter's garbage collector if a reference to it is not maintained.
+
+    Returns:
+        QWidget: The Maya main window.
+
+    References:
+        `Maintain a Reference to your Widget`_
+
+        `Shiboken module`_
+
+        `QWidget Class`_
+
+        `QMainWindow Class`_
+
+        `MQtUtil Class Reference`_
+
+    .. _Maintain a Reference to your Widget:
+       https://help.autodesk.com/cloudhelp/2018/ENU/Maya-SDK/files-to-wrap/GUID-66ADA1FF-3E0F-469C-84C7-74CEB36D42EC.htm
+    .. _Shiboken module:
+       https://doc.qt.io/qtforpython/shiboken6/shibokenmodule.html#shiboken-module
+    .. _QWidget Class:
+       https://doc.qt.io/qt-6/qwidget.html
+    .. _QMainWindow Class:
+       https://doc.qt.io/qt-6/qmainwindow.html
+    .. _MQtUtil Class Reference:
+       https://download.autodesk.com/us/maya/2011help/API/class_m_qt_util.html#76e5d7e2e06d5d8d6236d0ae6cad7754
+    """
+
     mayaMainWindowPtr = omui.MQtUtil.mainWindow()
     mayaMainWindow = wrapInstance(long(mayaMainWindowPtr), QWidget)
     return mayaMainWindow
