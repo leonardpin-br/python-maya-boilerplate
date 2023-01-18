@@ -173,7 +173,7 @@ Editing the file ./docs/sphinx/source/index.rst
    :maxdepth: 2
    :caption: Contents:
 
-	modules		<= Name inserted.
+   modules		<= Name inserted (3 spaces indentation).
 
 
 
