@@ -5,11 +5,11 @@
 get_root_directory() {
 
     # The directory of this script.
-    readonly SCRIPTS_DIR=$(dirname $(readlink -f $0))
-    local ROOT_DIR=$(dirname $SCRIPTS_DIR)
+    readonly SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+    local ROOT_DIR="$( cd "$( dirname "${SCRIPTS_DIR}" )" &> /dev/null && pwd )"
 
     # The return value.
-    echo -e "$ROOT_DIR"
+    echo -e "${ROOT_DIR}"
 }
 
 # param1 (string): The filename with extension.
@@ -33,7 +33,7 @@ remove_cygwin_prefix() {
     local ROOT_DIR=$1
 
     # The Cygwin prefix /cygdrive/e, if exists, must be removed.
-    if [[ "$ROOT_DIR" =~ ^\/cygdrive\/[a-z] ]]; then
+    if [[ "${ROOT_DIR}" =~ ^\/cygdrive\/[a-z] ]]; then
 
         # Removes /cygdrive/.
         ROOT_DIR=${ROOT_DIR/\/cygdrive\//}
@@ -56,7 +56,7 @@ remove_unix_prefix() {
     local ROOT_DIR=$1
 
     # The Unix prefix /e, if exists, must be removed.
-    if [[ "$ROOT_DIR" =~ ^\/[a-z]\/[a-z]+ ]]; then
+    if [[ "${ROOT_DIR}" =~ ^\/[a-z]\/[a-z]+ ]]; then
 
         # Removes the first /.
         ROOT_DIR=${ROOT_DIR/\//}
@@ -76,6 +76,8 @@ remove_unix_prefix() {
 # param1 (string): The root directory path.
 remove_prefix() {
 
+    local ROOT_DIR=$1
+
     # Discovers the environment this script is running on:
     # see   https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
     local environment="$(uname -s)"
@@ -83,12 +85,12 @@ remove_prefix() {
     # Checks if a string starts with a value:
     # see   https://stackoverflow.com/questions/2172352/in-bash-how-can-i-check-if-a-string-begins-with-some-value
     if [[ $environment == CYGWIN* ]]; then
-        root_dir=$(remove_cygwin_prefix $root_dir)
+        ROOT_DIR=$(remove_cygwin_prefix "${ROOT_DIR}")
     elif [[ $environment == MINGW* ]]; then
-        root_dir=$(remove_unix_prefix $root_dir)
+        ROOT_DIR=$(remove_unix_prefix "${ROOT_DIR}")
     fi
 
-    echo -e "$root_dir"
+    echo -e "${ROOT_DIR}"
 
 }
 
