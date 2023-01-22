@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 # This script mimics, loosely and in a very crud way, the
 # phpunit-skeleton-generator.

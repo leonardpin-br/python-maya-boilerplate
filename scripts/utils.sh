@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 # Gets the project root directory.
 # return (string) The root directory.

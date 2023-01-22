@@ -1,4 +1,4 @@
-#!/bin/bash -xv
+#! /bin/bash -xv
 
 # https://askubuntu.com/questions/153144/how-can-i-recursively-search-for-directory-names-with-a-particular-string-where
 # https://www.cyberciti.biz/faq/how-to-find-and-delete-directory-recursively-on-linux-or-unix-like-system/

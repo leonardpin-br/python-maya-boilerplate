@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 # This script updates the make.bat file that is used by Sphinx during the
 # documentation process.

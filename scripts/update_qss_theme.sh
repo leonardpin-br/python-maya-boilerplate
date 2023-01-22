@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 # This script updates the .qss theme that is used to customize the UI created
 # in Autodesk Maya.
