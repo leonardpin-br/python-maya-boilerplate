@@ -6,9 +6,9 @@
 # https://stackoverflow.com/questions/11616835/r-command-not-found-bashrc-bash-profile
 
 include() {
-    # MY_DIR is the <root_directory>.
-    MY_DIR=$(dirname $(readlink -f $0))
-    . $MY_DIR/$1
+    # MY_DIR is this directory (scripts).
+    MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+    . "${MY_DIR}"/$1
 }
 
 # Included files

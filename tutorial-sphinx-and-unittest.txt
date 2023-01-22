@@ -22,6 +22,12 @@ virtualenv --python="C:/Program Files/Python27/python.exe" "./py27env"
 source ./py27env/Scripts/activate
 
 
+Installation of all packages if there is a requirements.txt file
+--------------------------------------------------------------------------------
+
+pip install -r requirements.txt
+
+
 
 
 SPHINX
@@ -131,15 +137,15 @@ Editing the file ./docs/sphinx/source/conf.py
 sys.path.insert(0, os.path.abspath('../../../src')) <= From . to ../../../src
 
 extensions = [
-    'sphinxcontrib.napoleon',
+    'sphinx.ext.napoleon',
     'sphinx.ext.todo',
     'sphinx.ext.autodoc'
 ]
 
 autodoc_mock_imports = [    <= Auto mock in the conf.py file.
-    'maya',
-    'pymel',
-    'PySide2'
+    # 'maya',
+    # 'pymel',
+    # 'PySide2'
 ]
 
 master_doc = 'index'    <= Added
@@ -284,7 +290,7 @@ mock those modules. This technique is commonly used in unit testing.
 
 
 
-REFERENCES
+REFERENCES (teste)
 ================================================================================
 ================================================================================
 

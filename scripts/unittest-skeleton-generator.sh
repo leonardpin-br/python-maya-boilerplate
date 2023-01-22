@@ -12,8 +12,8 @@
 
 include() {
     # MY_DIR corresponds to the folder where this file is.
-    MY_DIR=$(dirname $(readlink -f $0))
-    . $MY_DIR/$1
+    MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+    . "${MY_DIR}"/$1
     # ==========================================================================
     # MY_DIR=/home/web/Documents/GitHub/python-maya-boilerplate/scripts
 }

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#! mayapy.exe
 # -*- coding: utf-8 -*-
 u"""Entry point of this script/app.
 
