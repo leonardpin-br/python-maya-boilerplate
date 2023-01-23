@@ -33,8 +33,11 @@ Example:
         else:
             sys.path.insert(0, module_path)
 
-        import main
-        reload(main)
+        # Checks if the module was already imported. If so, reloads it.
+        if "main" not in sys.modules:
+            import main
+        else:
+            reload(main)
 
 Note:
     If **unit tests** are in place, this is how they can be run::
@@ -97,6 +100,8 @@ References:
 
     `Maintain a Reference to your Widget`_
 
+    `How can I check if a module has been imported?`_
+
 .. _sphinx-apidoc ignoring some modules/packages:
    https://chadrick-kwag.net/sphinx-apidoc-ignoring-some-modules-packages/
 .. _Coverage.py:
@@ -119,6 +124,8 @@ References:
    https://packaging.python.org/en/latest/tutorials/packaging-projects/#creating-the-package-files
 .. _Maintain a Reference to your Widget:
    https://help.autodesk.com/cloudhelp/2018/ENU/Maya-SDK/files-to-wrap/GUID-66ADA1FF-3E0F-469C-84C7-74CEB36D42EC.htm
+.. _How can I check if a module has been imported?:
+   https://stackoverflow.com/a/30483269/3768670
 
 """
 

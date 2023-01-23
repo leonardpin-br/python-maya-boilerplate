@@ -16,5 +16,8 @@ for path in sys.path:
 else:
     sys.path.insert(0, module_path)
 
-import main
-reload(main)
+# Checks if the module was already imported. If so, reloads it.
+if "main" not in sys.modules:
+    import main
+else:
+    reload(main)
