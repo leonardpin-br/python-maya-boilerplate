@@ -1,4 +1,4 @@
-#! /usr/bin/env python2
+#! /usr/bin/env mayapy
 # -*- coding: utf-8 -*-
 u"""Serves as a configuration file to Sphinx to work with Maya 2020 modules.
 
@@ -12,7 +12,7 @@ Warning:
 
     To make this script a little bit more portable, the shebang line is:
 
-        #! /usr/bin/env python2
+        #! /usr/bin/env mayapy
 
 
     The use of the **mayapy** command, inside the ``make.bat`` file, makes all
