@@ -16,31 +16,11 @@ scripts with just Git Bash.
 Make sure you clone this repository to a path without spaces in it. Maya can and do execute without problems, but Sphinx will throw an error if there are any spaces in the path.
 
 ### Line endings (CRLF and LF) on Windows
-To execute BASH scripts without problems, the files should have LF (Unix) line
-endings even if you are using Windows.
+The ``<project_root>/docs/sphinx/make.bat`` file should have CRLF line endings.
 
-After installing Git, type the commands below in the terminal ([How do I force Git to use LF instead of CR+LF under Windows?](https://stackoverflow.com/a/13154031/3768670)).
+The BASH script (``.sh``) files should have LF (Unix) line endings even if you are using Windows. They should be executed in Cygwin or Git Bash.
 
-#### Set core.autocrlf to false
-```
-git config --global core.autocrlf false
-```
-
-#### Set text=auto in your .gitattributes for all files
-```
-* text=auto
-```
-
-#### Set core.eol to lf
-```
-git config --global core.eol lf
-```
-
-#### Normalize the files in your working directory
-```
-git ls-files -z | xargs -0 rm
-git checkout .
-```
+The provided ``.gitattributes`` file has a configuration that should work without problems ([Configuring Git to handle line endings](https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings)).
 
 
 
@@ -69,6 +49,7 @@ This starter kit allows the development of a more powerfull tool. Instead of cre
     is preconfigured.
     5. General and validation functions that can be easily reused in other projects.
     6. Unit tests and coverage are preconfigured.
+    7. Line endings are preconfigured.
 
 
 
@@ -106,6 +87,8 @@ installation of lauchers. The configuration os Sphinx will depend on it later.
 You could do it with only one (Python 2) version
 ([Create virtualenv in Python 2.7 on windows 10 while other virtualenv are working in Python 3.8](https://stackoverflow.com/a/64940580/3768670))
 if you wanted. But, I do not recommend it.
+
+The command to install the recommended package is:
 
 ```
 pip install virtualenv
@@ -169,9 +152,9 @@ ___________
 
 The laucher **does read** the shebang lines. The commands for each terminal are:
 ```
-code/python/src/procedural_rigging.py       => Cygwin and Git Bash
-code\python\src\procedural_rigging.py       => Command Prompt
-.\code\python\src\procedural_rigging.py     => PowerShell
+code/python/src/main.py       => Cygwin and Git Bash
+code\python\src\main.py       => Command Prompt
+.\code\python\src\main.py     => PowerShell
 ```
 
 The result is:
