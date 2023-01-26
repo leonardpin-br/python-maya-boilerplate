@@ -20,7 +20,7 @@ The ``<project_root>/docs/sphinx/make.bat`` file should have CRLF line endings.
 
 The BASH script (``.sh``) files should have LF (Unix) line endings even if you are using Windows. They should be executed in Cygwin or Git Bash.
 
-The provided ``.gitattributes`` file has a configuration that should work without problems ([Configuring Git to handle line endings](https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings)).
+The provided ``.gitattributes`` file has a configuration that should work without problems (Reference: [Configuring Git to handle line endings](https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings)).
 
 
 
@@ -85,7 +85,7 @@ installation of lauchers. The configuration os Sphinx will depend on it later.
 `virtualenv` will allow you to create virtual environments.
 
 You could do it with only one (Python 2) version
-([Create virtualenv in Python 2.7 on windows 10 while other virtualenv are working in Python 3.8](https://stackoverflow.com/a/64940580/3768670))
+(Reference: [Create virtualenv in Python 2.7 on windows 10 while other virtualenv are working in Python 3.8](https://stackoverflow.com/a/64940580/3768670))
 if you wanted. But, I do not recommend it.
 
 The command to install the recommended package is:
@@ -134,7 +134,13 @@ Even after activating the virtual environment in all of them, the results may di
 
 ### The shebang line
 
-Windows do not support the shebang line (the first line starting with `#! `). But, since Python 3.3 ([Should I put #! (shebang) in Python scripts, and what form should it take?](https://stackoverflow.com/a/14599026/3768670)), Python installs launchers like
+Only the files that are intended to be executed directly should have the shebang line (Reference: [3.7 Shebang Line](https://google.github.io/styleguide/pyguide.html#37-shebang-line)). In this code, there are only two files that should have it:
+```
+<project_root>/src/main.py
+<project_root>/resources/documentation_config/build_sphinx_mayadoc.py
+```
+
+Windows do not support the shebang line (the first line starting with `#! `). But, since Python 3.3 (Reference: [Should I put #! (shebang) in Python scripts, and what form should it take?](https://stackoverflow.com/a/14599026/3768670)), Python installs launchers like
 
 ```
 "C:\Windows\pyw.exe"
@@ -202,15 +208,26 @@ set SPHINXBUILD=mayapy "full/path/to/the/build_sphinx_mayadoc.py"
 
 The `mayapy` command is important. Without it, all terminals fail to generate the documentation.
 
+The `"C:/Windows/pyw.exe"` command would also work, but it is inconvenient because it keeps opening and closing other windows while executing. When it finishes, it closes and it is not possible
+to see any enventual error. So, it should not be used.
+
 The above file (`build_sphinx_mayadoc.py`) is a custom config file that instructs Sphinx to work with the Maya modules.
 
+#### Portability
+
+In Windows (inside `make.bat`), the path with foward slashes (`/`) works as well as with back slashes (`\`). To keep it easy to copy and paste between different systems, it is best to keep the `/`.
+
+Also to keep this code more portable, the shebang line inside `build_sphinx_mayadoc.py` was set to `#! /usr/bin/env mayapy`.
+
 ___________
 
-**With the `mayapy` command, the shebang line (`#! mayapy.exe`) inside `build_sphinx_mayadoc.py` makes absolutely no difference. It works with or without it.**
+**With the `mayapy` command in `make.bat`, the shebang line (`#! mayapy.exe` or `#! /usr/bin/env mayapy`) inside `build_sphinx_mayadoc.py` makes absolutely no difference. It works with or without it.**
+
+With the `"C:/Windows/pyw.exe"` command, the shebang line (`#! mayapy.exe`) is probably read, but it's not advisable to use it as stated above.
 
 ___________
 
-### If the Makefile is edited instead of the make.bat
+#### If the Makefile is edited instead of the make.bat
 
 The result is the same on all terminals:
 
@@ -233,7 +250,7 @@ The result is the same on all terminals:
     |- sphinx                   (for the generated HTML documentation)
 |- py27env                      (virtual environment folder)
 |- resources                    (good to have and needed files)
-    |- documentation_config     (configuration file for Sphinx)
+    |- documentation_config     (configuration for Sphinx)
     |- example_files            (files that can be used as reference)
     |- img                      (images used in the interface creation)
     |- qss                      (for interface customization)
