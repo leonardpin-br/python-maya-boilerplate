@@ -64,6 +64,7 @@ clear_project() {
     local DOT_COVERAGE="$COVERAGE/.coverage"
 
     local MAKE_BAT="$SPHINX/make.bat"
+    local MAKE_BAT_DIST="$SPHINX/make.bat.dist"
     local MAKEFILE="$SPHINX/Makefile"
     local CONF_PY="$SOURCE/conf.py"
     local INDEX_RST="$SOURCE/index.rst"
@@ -141,6 +142,10 @@ clear_project() {
 
                 # If it is ./docs/sphinx/make.bat
                 elif [ $sphinxItem = $MAKE_BAT ]; then
+                    continue
+
+                # If it is ./docs/sphinx/make.bat.dist
+                elif [ $sphinxItem = $MAKE_BAT_DIST ]; then
                     continue
 
                 # If it is ./docs/sphinx/Makefile

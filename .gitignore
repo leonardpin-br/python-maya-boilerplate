@@ -7,6 +7,9 @@
 # Exclude the .coverage file:
 docs/coverage/.coverage
 
+# Ignone the ./docs/sphinx/make.bat after customization.
+docs/sphinx/make.bat
+
 # Exclude the contentes of docs/sphinx/build:
 docs/sphinx/build/*
 
