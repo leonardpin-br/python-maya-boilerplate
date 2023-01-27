@@ -184,9 +184,11 @@ C:\Program Files\Autodesk\Maya2020\bin
 Move it tho the top of the list.
 
 #### 2. Edit the make.bat file
+Make a copy of `<project_root>/docs/sphinx/make.bat.dist` and rename the copy to `make.bat`. This is necessary because of Git source control.
+
 Sphinx will be configured to use the Maya interpreter (`mayapy.exe`) instead of the interpreter in the virtual environment.
 
-`sphinx-quickstart` created two important files (they are inside the `<project_root>/docs/sphinx` folder):
+`sphinx-quickstart` creates two important files (they are inside the `<project_root>/docs/sphinx` folder):
 
 ```
 make.bat    => Edit this one if you are on Windows.
