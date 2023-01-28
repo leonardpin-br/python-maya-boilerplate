@@ -95,8 +95,8 @@ if __name__ == '__main__':
     executing the script inside ``package.json`` ("build:html:doc"). That script
     translates to ``make clean && make html``::
 
-        ['E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/resources/documentation_config/build_sphinx_mayadoc.py', '-M', 'clean', 'source', 'build']
-        ['E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/resources/documentation_config/build_sphinx_mayadoc.py', '-M', 'html', 'source', 'build']
+        ['E:/cloud/Backup/Libraries/scripts/maya/python-maya-boilerplate/resources/documentation_config/build_sphinx_mayadoc.py', '-M', 'clean', 'source', 'build']
+        ['E:/cloud/Backup/Libraries/scripts/maya/python-maya-boilerplate/resources/documentation_config/build_sphinx_mayadoc.py', '-M', 'html', 'source', 'build']
     """
 
     argv = sys_argv[1:]
@@ -112,13 +112,13 @@ if __name__ == '__main__':
     u"""str: As this script file is called twice (``make clean && make html``),
     this variable is assigned twice::
 
-        E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/py27env/Lib/site-packages/sphinx/__init__.pyc
-        E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/py27env/Lib/site-packages/sphinx/__init__.pyc
+        E:/cloud/Backup/Libraries/scripts/maya/python-maya-boilerplate/py27env/Lib/site-packages/sphinx/__init__.pyc
+        E:/cloud/Backup/Libraries/scripts/maya/python-maya-boilerplate/py27env/Lib/site-packages/sphinx/__init__.pyc
     """
 
     # The insert() method inserts the specified value at the specified position.
-    # ['E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/py27env/Lib/site-packages/sphinx/__init__.pyc', '-M', 'clean', 'source', 'build']
-    # ['E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/py27env/Lib/site-packages/sphinx/__init__.pyc', '-M', 'html', 'source', 'build']
+    # ['E:/cloud/Backup/Libraries/scripts/maya/python-maya-boilerplate/py27env/Lib/site-packages/sphinx/__init__.pyc', '-M', 'clean', 'source', 'build']
+    # ['E:/cloud/Backup/Libraries/scripts/maya/python-maya-boilerplate/py27env/Lib/site-packages/sphinx/__init__.pyc', '-M', 'html', 'source', 'build']
     argv.insert(0, sphinx_module)
 
     sphinx.main(argv)

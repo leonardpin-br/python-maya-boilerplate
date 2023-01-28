@@ -1,6 +1,6 @@
-REM This file should be duplicated and the new file renamed to "make.bat".
-REM REFERENCES:
-REM https://stackoverflow.com/questions/38996839/gitignore-keeping-files-on-github
+:: This file should be duplicated and the new file renamed to "make.bat".
+:: REFERENCES:
+:: https://stackoverflow.com/questions/38996839/gitignore-keeping-files-on-github
 
 @ECHO OFF
 
