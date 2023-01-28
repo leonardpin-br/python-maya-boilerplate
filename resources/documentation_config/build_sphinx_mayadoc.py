@@ -86,14 +86,39 @@ maya.standalone.initialize(name='python')
 
 if __name__ == '__main__':
 
-    # sys.argv is a list containing the name of the script being executed
-    # and all the arguments passed. The first item is the name of the script.
-    # Below is the entire sys.argv list passed to this file by Sphinx:
-    # ['E:/cloud/Videoaulas/Digital Tutors - Procedural Rigging with Python in Maya/procedural_rigging/resources/documentation_config/build_sphinx_mayadoc.py', '-M', 'clean', 'source', 'build']
-    # The line below skips the first item.
-    argv = sys.argv[1:]
+    sys_argv = sys.argv
+    u"""list[str]: sys.argv is a list containing the name of the script being
+    executed and all the arguments passed to it. The first item is the script's
+    name.
+
+    Below are the entire ``sys.argv`` list passed to this file by Sphinx,
+    executing the script inside ``package.json`` ("build:html:doc"). That script
+    translates to ``make clean && make html``::
+
+        ['E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/resources/documentation_config/build_sphinx_mayadoc.py', '-M', 'clean', 'source', 'build']
+        ['E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/resources/documentation_config/build_sphinx_mayadoc.py', '-M', 'html', 'source', 'build']
+    """
+
+    argv = sys_argv[1:]
+    u"""list[str]: argv becomes only the arguments passed to this script file.
+
+    The assignment creates a new list removing the first item of the original::
+
+        ['-M', 'clean', 'source', 'build']
+        ['-M', 'html', 'source', 'build']
+    """
+
+    sphinx_module = sphinx.__file__.replace("\\", "/")
+    u"""str: As this script file is called twice (``make clean && make html``),
+    this variable is assigned twice::
+
+        E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/py27env/Lib/site-packages/sphinx/__init__.pyc
+        E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/py27env/Lib/site-packages/sphinx/__init__.pyc
+    """
 
     # The insert() method inserts the specified value at the specified position.
-    argv.insert(0, sphinx.__file__.replace("\\", "/"))
+    # ['E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/py27env/Lib/site-packages/sphinx/__init__.pyc', '-M', 'clean', 'source', 'build']
+    # ['E:/cloud/Backup/Libraries/scripts/maya/procedural_rigging/py27env/Lib/site-packages/sphinx/__init__.pyc', '-M', 'html', 'source', 'build']
+    argv.insert(0, sphinx_module)
 
     sphinx.main(argv)
