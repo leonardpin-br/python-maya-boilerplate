@@ -11,16 +11,18 @@ __all__ = [
     'password_hash',
     'password_verify',
     'print_error_message',
-    'print_sys_path'
+    'print_sys_path',
+    'process_exists'
 ]
 __author__ = u"Leonardo Pinheiro <info@leonardopinheiro.net>"
-__copyright__ = u"Copyright (C) 2022 Leonardo Pinheiro"
+__copyright__ = u"Copyright (C) 2023 Leonardo Pinheiro"
 __link__ = u"https://www.leonardopinheiro.net"
 
 import os
 import sys
 import inspect
 import locale
+import subprocess
 
 
 def add_site_packages_to_sys_path(path_to_module, venv_folder_name='py27env'):
@@ -249,3 +251,38 @@ def print_sys_path():
     """
     for path in sys.path:
         print(path)
+
+def process_exists(process_name):
+    u"""Checks if a program is running on Windows.
+
+    Args:
+        process_name (str): The program name with the ".exe" extension.
+
+    Returns:
+        bool : True if the program is running. False otherwise.
+
+    Example:
+        How to call this function::
+
+            import shared
+
+            is_running = shared.process_exists('notepad++.exe')
+            print(is_running)
+
+    References:
+        `Check if a process is running or not on Windows?`_
+
+    .. _Check if a process is running or not on Windows?:
+       https://stackoverflow.com/a/29275361/3768670
+    """
+
+    call = 'TASKLIST', '/FI', 'imagename eq %s' % process_name
+
+    # use built-in check_output right away
+    output = subprocess.check_output(call).decode()
+
+    # check in last line for process name
+    last_line = output.strip().split('\r\n')[-1]
+
+    # because Fail message could be translated
+    return last_line.lower().startswith(process_name.lower())
