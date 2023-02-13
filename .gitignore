@@ -5,6 +5,9 @@
 **/__pycache__
 
 # Exclude the .coverage file:
+.vscode/settings.json
+
+# Exclude the .coverage file:
 docs/coverage/.coverage
 
 # Ignone the ./docs/sphinx/make.bat after customization.
