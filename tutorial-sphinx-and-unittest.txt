@@ -307,3 +307,15 @@ How to make a folder clean with PowerShell
 --------------------------------------------------------------------------------
 
 Remove-Item -Path ./docs/* -Recurse -Force
+
+
+
+
+COMPILING .ui to .py
+================================================================================
+================================================================================
+
+"C:\Program Files\Autodesk\Maya2020\bin" must be added to environment variables.
+--------------------------------------------------------------------------------
+
+mayapy.exe "C:\Program Files\Autodesk\Maya2020\bin\pyside2-uic" "F:\d_flux\libraries\scripts\Maya\python-maya-boilerplate\resources\ui\maya_ui_template.ui" -o "F:\d_flux\libraries\scripts\Maya\python-maya-boilerplate\src\userinterface\maya_ui_templateUIC.py"
