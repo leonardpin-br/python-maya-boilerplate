@@ -24,6 +24,7 @@ It is necessary to copy and rename them, removing the ``_example``. Those files 
 <project_root>/.vscode/settings_example.json
 <project_root>/docs/sphinx/make_example.bat
 <project_root>/resources/qss/Combinear_example.qss
+<project_root>/src/activerecord/db_credentials_example.py
 ```
 
 ### Line endings (CRLF and LF) on Windows
