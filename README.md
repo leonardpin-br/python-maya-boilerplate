@@ -15,6 +15,17 @@ scripts with just Git Bash.
 ### Spaces in file paths
 Make sure you clone this repository to a path without spaces in it. Maya can and do execute without problems, but Sphinx will throw an error if there are any spaces in the path.
 
+### _example files
+There are files that have ``_example`` in their names. Those files were created to deal with source control.
+
+It is necessary to copy and rename them, removing the ``_example``. Those files are:
+
+```
+<project_root>/.vscode/settings_example.json
+<project_root>/docs/sphinx/make_example.bat
+<project_root>/resources/qss/Combinear_example.qss
+```
+
 ### Line endings (CRLF and LF) on Windows
 The ``<project_root>/docs/sphinx/make.bat`` file should have CRLF line endings.
 
