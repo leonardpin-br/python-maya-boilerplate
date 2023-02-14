@@ -28,7 +28,7 @@
         "\"${workspaceFolder}${pathSeparator}src${pathSeparator}userinterface${pathSeparator}${fileBasenameNoExtension}_rc.py\""
     ],
     "qtForPython.uic.liveExecution": false,
-	"qtForPython.uic.path": "mayapy",
+	"qtForPython.uic.path": "C:\\Program Files\\Autodesk\\Maya2020\\bin\\mayapy.exe",
 	"qtForPython.uic.options": [
         "\"C:\\Program Files\\Autodesk\\Maya2020\\bin\\pyside2-uic\"",
         "-o",
