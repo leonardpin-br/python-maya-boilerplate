@@ -18,17 +18,17 @@
     "python.testing.pytestEnabled": false,
     "python.testing.unittestEnabled": true,
 
-    "qtForPython.designer.path": "C:\\Users\\web\\AppData\\Roaming\\Python\\Python38\\site-packages\\QtDesigner\\designer.exe",
+    "qtForPython.designer.path": "C:\\Users\\leonardo\\AppData\\Roaming\\Python\\Python38\\site-packages\\qt5_applications\\Qt\\bin\\designer.exe",
     "qtForPython.rcc.liveExecution": true,
     "qtForPython.rcc.path": "C:\\Program Files\\Autodesk\\Maya2020\\bin\\pyside2-rcc.exe",
     "qtForPython.rcc.options": [
         "-o",
-        "\"${workspaceFolder}${pathSeparator}src${pathSeparator}userinterface${pathSeparator}ui_resources.py\""
+        "\"${workspaceFolder}${pathSeparator}src${pathSeparator}userinterface${pathSeparator}${fileBasenameNoExtension}_rc.py\""
     ],
-    "qtForPython.uic.liveExecution": false,
-	"qtForPython.uic.path": "C:\\Program Files\\Autodesk\\Maya2020\\bin\\pyside2-uic",
+    "qtForPython.uic.liveExecution": true,
+	"qtForPython.uic.path": mayapy 'C:/Program Files/Autodesk/Maya2020/bin/pyside2-uic',
 	"qtForPython.uic.options": [
         "-o",
-        "\"${workspaceFolder}${pathSeparator}src${pathSeparator}userinterface${pathSeparator}${fileBasenameNoExtension}UIC.py\""
+        "\"${workspaceFolder}${pathSeparator}src${pathSeparator}userinterface${pathSeparator}${fileBasenameNoExtension}_ui.py\""
     ]
 }

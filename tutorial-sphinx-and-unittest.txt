@@ -316,6 +316,10 @@ COMPILING .ui to .py
 ================================================================================
 
 "C:\Program Files\Autodesk\Maya2020\bin" must be added to environment variables.
+
+Using the Qt for Python (VSCODE extension), the compiled resource file must
+have the _rc.py suffix. The .py compiled from the .ui will import the the
+compiled resource file with the _rc as the last line of the file.
 --------------------------------------------------------------------------------
 
-mayapy.exe "C:\Program Files\Autodesk\Maya2020\bin\pyside2-uic" "F:\d_flux\libraries\scripts\Maya\python-maya-boilerplate\resources\ui\maya_ui_template.ui" -o "F:\d_flux\libraries\scripts\Maya\python-maya-boilerplate\src\userinterface\maya_ui_templateUIC.py"
+mayapy "C:\Program Files\Autodesk\Maya2020\bin\pyside2-uic" "E:\cloud\Backup\Libraries\scripts\maya\python-maya-boilerplate\resources\ui\maya_ui_template.ui" -o "E:\cloud\Backup\Libraries\scripts\maya\python-maya-boilerplate\src\userinterface\maya_ui_template_ui.py"

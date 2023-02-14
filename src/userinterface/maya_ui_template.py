@@ -123,7 +123,7 @@ from PySide2 import QtWidgets
 from PySide2.QtUiTools import QUiLoader
 
 import ui_functions
-import ui_resources
+import ui_resources_rc
 
 
 UI_FILE, STYLESHEET_FILE, QSS_DIR = ui_functions.build_ui_qss_filenames(
