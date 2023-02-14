@@ -16,6 +16,9 @@ docs/sphinx/make.bat
 # Exclude the contentes of docs/sphinx/build:
 docs/sphinx/build/*
 
+# Ignone the ./resources/qss/Combinear.qss after customization.
+resources/qss/Combinear.qss
+
 # Exclude the db_credentials.py file:
 src/activerecord/db_credentials.py
 
