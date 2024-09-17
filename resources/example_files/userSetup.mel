@@ -1,0 +1,26 @@
+/*	Arquivo criado para uso com a extensão MayaCode do Visual Studio Code.
+	Local em que deve estar o arquivo:
+	"C:\Users\leonardo\Documents\maya\2020\scripts\userSetup.mel"
+
+	Conversando com o criador da extensão MayaCode, apenas a linha abaixo
+	é necessária tanto para Python quanto para MEL.
+	"As for your userSetup.mel, if you're using an extension version higher than 0.9,
+	then MEL and Python code uses the same port in Maya. so you only need one
+	commandPort open."
+
+	----------------------------------------------------------------------------
+	Códigos escritos em Python e enviados para o Maya via botão direito
+	da extensão MayaPy ("Send Python code to Maya") são copiados para o arquivo
+	"C:\Users\leonardo\AppData\Local\Temp\MayaCode.py"
+	(acho que) esse é o arquivo executado.
+
+    ----------------------------------------------------------------------------
+    Por causa de um bug no Maya 2023, -echoOutput precisa ser retirado (e deixa
+    de aparecer no VSCODE).
+    Passa de
+    commandPort -name "localhost:7001" -sourceType "mel" -echoOutput;
+    Para
+    commandPort -name "localhost:7001" -sourceType "mel";
+*/
+
+commandPort -name "localhost:7001" -sourceType "mel" -echoOutput;
